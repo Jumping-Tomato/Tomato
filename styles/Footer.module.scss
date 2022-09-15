@@ -1,0 +1,10 @@
+.footer {
+    padding: 2rem 1rem;
+    border-top: 1px solid #eaeaea;
+}
+
+@media (prefers-color-scheme: dark) {
+    .footer {
+      border-color: #222;
+    }
+}

@@ -1,4 +1,4 @@
-import { Button } from 'react-bootstrap';
+import LoginForm from "../components/LoginForm";
 
 import Head from 'next/head'
 import Topbar from "../components/Topbar";
@@ -18,8 +18,7 @@ export default function Login() {
         </Head>
 
         <main className={global.main}>
-            
-            
+            <LoginForm />
         </main>
       </div>
       <Footer />

@@ -11,7 +11,7 @@ function register(req, res) {
     const { password, ...user } = req.body;
 
     // validate
-    if (usersRepo.find(x => x.username === user.username))
+    if (usersRepo.find(user))
         throw `User with the username "${user.username}" already exists`;
 
     // hash password

@@ -1,15 +1,22 @@
-const fs = require('fs');
+import clientPromise from "database/mongodb";
 
-// users in JSON file for simplicity, store in a db for production applications
-let users = require('data/users.json');
+let users;
+clientPromise.then((value) => {
+    const client = value;
+    const db = client.db("Tomato");
+    users = db.collection("users")
+});
+
 
 export const usersRepo = {
-    getAll: () => users,
-    getById: id => users.find(x => x.id.toString() === id.toString()),
-    find: x => users.find(x),
+    // getAll: () => users.find(),
+    // getById: id => users.find({"id": id}),
+    find: x => {
+        users.find({"id": x.id});
+    } ,
     create,
-    update,
-    delete: _delete
+    // update,
+    // delete: _delete
 };
 
 function create(user) {
@@ -21,8 +28,9 @@ function create(user) {
     user.dateUpdated = new Date().toISOString();
 
     // add and save user
-    users.push(user);
-    saveData();
+    users.insertOne(user).catch((error)=>{
+        throw `Unable to create user with the username "${user.username}"`;
+    });
 }
 
 function update(id, params) {

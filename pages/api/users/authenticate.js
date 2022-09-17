@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 import getConfig from 'next/config';
 
 import { apiHandler, usersRepo } from 'helpers/api';
+import  mongoDB  from 'database/mongodb'
+
 
 const { serverRuntimeConfig } = getConfig();
 

@@ -12,7 +12,9 @@ export const usersRepo = {
     getAll: async () => {
         return await users.find({}).toArray();
     },
-    // getById: id => users.find({"id": id}),
+    getById: async id => {
+        return await users.findOne({"id": id});
+    },
     find: async username => {
         return await users.findOne({"username": username});
     } ,

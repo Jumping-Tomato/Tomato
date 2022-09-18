@@ -9,9 +9,9 @@ export default apiHandler({
     delete: _delete
 });
 
-function getById(req, res) {
-    const user = usersRepo.getById(req.query.id);
-
+async function getById(req, res) {
+    const user = await usersRepo.getById(parseInt(req.query.id));
+    
     if (!user) throw 'User Not Found';
 
     return res.status(200).json(omit(user, 'hash'));

@@ -11,15 +11,10 @@ clientPromise.then((value) => {
 export const usersRepo = {
     // getAll: () => users.find(),
     // getById: id => users.find({"id": id}),
-    find: user => {
-        return users.find({"username": user.username}).toArray()
-        .then((result)=>{
-            return result.length;
-        })
-        .catch(error=> {
-            throw error;
-        });
-    },
+    find: async x => {
+        const match_users = await users.find({"username": x.username}).toArray();
+        return match_users.length;
+    } ,
     create,
     // update,
     // delete: _delete

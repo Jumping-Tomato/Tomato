@@ -54,7 +54,12 @@ async function update(req, res) {
     }
 }
 
-function _delete(req, res) {
-    usersRepo.delete(req.query.id);
-    return res.status(200).json({});
+async function _delete(req, res) {
+    try{
+        let result = usersRepo.delete(parseInt(req.query.id));
+        return res.status(200).json({"result": result});
+    }
+    catch(error){
+        return res.status(500).json({"error": error});
+    };   
 }

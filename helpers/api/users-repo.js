@@ -20,7 +20,7 @@ export const usersRepo = {
     } ,
     create,
     update,
-    // delete: _delete
+    delete: _delete
 };
 
 function create(user) {
@@ -45,14 +45,17 @@ function update(id, params) {
         console.log(result);
     })
     .catch((error)=>{
-        throw `Unable to update user with the username.\nError: "${error}"`;
+        throw `Unable to update the user.\nError: "${error}"`;
     });
 }
 
 // prefixed with underscore '_' because 'delete' is a reserved word in javascript
-function _delete(id) {
-    // filter out deleted user and save
-    users = users.filter(x => x.id.toString() !== id.toString());
-    saveData();
-    
+async function _delete(id) {
+    try{
+        let result = await users.deleteOne({"id": id });
+        return result
+    }
+    catch(error){
+        throw `Unable to delete the username.\nError: "${error}"`;
+    }
 }

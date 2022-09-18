@@ -9,11 +9,12 @@ clientPromise.then((value) => {
 
 
 export const usersRepo = {
-    // getAll: () => users.find(),
+    getAll: async () => {
+        return await users.find({}).toArray();
+    },
     // getById: id => users.find({"id": id}),
     find: async username => {
-        const match_users = await users.findOne({"username": username});
-        return match_users;
+        return await users.findOne({"username": username});
     } ,
     create,
     // update,

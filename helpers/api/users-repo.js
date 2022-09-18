@@ -41,6 +41,7 @@ function update(id, params) {
     delete params['_id'];
     return users.replaceOne({"id":id},params)
     .then((result)=>{
+        console.log(`user with id "${id}" is updated is mongoDB`);
         console.log(result);
     })
     .catch((error)=>{

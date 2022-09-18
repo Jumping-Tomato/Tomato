@@ -11,9 +11,9 @@ clientPromise.then((value) => {
 export const usersRepo = {
     // getAll: () => users.find(),
     // getById: id => users.find({"id": id}),
-    find: async x => {
-        const match_users = await users.find({"username": x.username}).toArray();
-        return match_users.length;
+    find: async username => {
+        const match_users = await users.findOne({"username": username});
+        return match_users;
     } ,
     create,
     // update,

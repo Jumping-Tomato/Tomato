@@ -12,9 +12,9 @@ export default apiHandler({
     post: authenticate
 });
 
-function authenticate(req, res) {
+async function authenticate(req, res) {
     const { username, password } = req.body;
-    const user = usersRepo.find(u => u.username === username);
+    const user = await usersRepo.find(username);
 
     // validate
     if (!(user && bcrypt.compareSync(password, user.hash))) {

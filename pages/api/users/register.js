@@ -11,8 +11,8 @@ async function register(req, res) {
     const { password, ...user } = req.body;
 
     // validate
-    let existed_users = await usersRepo.find(user);
-    if(existed_users){
+    let existed_user = await usersRepo.find(user.username);
+    if(existed_user){
         throw `User with the username "${user.username}" already exists`;
     }
         

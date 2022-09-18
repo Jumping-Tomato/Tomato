@@ -11,9 +11,15 @@ clientPromise.then((value) => {
 export const usersRepo = {
     // getAll: () => users.find(),
     // getById: id => users.find({"id": id}),
-    find: x => {
-        users.find({"id": x.id});
-    } ,
+    find: user => {
+        return users.find({"username": user.username}).toArray()
+        .then((result)=>{
+            return result.length;
+        })
+        .catch(error=> {
+            throw error;
+        });
+    },
     create,
     // update,
     // delete: _delete

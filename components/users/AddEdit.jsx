@@ -53,7 +53,7 @@ function AddEdit(props) {
     }
 
     function updateUser(id, data) {
-        return userService.update(id, data)
+        return userService.update(parseInt(id), data)
             .then(() => {
                 alertService.success('User updated', { keepAfterRouteChange: true });
                 router.push('..');

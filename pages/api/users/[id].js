@@ -17,16 +17,16 @@ async function getById(req, res) {
     return res.status(200).json(omit(user, 'hash'));
 }
 
-function update(req, res) {
-    const user = usersRepo.getById(req.query.id);
-
+async function update(req, res) {
+    const user = await usersRepo.getById(parseInt(req.query.id));
+   
     if (!user) throw 'User Not Found';
 
     // split out password from user details 
     const { password, ...params } = req.body;
 
     // validate
-    if (user.username !== params.username && usersRepo.find(x => x.username === params.username))
+    if (user.username !== params.username && await usersRepo.find(params.username))
         throw `User with the username "${params.username}" already exists`;
 
     // only update hashed password if entered
@@ -34,8 +34,14 @@ function update(req, res) {
         user.hash = bcrypt.hashSync(password, 10);
     }
 
-    usersRepo.update(req.query.id, params);
-    return res.status(200).json({});
+    usersRepo.update(parseInt(req.query.id), params)
+    .then(function(result){
+        return res.status(200).json({"result":result});
+    })
+    .catch(function(error){
+        throw error;
+    });
+    
 }
 
 function _delete(req, res) {

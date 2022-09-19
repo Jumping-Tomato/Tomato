@@ -27,8 +27,7 @@ async function create(user) {
     // generate new user id
     const newest_user = await users.find({}).sort({"id":-1}).limit(1).toArray();
     const max_id = newest_user[0]["id"];
-    console.log(max_id)
-    console.log(await users.count({}))
+    
     
     user.id = users.count({}) ?  max_id + 1 : 1;
     // set date created and updated

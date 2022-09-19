@@ -23,10 +23,14 @@ export const usersRepo = {
     delete: _delete
 };
 
-function create(user) {
+async function create(user) {
     // generate new user id
-    user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
-
+    const newest_user = await users.find({}).sort({"id":-1}).limit(1).toArray();
+    const max_id = newest_user[0]["id"];
+    console.log(max_id)
+    console.log(await users.count({}))
+    
+    user.id = users.count({}) ?  max_id + 1 : 1;
     // set date created and updated
     user.dateCreated = new Date().toISOString();
     user.dateUpdated = new Date().toISOString();

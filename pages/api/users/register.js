@@ -11,9 +11,9 @@ async function register(req, res) {
     const { password, ...user } = req.body;
 
     // validate
-    let existed_user = await usersRepo.find(user.username);
+    let existed_user = await usersRepo.find(user.email);
     if(existed_user){
-        throw `User with the username "${user.username}" already exists`;
+        throw `User with the email "${user.email}" already exists`;
     }
         
     // hash password

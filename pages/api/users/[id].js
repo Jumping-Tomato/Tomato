@@ -35,8 +35,8 @@ async function update(req, res) {
     const { password, ...params } = req.body;
 
     // validate
-    if (user.username !== params.username && await usersRepo.find(params.username)){
-        throw `User with the username "${params.username}" already exists`;
+    if (user.email !== params.email && await usersRepo.find(params.email)){
+        throw `User with the email "${params.email}" already exists`;
     }
         
     // only update hashed password if entered

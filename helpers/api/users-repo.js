@@ -15,8 +15,8 @@ export const usersRepo = {
     getById: async id => {
         return await users.findOne({"id": id});
     },
-    find: async username => {
-        return await users.findOne({"username": username});
+    find: async email => {
+        return await users.findOne({"email": email});
     } ,
     create,
     update,
@@ -33,7 +33,7 @@ function create(user) {
 
     // add and save user
     users.insertOne(user).catch((error)=>{
-        throw `Unable to create user with the username "${user.username}"`;
+        throw `Unable to create user with the email "${user.email}"`;
     });
 }
 
@@ -56,6 +56,6 @@ async function _delete(id) {
         return result
     }
     catch(error){
-        throw `Unable to delete the username.\nError: "${error}"`;
+        throw `Unable to delete the user.\nError: "${error}"`;
     }
 }

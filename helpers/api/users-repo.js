@@ -1,7 +1,7 @@
-import clientPromise from "database/mongodb";
+import dbPromise from "database/mongodb";
 
 let users;
-clientPromise.then((value) => {
+dbPromise.then((value) => {
     const client = value;
     const db = client.db("Tomato");
     users = db.collection("users")

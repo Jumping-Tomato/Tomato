@@ -19,8 +19,8 @@ function AddEdit(props) {
             .required('First Name is required'),
         lastName: Yup.string()
             .required('Last Name is required'),
-        username: Yup.string()
-            .required('Username is required'),
+        email: Yup.string()
+            .required('email is required'),
         password: Yup.string()
             .transform(x => x === '' ? undefined : x)
             .concat(isAddMode ? Yup.string().required('Password is required') : null)
@@ -77,8 +77,8 @@ function AddEdit(props) {
             </div>
             <div className="form-row">
                 <div className="form-group col">
-                    <label>Username</label>
-                    <input name="username" type="text" {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`} />
+                    <label>email</label>
+                    <input name="email" type="email" {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`} />
                     <div className="invalid-feedback">{errors.email?.message}</div>
                 </div>
                 <div className="form-group col">

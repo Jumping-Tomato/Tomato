@@ -24,11 +24,19 @@ export const usersRepo = {
 
 async function create(user) {
     // generate new user id
-    const newest_user = await db.collection("users").find({}).sort({"id":-1}).limit(1).toArray();
-    const max_id = newest_user[0]["id"];
+    let uid;
+    const collections = await db.listCollections().toArray();
+    const collectionNames = collections.map(collection => collection.name);
+  
+    if(collectionNames.indexOf("users") == -1){
+        uid = 1;
+    }
+    else{
+        const newest_user = await db.collection("users").find({}).sort({"id":-1}).limit(1).toArray();
+        uid = newest_user[0]["id"] + 1;
+    }
+    user.id = uid;
     
-    
-    user.id = db.collection("users").count({}) ?  max_id + 1 : 1;
     // set date created and updated
     user.dateCreated = new Date().toISOString();
     user.dateUpdated = new Date().toISOString();

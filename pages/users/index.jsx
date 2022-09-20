@@ -10,7 +10,10 @@ function Index() {
     const [users, setUsers] = useState(null);
 
     useEffect(() => {
-        console.log(userService.userValue)
+        const uid = userService.userValue.id;
+        userService.checkAdminLevel(uid).then(result=>{
+            console.log(result)
+        })
         userService.getAll().then(x => setUsers(x));
     }, []);
 

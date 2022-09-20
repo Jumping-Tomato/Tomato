@@ -19,7 +19,8 @@ export const usersRepo = {
     } ,
     create,
     update,
-    delete: _delete
+    delete: _delete,
+    isAdmin
 };
 
 async function create(user) {
@@ -67,5 +68,15 @@ async function _delete(id) {
     }
     catch(error){
         throw `Unable to delete the user.\nError: "${error}"`;
+    }
+}
+
+async function isAdmin(id) {
+    try{
+        let user = await db.collection("users").findOne({"id": id });
+        return user.isAdmin;
+    }
+    catch(error){
+        throw `Unable to find user's access level: "${error}"`;
     }
 }

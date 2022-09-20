@@ -17,7 +17,8 @@ export const userService = {
     getAll,
     getById,
     update,
-    delete: _delete
+    delete: _delete,
+    checkAdminLevel
 };
 
 function login(email, password) {
@@ -69,4 +70,8 @@ function update(id, params) {
 // prefixed with underscored because delete is a reserved word in javascript
 function _delete(id) {
     return fetchWrapper.delete(`${baseUrl}/${id}`);
+}
+
+function checkAdminLevel(id){
+    return fetchWrapper.get(`${baseUrl}/checkAdminLevel?id=${id}`);
 }

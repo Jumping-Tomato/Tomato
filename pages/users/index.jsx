@@ -8,13 +8,15 @@ export default Index;
 
 function Index() {
     const [users, setUsers] = useState(null);
-
+    const [isAdmin, setIsAdmin] = useState(false);
     useEffect(() => {
         const uid = userService.userValue.id;
         userService.checkAdminLevel(uid).then(result=>{
-            console.log(result)
-        })
-        userService.getAll().then(x => setUsers(x));
+            if(result.isAdmin){
+                setIsAdmin(true);
+                userService.getAll().then(x => setUsers(x));
+            }
+        });
     }, []);
 
     function deleteUser(id) {
@@ -29,56 +31,50 @@ function Index() {
 
     return (
         <Layout>
-            {
-                userService.userValue.id == 1 ? 
-                <>
-                    <h1>Users</h1>
-                    <Link href="/users/add" className="btn btn-sm btn-success mb-2">Add User</Link>
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th style={{ width: '30%' }}>First Name</th>
-                                <th style={{ width: '30%' }}>Last Name</th>
-                                <th style={{ width: '30%' }}>Username</th>
-                                <th style={{ width: '10%' }}></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {users && users.map(user =>
-                                <tr key={user.id}>
-                                    <td>{user.firstName}</td>
-                                    <td>{user.lastName}</td>
-                                    <td>{user.username}</td>
-                                    <td style={{ whiteSpace: 'nowrap' }}>
-                                        <Link href={`/users/edit/${user.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
-                                        <button onClick={() => deleteUser(user.id)} className="btn btn-sm btn-danger btn-delete-user" disabled={user.isDeleting}>
-                                            {user.isDeleting 
-                                                ? <span className="spinner-border spinner-border-sm"></span>
-                                                : <span>Delete</span>
-                                            }
-                                        </button>
-                                    </td>
-                                </tr>
-                            )}
-                            {!users &&
-                                <tr>
-                                    <td colSpan="4">
-                                        <Spinner />
-                                    </td>
-                                </tr>
-                            }
-                            {users && !users.length &&
-                                <tr>
-                                    <td colSpan="4" className="text-center">
-                                        <div className="p-2">No Users To Display</div>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </> :
-                <h1>Restricted</h1>
-            }
+            <h1>Users</h1>
+            <Link href="/users/add" className="btn btn-sm btn-success mb-2">Add User</Link>
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                        <th style={{ width: '30%' }}>First Name</th>
+                        <th style={{ width: '30%' }}>Last Name</th>
+                        <th style={{ width: '30%' }}>Username</th>
+                        <th style={{ width: '10%' }}></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users && users.map(user =>
+                        <tr key={user.id}>
+                            <td>{user.firstName}</td>
+                            <td>{user.lastName}</td>
+                            <td>{user.username}</td>
+                            <td style={{ whiteSpace: 'nowrap' }}>
+                                <Link href={`/users/edit/${user.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
+                                <button onClick={() => deleteUser(user.id)} className="btn btn-sm btn-danger btn-delete-user" disabled={user.isDeleting}>
+                                    {user.isDeleting 
+                                        ? <span className="spinner-border spinner-border-sm"></span>
+                                        : <span>Delete</span>
+                                    }
+                                </button>
+                            </td>
+                        </tr>
+                    )}
+                    {!users &&
+                        <tr>
+                            <td colSpan="4">
+                                <Spinner />
+                            </td>
+                        </tr>
+                    }
+                    {users && !users.length &&
+                        <tr>
+                            <td colSpan="4" className="text-center">
+                                <div className="p-2">No Users To Display</div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </Layout>
     );
 }

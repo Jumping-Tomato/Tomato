@@ -33,7 +33,7 @@ function Login() {
             router.push("/");
         }
         else{
-            console.error(error);
+            console.error(res);
         }
         
     }

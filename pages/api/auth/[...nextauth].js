@@ -28,18 +28,11 @@ export default NextAuth({
                     token.id = user.id;
                 }
                 return token;
-            },
-            session: ({session, token})=>{
-                if(token){
-                    session.id = token.id;
-                }
-                return session;
             }
     },
     pages: {
         signIn: "/auth/signin"
     },
-    secret: "test",
     jwt: {
         secret:"test",
         encryption: true

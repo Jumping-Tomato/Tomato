@@ -24,14 +24,22 @@ function Login() {
     const { errors } = formState;
 
     async function onSubmit({ email, password }) {
-        const res = await signIn("credentials", {
-            email: email,
-            password: password,
-            redirect: false,
-        });
-        if(res.status == 200){
-            router.push("/")
+        try{
+            const res = await signIn("credentials", {
+                email: email,
+                password: password,
+                redirect: false,
+            });
+            if(res.status == 200){
+                router.push("/")
+            }
         }
+        catch(error){
+            throw error;
+            console.log(error);
+        }
+        
+        
     }
 
     return (

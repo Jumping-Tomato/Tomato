@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Home({data}) {
   const { data: session } = useSession();
   console.log("session", session);
   const router = useRouter();
@@ -17,6 +17,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        <h1>{data.uid}</h1>
         {session ? <button onClick={()=>signOut()}>Log out</button> : <button onClick={()=>{router.push("/api/auth/signin")}}>Sign in</button>}
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -74,12 +75,13 @@ export default function Home() {
   )
 }
 
-// export async function getServerSideProps(ctx) {
-//   const session = await getSession(ctx) //pass context to authenticate create session
-//   console.log(session.id)
-//   return {
-//     props: {
-//       user:session
-//     }
-//   }
-// }
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx) //pass context to authenticate create session
+  let data = {};
+  if (session){
+      data["uid"] = session.id;
+  }
+  return {
+    props: {data}
+  }
+}

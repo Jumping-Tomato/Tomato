@@ -22,12 +22,21 @@ export default NextAuth({
             }
         })
     ],
+    session: {
+        strategy: 'jwt',
+    },
     callbacks: {
             jwt: ({token, user})=> {
                 if(user){
                     token.id = user.id;
                 }
                 return token;
+            },
+            session: ({session, token})=>{
+                if(token){
+                    session.id = token.id;
+                }
+                return session;
             }
     },
     pages: {

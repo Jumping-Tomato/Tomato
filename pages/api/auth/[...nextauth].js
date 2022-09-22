@@ -1,5 +1,7 @@
 import NextAuth from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
+import { apiHandler, usersRepo } from 'helpers/api';
+const bcrypt = require('bcryptjs');
 
 export default NextAuth({
     providers: [
@@ -9,16 +11,18 @@ export default NextAuth({
                     email: {label: "Email", type:"email", placeholder:"johnDoe@test.com"},
                     password: {label: "Password", type:"password"}
             },
-            authorize: (credentials)=>{
+            authorize: async (credentials)=>{
                 //database look up
-                if(credentials.email === "ronganlihappyday@gmail.com" && credentials.password === "wakanda"){
-                    return {
-                        id: 2,
-                        name: "Rongan",
-                        email: credentials.email
-                    }
+                const email = credentials.email;
+                const password = credentials.password;
+
+                const user = await usersRepo.find(email);
+
+                if (!(user && bcrypt.compareSync(password, user.hash))) {
+                    throw 'Username or password is incorrect';
                 }
-                throw "Your mom";
+                
+                return user;
             }
         })
     ],

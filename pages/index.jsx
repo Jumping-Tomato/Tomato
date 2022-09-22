@@ -1,4 +1,4 @@
-import { signOut, useSession } from 'next-auth/react'
+import { signOut, useSession, getSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router';
@@ -73,3 +73,13 @@ export default function Home() {
     </div>
   )
 }
+
+// export async function getServerSideProps(ctx) {
+//   const session = await getSession(ctx) //pass context to authenticate create session
+//   console.log(session.id)
+//   return {
+//     props: {
+//       user:session
+//     }
+//   }
+// }

@@ -9,14 +9,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import { signIn } from "next-auth/react";
+import { userService } from 'services';
 
 export default function Resgister(){
     const router = useRouter();
     const [formData, setFormData] = useState({
       "email":"",
-      "first name":"",
-      "last Name":"",
+      "firstName":"",
+      "lastName":"",
       "password1":"",
       "password2":"",
     });
@@ -35,14 +35,27 @@ export default function Resgister(){
           setError("Passwords do NOT match");
           return;
         }
+        try {
+          const user = {
+            email: formData.email,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            password: formData.password1
+          }
+          const res = await userService.register(user);   
+          router.push("/auth/signin");
+        }
+        catch(error){
+          setError(error);
+        }
         
     }
     return (
         <form onChange={handleChange} onSubmit={handleSubmit}>
             <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
                 <MDBInput wrapperClass='mb-4' label='Email address' name="email" type='email' required/>
-                <MDBInput wrapperClass='mb-4' label='First Name' name="first name" type='text' required/>
-                <MDBInput wrapperClass='mb-4' label='Last Name' name="last name" type='text' required/>
+                <MDBInput wrapperClass='mb-4' label='First Name' name="firstName" type='text' required/>
+                <MDBInput wrapperClass='mb-4' label='Last Name' name="lastName" type='text' required/>
                 <MDBInput wrapperClass='mb-4' label='Password' name="password1" type='password' required />
                 <MDBInput wrapperClass='mb-4' label='Password' name="password2" type='password' required />
                 { error && <Alert variant="danger"> {error} </Alert>}

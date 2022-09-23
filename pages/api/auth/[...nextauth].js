@@ -19,7 +19,7 @@ export default NextAuth({
                 const user = await usersRepo.find(email);
 
                 if (!(user && bcrypt.compareSync(password, user.hash))) {
-                    throw 'Username or password is incorrect';
+                    throw 'Email or password is incorrect';
                 }
                 
                 return user;

@@ -1,22 +1,50 @@
-import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-
-import { Link } from 'components';
-import { Layout } from 'components/account';
+import React from 'react';
+import {
+  MDBContainer,
+  MDBInput
+}
+from 'mdb-react-ui-kit';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import { signIn } from "next-auth/react";
 
-export default Login;
-
-function Login() {
-    const router = useRouter();
-
-    // form validation rules 
-    const validationSchema = Yup.object().shape({
-        email: Yup.string().required('mail is required'),
-        password: Yup.string().required('Password is required')
+export default function Signin(){
+    const [formData, setFormData] = useState({
+      "email":"",
+      "password":"",
     });
+<<<<<<< HEAD
+    const [error, setError] = useState("");
+    const handleChange = function (event){
+      let name = event.target.name;
+      let val = event.target.value;
+      setFormData({
+        ...formData,
+        [name]: val
+      });
+    }
+    const handleSubmit = async function(event){
+        event.preventDefault();
+        try{
+            const res = await signIn("credentials", {
+                redirect: false,
+                email: formData.email,
+                password: formData.password
+            });
+            if(res.status == 200){
+                router.push("/");
+            }
+            else{
+                setError('Email or password is incorrect');
+            }
+        }
+        catch(error){
+            console.error(error);
+            setError(error);
+        }
+=======
     const formOptions = { resolver: yupResolver(validationSchema) };
 
     // get functions to build form with useForm() hook
@@ -24,48 +52,37 @@ function Login() {
     const { errors } = formState;
 
     async function onSubmit({ email, password }) {
-        try{
-            const res = await signIn("credentials", {
-                email: email,
-                password: password,
-                redirect: false,
-            });
-            if(res.status == 200){
-                router.push("/")
-            }
+        const res = await signIn("credentials", {
+            email: email,
+            password: password,
+            redirect: false,
+        });
+        if(res.status == 200){
+            router.push("/");
         }
-        catch(error){
-            throw error;
-            console.log(error);
+        else{
+            console.error(res);
         }
         
-        
+>>>>>>> 59007c51c80620b863a4078c43656e5b7540a626
     }
-
     return (
-        <Layout>
-            <div className="card">
-                <h4 className="card-header">Login</h4>
-                <div className="card-body">
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="form-group">
-                            <label>Email</label>
-                            <input name="email" type="email" {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`} />
-                            <div className="invalid-feedback">{errors.email?.message}</div>
-                        </div>
-                        <div className="form-group">
-                            <label>Password</label>
-                            <input name="password" type="password" {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`} />
-                            <div className="invalid-feedback">{errors.password?.message}</div>
-                        </div>
-                        <button disabled={formState.isSubmitting} className="btn btn-primary">
-                            {formState.isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                            Login
-                        </button>
-                        <Link href="/account/register" className="btn btn-link">Register</Link>
-                    </form>
+        <form onChange={handleChange} onSubmit={handleSubmit}>
+            <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
+                <MDBInput wrapperClass='mb-4' label='Email address' name="email" type='email' required/>
+                <MDBInput wrapperClass='mb-4' label='Password' name="email" type='password' required />
+                { error && <Alert variant="danger"> {error} </Alert>}
+                <div className="d-flex justify-content-between mx-3 mb-4">
+                    <a href="!#">Forgot password?</a>
                 </div>
-            </div>
-        </Layout>
+                <Button variant="primary" type="submit">
+                        Submit
+                </Button>
+
+                <div className="text-center">
+                    <p>Not a member? <a href="#!">Register</a></p>
+                </div>
+            </MDBContainer>
+        </form>
     );
 }

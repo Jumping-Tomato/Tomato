@@ -15,7 +15,6 @@ export default function Signin(){
       "email":"",
       "password":"",
     });
-<<<<<<< HEAD
     const [error, setError] = useState("");
     const handleChange = function (event){
       let name = event.target.name;
@@ -44,27 +43,6 @@ export default function Signin(){
             console.error(error);
             setError(error);
         }
-=======
-    const formOptions = { resolver: yupResolver(validationSchema) };
-
-    // get functions to build form with useForm() hook
-    const { register, handleSubmit, formState } = useForm(formOptions);
-    const { errors } = formState;
-
-    async function onSubmit({ email, password }) {
-        const res = await signIn("credentials", {
-            email: email,
-            password: password,
-            redirect: false,
-        });
-        if(res.status == 200){
-            router.push("/");
-        }
-        else{
-            console.error(res);
-        }
-        
->>>>>>> 59007c51c80620b863a4078c43656e5b7540a626
     }
     return (
         <form onChange={handleChange} onSubmit={handleSubmit}>

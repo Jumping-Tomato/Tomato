@@ -11,11 +11,14 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { signIn } from "next-auth/react";
 
-export default function Signin(){
+export default function Resgister(){
     const router = useRouter();
     const [formData, setFormData] = useState({
       "email":"",
-      "password":"",
+      "first name":"",
+      "last Name":"",
+      "password1":"",
+      "password2":"",
     });
     const [error, setError] = useState("");
     const handleChange = function (event){
@@ -28,38 +31,30 @@ export default function Signin(){
     }
     const handleSubmit = async function(event){
         event.preventDefault();
-        try{
-            const res = await signIn("credentials", {
-                redirect: false,
-                email: formData.email,
-                password: formData.password
-            });
-            if(res.status == 200){
-                router.push("/");
-            }
-            else{
-                setError('Email or password is incorrect');
-            }
+        if(formData.password1 !== formData.password2){
+          setError("Passwords do NOT match");
+          return;
         }
-        catch(error){
-            console.error(error);
-        }
+        
     }
     return (
         <form onChange={handleChange} onSubmit={handleSubmit}>
             <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
                 <MDBInput wrapperClass='mb-4' label='Email address' name="email" type='email' required/>
-                <MDBInput wrapperClass='mb-4' label='Password' name="password" type='password' required />
+                <MDBInput wrapperClass='mb-4' label='First Name' name="first name" type='text' required/>
+                <MDBInput wrapperClass='mb-4' label='Last Name' name="last name" type='text' required/>
+                <MDBInput wrapperClass='mb-4' label='Password' name="password1" type='password' required />
+                <MDBInput wrapperClass='mb-4' label='Password' name="password2" type='password' required />
                 { error && <Alert variant="danger"> {error} </Alert>}
                 <div className="d-flex justify-content-between mx-3 mb-4">
-                    <a href="!#">Forgot password?</a>
+                    
                 </div>
                 <Button variant="primary" type="submit">
                         Submit
                 </Button>
 
                 <div className="text-center">
-                    <p>Not a member? <a href="/auth/register">Register</a></p>
+                    <p>Already a member? <a href="/auth/signin">Sign In</a></p>
                 </div>
             </MDBContainer>
         </form>

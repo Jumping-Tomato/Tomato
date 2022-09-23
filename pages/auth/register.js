@@ -1,15 +1,15 @@
-import React from 'react';
 import {
   MDBContainer,
   MDBInput
 }
 from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { userService } from 'services';
+import  Link  from 'next/link';
 
 export default function Resgister(){
     const router = useRouter();
@@ -67,7 +67,7 @@ export default function Resgister(){
                 </Button>
 
                 <div className="text-center">
-                    <p>Already a member? <a href="/auth/signin">Sign In</a></p>
+                    <p>Already a member? <Link href="/auth/signin">Sign In</Link></p>
                 </div>
             </MDBContainer>
         </form>

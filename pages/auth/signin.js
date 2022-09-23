@@ -1,15 +1,15 @@
-import React from 'react';
 import {
   MDBContainer,
   MDBInput
 }
 from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { signIn } from "next-auth/react";
+import  Link  from 'next/link';
 
 export default function Signin(){
     const router = useRouter();
@@ -59,7 +59,7 @@ export default function Signin(){
                 </Button>
 
                 <div className="text-center">
-                    <p>Not a member? <a href="/auth/register">Register</a></p>
+                    <p>Not a member? <Link href="/auth/register">Register</Link></p>
                 </div>
             </MDBContainer>
         </form>

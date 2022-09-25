@@ -1,10 +1,5 @@
+import { usersRepo } from 'database/user-repo';
 const bcrypt = require('bcryptjs');
-
-import { apiHandler, usersRepo } from 'helpers/api';
-
-export default apiHandler({
-    post: register
-});
 
 async function register(req, res) {
     // split out password from user details 
@@ -22,3 +17,5 @@ async function register(req, res) {
     usersRepo.create(user);
     return res.status(200).json({});
 }
+
+export default register;

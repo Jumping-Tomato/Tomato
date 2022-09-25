@@ -8,8 +8,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import { userService } from 'services/user';
 import  Link  from 'next/link';
+import axios from 'axios';
 
 export default function Resgister(){
     const router = useRouter();
@@ -35,20 +35,19 @@ export default function Resgister(){
           setError("Passwords do NOT match");
           return;
         }
-        try {
-          const user = {
-            email: formData.email,
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            password: formData.password1
-          }
-          const res = await userService.register(user);   
+        const user = {
+          email: formData.email,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          password: formData.password1
+        }
+        axios.post('/api/register', user)
+        .then(function (response) {
           router.push("/auth/signin");
-        }
-        catch(error){
+        })
+        .catch(function (error) {
           setError(error);
-        }
-        
+        });       
     }
     return (
         <form onChange={handleChange} onSubmit={handleSubmit}>

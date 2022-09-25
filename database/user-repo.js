@@ -1,4 +1,4 @@
-import dbPromise from "database/mongodb";
+import dbPromise from "database/mongodb-config";
 
 let db;
 dbPromise.then((value) => {

@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
-import { apiHandler, usersRepo } from 'helpers/api';
+// import { usersRepo } from 'helpers';
 const bcrypt = require('bcryptjs');
 
 export default NextAuth({
@@ -16,7 +16,7 @@ export default NextAuth({
                 const email = credentials.email;
                 const password = credentials.password;
 
-                const user = await usersRepo.find(email);
+                // const user = await usersRepo.find(email);
 
                 if (!(user && bcrypt.compareSync(password, user.hash))) {
                     throw 'Email or password is incorrect';

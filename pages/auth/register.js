@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import { userService } from 'services/user';
+// import { userService } from 'services/user';
 import  Link  from 'next/link';
 
 export default function Resgister(){
@@ -42,7 +42,7 @@ export default function Resgister(){
             lastName: formData.lastName,
             password: formData.password1
           }
-          const res = await userService.register(user);   
+          // const res = await userService.register(user);   
           router.push("/auth/signin");
         }
         catch(error){

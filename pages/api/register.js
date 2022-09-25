@@ -8,7 +8,7 @@ async function register(req, res) {
     // validate
     let existed_user = await usersRepo.find(user.email);
     if(existed_user){
-        return res.status(500).json({"error":`User with the email "${user.email}" already exists`});
+        return res.status(500).json({"errorMessage":`User with the email "${user.email}" already exists`});
     }
         
     // hash password

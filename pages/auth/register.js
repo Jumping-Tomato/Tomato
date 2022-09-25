@@ -46,7 +46,7 @@ export default function Resgister(){
           router.push("/auth/signin");
         })
         .catch(function (error) {
-          setError(error);
+          setError(error.response.data.error);
         });       
     }
     return (

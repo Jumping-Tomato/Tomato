@@ -8,14 +8,14 @@ async function register(req, res) {
     // validate
     let existed_user = await usersRepo.find(user.email);
     if(existed_user){
-        throw `User with the email "${user.email}" already exists`;
+        return res.status(500).json({"error":`User with the email "${user.email}" already exists`});
     }
         
     // hash password
     user.hash = bcrypt.hashSync(password, 10);    
 
     usersRepo.create(user);
-    return res.status(200).json({});
+    return res.status(200);
 }
 
 export default register;

@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 
 import { Link } from 'components';
 import { Layout } from 'components/account';
-import { userService, alertService } from 'services';
+import { userService, alertService } from 'services/user';
 
 export default Register;
 

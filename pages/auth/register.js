@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import { userService } from 'services';
+import { userService } from 'services/user';
 import  Link  from 'next/link';
 
 export default function Resgister(){

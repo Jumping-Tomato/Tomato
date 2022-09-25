@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { Link, Spinner } from 'components';
 import { Layout } from 'components/users';
-import { userService } from 'services';
+import { userService } from 'services/user';
 
 export default Index;
 

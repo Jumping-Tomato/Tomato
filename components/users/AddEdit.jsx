@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
 import { Link } from 'components';
-import { userService, alertService } from 'services';
+import { userService, alertService } from 'services/user';
 
 export { AddEdit };
 

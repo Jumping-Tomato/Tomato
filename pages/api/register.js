@@ -14,8 +14,8 @@ async function register(req, res) {
     // hash password
     user.hash = bcrypt.hashSync(password, 10);    
 
-    usersRepo.create(user);
-    return res.status(200);
+    const result = await usersRepo.create(user);
+    return res.status(200).json({"result": result});
 }
 
 export default register;

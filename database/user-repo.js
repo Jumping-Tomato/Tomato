@@ -4,6 +4,9 @@ let db;
 dbPromise.then((value) => {
     const client = value;
     db = client.db("Tomato");
+})
+.catch((error)=>{
+    console.error(error);
 });
 
 

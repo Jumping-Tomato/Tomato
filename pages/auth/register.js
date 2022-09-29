@@ -1,15 +1,14 @@
-import {
-  MDBContainer,
-  MDBInput
-}
-from 'mdb-react-ui-kit';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import  Link  from 'next/link';
 import axios from 'axios';
+import Head from 'next/head'
+import global from 'styles/Global.module.scss'
 
 export default function Resgister(){
     const router = useRouter();
@@ -17,6 +16,7 @@ export default function Resgister(){
       "email":"",
       "firstName":"",
       "lastName":"",
+      "role": "",
       "password1":"",
       "password2":"",
     });
@@ -39,6 +39,7 @@ export default function Resgister(){
           email: formData.email,
           firstName: formData.firstName,
           lastName: formData.lastName,
+          role: formData.role,
           password: formData.password1
         }
         axios.post('/api/register', user)
@@ -50,25 +51,58 @@ export default function Resgister(){
         });       
     }
     return (
-        <form onChange={handleChange} onSubmit={handleSubmit}>
-            <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
-                <MDBInput wrapperClass='mb-4' label='Email address' name="email" type='email' required/>
-                <MDBInput wrapperClass='mb-4' label='First Name' name="firstName" type='text' required/>
-                <MDBInput wrapperClass='mb-4' label='Last Name' name="lastName" type='text' required/>
-                <MDBInput wrapperClass='mb-4' label='Password' name="password1" type='password' required />
-                <MDBInput wrapperClass='mb-4' label='Password' name="password2" type='password' required />
-                { error && <Alert variant="danger"> {error} </Alert>}
-                <div className="d-flex justify-content-between mx-3 mb-4">
-                    
-                </div>
-                <Button variant="primary" type="submit">
-                        Submit
-                </Button>
+        <>
+        <div className={global.container}>
+          <Head>
+            <title>Register</title>
+            <meta name="description" content="Register page" />
+            <link rel="icon" href="#" />
+          </Head>
 
+          <main className={global.main}>
+            <div className='row justify-content-center'>
+              <div className="col-lg-6 col-12 p-3">
+                <Form onChange={handleChange} onSubmit={handleSubmit} >  
+                  <Form.Group className="mb-3">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control type="email" name="email" placeholder="Enter email" required />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>I am a</Form.Label>
+                    <Form.Select name="role" required>
+                      <option disbled></option>
+                      <option value="student">Student</option>
+                      <option value="teacher">Teacher</option>
+                    </Form.Select>
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>First Name</Form.Label>
+                    <Form.Control type="text" name="firstName" placeholder="Enter First Name" required />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Last Name</Form.Label>
+                    <Form.Control type="text" name="lastName" placeholder="Enter Last Name" required />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" name="password1" placeholder="Password" required />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Repeat Password</Form.Label>
+                    <Form.Control type="password" name="password2" placeholder="Password" required />
+                  </Form.Group>
+                  { error && <Alert variant="danger"> {error} </Alert>}
+                  <Button variant="primary" type="submit">
+                    Submit
+                  </Button>
+                </Form>
                 <div className="text-center">
                     <p>Already a member? <Link href="/auth/signin">Sign In</Link></p>
                 </div>
-            </MDBContainer>
-        </form>
+              </div>
+            </div>
+          </main>
+        </div>
+      </>
     );
 }

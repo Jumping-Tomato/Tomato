@@ -6,14 +6,13 @@ export async function middleware(req) {
     const in_authentication_page = req.url.includes("/auth/signin") || req.url.includes("/auth/register");
   
     if (session && in_authentication_page) {
-      return NextResponse.rewrite(new URL('/', req.url))
+      return NextResponse.redirect(process.env.NEXTAUTH_URL); 
     }
     if (!session && !in_authentication_page){
-      return NextResponse.rewrite(new URL('/auth/signin', req.url))
+      return NextResponse.redirect(process.env.NEXTAUTH_URL +  '/auth/signin');
     } 
 
-    // If user is authenticated, continue.
-    return NextResponse.next()
+    return NextResponse.next();
   
 }
 

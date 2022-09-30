@@ -47,7 +47,7 @@ export default NextAuth({
         signIn: "/auth/signin"
     },
     jwt: {
-        secret:"test",
+        secret: process.env.NEXTAUTH_SECRET,
         encryption: true
     }
 })

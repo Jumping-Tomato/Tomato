@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { getToken } from "next-auth/jwt"
 
 export async function middleware(req) {
-    const session = await getToken({ req, secret: "test" })
+    const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET, })
     const in_authentication_page = req.url.includes("/auth/signin") || req.url.includes("/auth/register");
   
     if (session && in_authentication_page) {

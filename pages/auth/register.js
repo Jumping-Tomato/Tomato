@@ -41,7 +41,7 @@ export default function Resgister(){
           role: formData.role,
           password: formData.password1
         }
-        axios.post('/api/register', user)
+        axios.post('/api/auth/register', user)
         .then(function (response) {
           router.push("/auth/signin");
         })

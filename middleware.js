@@ -19,6 +19,6 @@ export async function middleware(req) {
 // Supports both a single string value or an array of matchers
 export const config = {
   matcher: [
-    '/((?!_next|api/auth|api/register).*)(.+)' //put '_next' as a temporary fix. This is an issue of Next.js of the newest versions
+    '/((?!_next|api/auth).*)(.+)' //put '_next' as a temporary fix. This is an issue of Next.js of the newest versions
   ],
 }

@@ -6,10 +6,12 @@ import React from "react";
 import { useRouter } from 'next/router';
 import Container from 'react-bootstrap/Container';
 import Image from 'next/image'
+import { signOut, useSession } from 'next-auth/react'
 
 
 export default function Topbar() {
   const router = useRouter();
+  const { data: session } = useSession();
   const getColor = (page) => {
     let pathname = router.pathname;
     if(page != "/" && pathname.indexOf(page) > -1 || pathname == "/" && page == "/"){
@@ -29,6 +31,17 @@ export default function Topbar() {
             <Nav.Link key="home" className={getColor("/")} href="/">Home</Nav.Link>
             <Nav.Link key="about" className={getColor("about")} href="/about">About</Nav.Link>
             <Nav.Link key="contact" className={getColor("contact")} href="/contact">Contact</Nav.Link>
+          </Nav>
+          <Nav>
+          {
+            session ? 
+              <Nav.Link onClick={()=>signOut()}>
+                Log out
+              </Nav.Link> :
+              <Nav.Link href="/auth/sigin">
+                Log In
+              </Nav.Link>
+          }
           </Nav>
         </Navbar.Collapse>
       </Container>

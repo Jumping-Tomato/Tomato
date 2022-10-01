@@ -52,7 +52,7 @@ async function create(user) {
 
 function update(id, params) {
     delete params['_id'];
-    return db.collection("users").replaceOne({"id":id},params)
+    return db.collection("users").updateOne({"id":id},{$set: params})
     .then((result)=>{
         console.log(`user with id "${id}" is updated is mongoDB`);
         console.log(result);

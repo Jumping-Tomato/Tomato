@@ -7,7 +7,9 @@ import { useRouter } from 'next/router';
 import Container from 'react-bootstrap/Container';
 import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
-
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGear } from '@fortawesome/free-solid-svg-icons'
 
 export default function Topbar() {
   const router = useRouter();
@@ -33,15 +35,18 @@ export default function Topbar() {
             <Nav.Link key="contact" className={getColor("contact")} href="/contact">Contact</Nav.Link>
           </Nav>
           <Nav>
-          {
-            session ? 
-              <Nav.Link onClick={()=>signOut()}>
-                Log out
-              </Nav.Link> :
-              <Nav.Link href="/auth/sigin">
-                Log In
-              </Nav.Link>
-          }
+          <NavDropdown title={<FontAwesomeIcon icon={faGear} />}>
+            {
+              session ? 
+              <NavDropdown.Item onClick={()=>signOut()}>Log out</NavDropdown.Item>
+                :
+              <NavDropdown.Item href="/auth/sigin">Log In</NavDropdown.Item>
+            }
+            <NavDropdown.Item  href="/auth/reset-password">
+              reset password
+            </NavDropdown.Item>
+          </NavDropdown>
+          
           </Nav>
         </Navbar.Collapse>
       </Container>

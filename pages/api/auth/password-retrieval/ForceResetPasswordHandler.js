@@ -31,6 +31,7 @@ export default async function ForceResetPasswordHandler(req, res) {
     try{
         const new_hash = bcrypt.hashSync(newPassword, 10);
         await usersRepo.update( user_id,{hash:new_hash});
+        return res.status(200).send("Password has been reset")
     } 
     catch(error){
         console.error(error);

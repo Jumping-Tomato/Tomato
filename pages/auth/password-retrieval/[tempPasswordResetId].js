@@ -67,10 +67,6 @@ export default function tempPassowordResetPage({props}){
               <div className="col-lg-6 col-12 p-3">
                 <Form onChange={handleChange} onSubmit={handleSubmit} >  
                   <Form.Group className="mb-3">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" name="email" placeholder="Enter email" required />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
                     <Form.Label>New Password</Form.Label>
                     <Form.Control type="password" name="newPassword1" placeholder="Password" required />
                   </Form.Group>
@@ -109,7 +105,7 @@ export async function getServerSideProps(context) {
   }
   const props = {
     user_id: passwordResetData.user_id,
-    pw_reset_id: passwordResetData._id
+    pw_reset_id: tempPasswordResetId
   };
   return {
     props: {props}

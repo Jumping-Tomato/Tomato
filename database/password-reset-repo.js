@@ -1,5 +1,6 @@
 import dbPromise from "database/mongodb-config";
 import { usersRepo } from "database/user-repo";
+const { ObjectId } = require('mongodb')
 
 let db;
 dbPromise.then((value) => {
@@ -11,6 +12,9 @@ dbPromise.then((value) => {
 });
 
 export const passwordResetRepo = {
+    find: async _id => {
+        return await db.collection("passwordReset").findOne({"_id": ObjectId(_id)});
+    },
     sendPasswordResetLink,
 };
 

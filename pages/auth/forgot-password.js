@@ -10,7 +10,13 @@ import Modal from 'react-bootstrap/Modal';
 import global from 'styles/Global.module.scss'
 
 
-export default function ForgotPassword({userProps}){
+/*
+*
+* This page is for un-authenticated users who forgot their password
+* to get a password reset link.
+*
+*/
+export default function ForgotPasswordPage(){
     const router = useRouter();
     const [formData, setFormData] = useState({
       "email":""

@@ -9,7 +9,13 @@ import Head from 'next/head'
 import global from 'styles/Global.module.scss'
 import { getSession } from 'next-auth/react'
 
-export default function ResetPassword({userProps}){
+
+/*
+*
+* This page is for authenticated users to change their password.
+*
+*/
+export default function PasswordResetPage({userProps}){
     const router = useRouter();
     const [formData, setFormData] = useState({
       "currentPassword":"",

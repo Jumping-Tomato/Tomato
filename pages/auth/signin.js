@@ -55,7 +55,7 @@ export default function Signin(){
                     <Link href="/auth/password-retrieval/forgot-password">Forgot password?</Link>
                 </div>
                 <Button variant="primary" type="submit">
-                        Submit
+                        Sign In
                 </Button>
 
                 <div className="text-center">

@@ -29,12 +29,12 @@ async function sendPasswordResetLink(email) {
     var currentDate = new Date();
     const expire = new Date(currentDate.getTime() + minutesToAdd*60000).toString();
     let pw_reset_data = {
-        user_id: user.id,
+        user_id: user._id,
         expire: expire
     }
     try{
         let result = await db.collection("passwordReset").updateOne(
-            {user_id: user.id},
+            {user_id: user._id},
             {$set: pw_reset_data},
             {upsert: true}
         )

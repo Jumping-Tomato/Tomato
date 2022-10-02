@@ -14,8 +14,8 @@ export const usersRepo = {
     getAll: async () => {
         return await db.collection("users").find({}).toArray();
     },
-    getById: async id => {
-        return await db.collection("users").findOne({"id": id});
+    getById: async _id => {
+        return await db.collection("users").findOne({"_id": _id});
     },
     find: async email => {
         return await db.collection("users").findOne({"email": email});
@@ -35,10 +35,10 @@ async function create(user) {
         uid = 1;
     }
     else{
-        const newest_user = await db.collection("users").find({}).sort({"id":-1}).limit(1).toArray();
-        uid = newest_user[0]["id"] + 1;
+        const newest_user = await db.collection("users").find({}).sort({"_id":-1}).limit(1).toArray();
+        uid = newest_user[0]["_id"] + 1;
     }
-    user.id = uid;
+    user._id = uid;
     
     // set date created and updated
     user.dateCreated = new Date().toISOString();
@@ -50,11 +50,11 @@ async function create(user) {
     });
 }
 
-function update(id, params) {
+function update(_id, params) {
     delete params['_id'];
-    return db.collection("users").updateOne({"id":id},{$set: params})
+    return db.collection("users").updateOne({"_id":_id},{$set: params})
     .then((result)=>{
-        console.log(`user with id "${id}" is updated is mongoDB`);
+        console.log(`user with id "${_id}" is updated is mongoDB`);
         console.log(result);
     })
     .catch((error)=>{
@@ -63,9 +63,9 @@ function update(id, params) {
 }
 
 // prefixed with underscore '_' because 'delete' is a reserved word in javascript
-async function _delete(id) {
+async function _delete(_id) {
     try{
-        let result = await db.collection("users").deleteOne({"id": id });
+        let result = await db.collection("users").deleteOne({"_id": _id });
         return result
     }
     catch(error){

@@ -32,13 +32,13 @@ export default NextAuth({
     callbacks: {
             jwt: ({token, user})=> {
                 if(user){
-                    token.id = user.id;
+                    token._id = user._id;
                 }
                 return token;
             },
             session: ({session, token})=>{
                 if(token){
-                    session.id = token.id;
+                    session._id = token._id;
                 }
                 return session;
             }

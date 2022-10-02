@@ -32,7 +32,7 @@ export default function ResetPassword({userProps}){
             return;
         }
         const data = {
-          id: userProps.id,
+          id: userProps._id,
           password: formData.currentPassword,
           newPassword: formData.newPassword1
         }
@@ -87,7 +87,7 @@ export async function getServerSideProps(context) {
   const session = await getSession(context)
   let userProps = {};
   if (session){
-    userProps["id"] = session.id;
+    userProps["_id"] = session._id;
   }
   return {
     props: {userProps}

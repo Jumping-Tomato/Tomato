@@ -1,6 +1,6 @@
 import { passwordResetRepo } from 'database/password-reset-repo';
 
-export default async function passwordReset(req, res) {
+export default async function sendPasswordResetLink(req, res) {
     // split out password from user details 
     const { email } = req.body;
     try{

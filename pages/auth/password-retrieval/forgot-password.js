@@ -40,7 +40,7 @@ export default function ForgotPasswordPage(){
         const data = {
           email: formData.email,
         }
-        axios.post('/api/auth/passwordReset', data)
+        axios.post('/api/auth/sendPasswordResetLink', data)
         .then(function (response) {
           setShowEmailPopup(true);
           setError(null);

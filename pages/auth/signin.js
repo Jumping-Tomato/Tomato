@@ -52,7 +52,7 @@ export default function Signin(){
                 <MDBInput wrapperClass='mb-4' label='Password' name="password" type='password' required />
                 { error && <Alert variant="danger"> {error} </Alert>}
                 <div className="d-flex justify-content-between mx-3 mb-4">
-                    <a href="!#">Forgot password?</a>
+                    <Link href="/auth/forgot-password">Forgot password?</Link>
                 </div>
                 <Button variant="primary" type="submit">
                         Submit

@@ -7,14 +7,12 @@ import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 import Head from 'next/head'
 import global from 'styles/Global.module.scss'
-import { getSession } from 'next-auth/react'
 
-export default function ResetPassword({userProps}){
+
+export default function ForgotPassword({userProps}){
     const router = useRouter();
     const [formData, setFormData] = useState({
-      "currentPassword":"",
-      "newPassword1":"",
-      "newPassword2":""
+      "email":""
     });
     const [error, setError] = useState("");
     const handleChange = function (event){
@@ -48,8 +46,8 @@ export default function ResetPassword({userProps}){
          <>
          <div className={global.container}>
            <Head>
-             <title>Reset Password</title>
-             <meta name="description" content="Reset Password" />
+             <title>Forgot Password</title>
+             <meta name="description" content="Forgot Password" />
              <link rel="icon" href="#" />
            </Head>
  
@@ -58,16 +56,8 @@ export default function ResetPassword({userProps}){
                <div className="col-lg-6 col-12 p-3">
                     <Form onChange={handleChange} onSubmit={handleSubmit} > 
                         <Form.Group className="mb-3">
-                            <Form.Label>Current Password</Form.Label>
-                            <Form.Control type="password" name="currentPassword" placeholder="Current Password" required />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>New Password</Form.Label>
-                            <Form.Control type="password" name="newPassword1" placeholder="New Password" required />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Confirm New Password</Form.Label>
-                            <Form.Control type="password" name="newPassword2" placeholder="Confirm New Password" required />
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control type="email" name="email" placeholder="email" required />
                         </Form.Group>
                         { error && <Alert variant="danger"> {error} </Alert>}
                         <Button variant="primary" type="submit">
@@ -80,16 +70,4 @@ export default function ResetPassword({userProps}){
          </div>
        </>
     );
-}
-
-
-export async function getServerSideProps(context) {
-  const session = await getSession(context)
-  let userProps = {};
-  if (session){
-    userProps["_id"] = session._id;
-  }
-  return {
-    props: {userProps}
-  }
 }

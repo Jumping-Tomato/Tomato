@@ -16,7 +16,7 @@ import global from 'styles/Global.module.scss'
 * to reset their password.
 *
 */
-export default function tempPassowordResetPage({props}){
+export default function TempPassowordResetPage({props}){
   const router = useRouter();
   const [formData, setFormData] = useState({
     "email":"",

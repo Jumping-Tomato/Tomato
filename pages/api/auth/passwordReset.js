@@ -4,7 +4,7 @@ export default async function passwordReset(req, res) {
     // split out password from user details 
     const { email } = req.body;
     try{
-        let result = await passwordResetRepo.sendPasswordResetLink(email);
+        await passwordResetRepo.sendPasswordResetLink(email);
         return res.status(200).send("success");
     }
     catch(error){

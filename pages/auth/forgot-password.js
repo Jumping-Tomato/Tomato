@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 import Head from 'next/head'
+import Modal from 'react-bootstrap/Modal';
 import global from 'styles/Global.module.scss'
 
 
@@ -14,6 +15,7 @@ export default function ForgotPassword({userProps}){
     const [formData, setFormData] = useState({
       "email":""
     });
+    const [showEmailPopup, setShowEmailPopup] = useState(false);
     const [error, setError] = useState("");
     const handleChange = function (event){
       let name = event.target.name;
@@ -30,20 +32,23 @@ export default function ForgotPassword({userProps}){
             return;
         }
         const data = {
-          id: userProps._id,
-          password: formData.currentPassword,
-          newPassword: formData.newPassword1
+          email: formData.email,
         }
-        axios.post('/api/reset-password', data)
+        axios.post('/api/auth/passwordReset', data)
         .then(function (response) {
-          router.push("/auth/signin");
+          setShowEmailPopup(true);
+          setError(null);
         })
         .catch(function (error) {
           setError(error.response.data.error);
         });  
+    }   
+    const handleCloseEmailPopup = function(event){
+      event.preventDefault();
+      setShowEmailPopup(false);
     }
     return (
-         <>
+        <>
          <div className={global.container}>
            <Head>
              <title>Forgot Password</title>
@@ -68,6 +73,17 @@ export default function ForgotPassword({userProps}){
              </div>
            </main>
          </div>
+         <Modal show={showEmailPopup}>
+          <Modal.Header closeButton>
+            <Modal.Title>Sent</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Instruction to reset password has been sent to your email!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseEmailPopup}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
        </>
     );
 }

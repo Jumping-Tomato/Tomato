@@ -6,9 +6,12 @@ export async function middleware(req) {
     const is_unprotected_page = req.url.includes("/auth/signin") ||
                                     req.url.includes("/auth/register") ||
                                     req.url.includes("/auth/password-retrieval");
-  
+                                    
     if (session && is_unprotected_page) {
       return NextResponse.redirect(process.env.NEXTAUTH_URL); 
+    }
+    if(session && session.role == "student" && req.url.includes("/teacher")){
+      return NextResponse.redirect(process.env.NEXTAUTH_URL + "/error/forbidden"); 
     }
     if (!session && !is_unprotected_page){
       return NextResponse.redirect(process.env.NEXTAUTH_URL +  '/auth/signin');

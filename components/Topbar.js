@@ -10,6 +10,7 @@ import { signOut, useSession } from 'next-auth/react'
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
+import Button from 'react-bootstrap/Button';
 
 export default function Topbar() {
   const router = useRouter();
@@ -22,33 +23,40 @@ export default function Topbar() {
     return "text-white";
   };
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
       <Container>
         <Navbar.Brand href="/">
-            <Image className="bg-white p-1" src="/barber-shop-svgrepo-com.svg" alt="Logo" width={75} height={35} />
+            <Image className="bg-white p-1" src="/logo.svg" alt="Logo" width={75} height={35} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link key="home" className={getColor("/")} href="/">Home</Nav.Link>
-            <Nav.Link key="about" className={getColor("about")} href="/about">About</Nav.Link>
-            <Nav.Link key="contact" className={getColor("contact")} href="/contact">Contact</Nav.Link>
-          </Nav>
-          <Nav>
-          <NavDropdown title={<FontAwesomeIcon icon={faGear} />}>
-            {
-              session ? 
-              <NavDropdown.Item onClick={()=>signOut()}>Log out</NavDropdown.Item>
-                :
-              <NavDropdown.Item href="/auth/sigin">Log In</NavDropdown.Item>
-            }
-            <NavDropdown.Item  href="/auth/reset-password">
-              reset password
-            </NavDropdown.Item>
-          </NavDropdown>
-          
-          </Nav>
-        </Navbar.Collapse>
+        {
+          session ?
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link key="home" className={getColor("/")} href="/">Home</Nav.Link>
+            </Nav>
+            <Nav>
+              <NavDropdown title="More">
+                  <NavDropdown.Item onClick={()=>signOut()}>Log out</NavDropdown.Item> 
+                  <NavDropdown.Item  href="/auth/reset-password">reset password</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse> 
+          :
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link key="contact" className={getColor("/contact")} href="/contact">Contact</Nav.Link>
+              <Nav.Link key="Pricing" className={getColor("/Pricing")} href="/Pricing">Pricing</Nav.Link>
+            </Nav>
+            <Nav>
+              <Nav.Link key="Login" className={getColor("/auth/signin")} href="/auth/signin">
+                <Button variant="primary" size="sm">
+                  Log In
+                </Button>
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse> 
+        }
       </Container>
     </Navbar>
   );

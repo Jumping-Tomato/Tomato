@@ -8,8 +8,6 @@ import Container from 'react-bootstrap/Container';
 import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGear } from '@fortawesome/free-solid-svg-icons'
 import Button from 'react-bootstrap/Button';
 
 export default function Topbar() {
@@ -26,7 +24,7 @@ export default function Topbar() {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
       <Container>
         <Navbar.Brand href="/">
-            <Image className="bg-white p-1" src="/logo.svg" alt="Logo" width={75} height={35} />
+            <Image className="bg-white p-1" src="/images/logo.svg" alt="Logo" width={75} height={35} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         {

@@ -1,5 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
-
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import React from "react";
@@ -36,7 +34,7 @@ export default function Topbar() {
   if(session){
     navItems = <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link key="home" className={getColor("/")} href="/">DashBoard</Nav.Link>
+                <Nav.Link key="dashboard" className={getColor("/dashboard")} href="/dashboard">DashBoard</Nav.Link>
               </Nav>
               <Nav>
                 <NavDropdown title="More">

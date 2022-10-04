@@ -20,6 +20,32 @@ export default function Topbar() {
     }
     return "text-white";
   };
+  let navItems = <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="me-auto">
+                  <Nav.Link key="contact" className={getColor("/contact")} href="/contact">Contact</Nav.Link>
+                  <Nav.Link key="Pricing" className={getColor("/pricing")} href="/pricing">Pricing</Nav.Link>
+                </Nav>
+                <Nav>
+                  <Nav.Link key="Login" className={getColor("/auth/signin")} href="/auth/signin">
+                    <Button variant="primary" size="sm">
+                      Log In
+                    </Button>
+                  </Nav.Link>
+                </Nav>
+              </Navbar.Collapse>;
+  if(session){
+    navItems = <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="me-auto">
+                <Nav.Link key="home" className={getColor("/")} href="/">DashBoard</Nav.Link>
+              </Nav>
+              <Nav>
+                <NavDropdown title="More">
+                    <NavDropdown.Item onClick={()=>signOut()}>Log out</NavDropdown.Item> 
+                    <NavDropdown.Item  href="/auth/reset-password">reset password</NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+            </Navbar.Collapse>;
+  }
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
       <Container>
@@ -27,34 +53,7 @@ export default function Topbar() {
             <Image className="bg-white p-1" src="/images/logo.svg" alt="Logo" width={75} height={35} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        {
-          session ?
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link key="home" className={getColor("/")} href="/">Home</Nav.Link>
-            </Nav>
-            <Nav>
-              <NavDropdown title="More">
-                  <NavDropdown.Item onClick={()=>signOut()}>Log out</NavDropdown.Item> 
-                  <NavDropdown.Item  href="/auth/reset-password">reset password</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse> 
-          :
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link key="contact" className={getColor("/contact")} href="/contact">Contact</Nav.Link>
-              <Nav.Link key="Pricing" className={getColor("/Pricing")} href="/Pricing">Pricing</Nav.Link>
-            </Nav>
-            <Nav>
-              <Nav.Link key="Login" className={getColor("/auth/signin")} href="/auth/signin">
-                <Button variant="primary" size="sm">
-                  Log In
-                </Button>
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse> 
-        }
+        { navItems }
       </Container>
     </Navbar>
   );

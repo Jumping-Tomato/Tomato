@@ -32,9 +32,16 @@ export default function Topbar() {
                 </Nav>
               </Navbar.Collapse>;
   if(session){
+    let roleSpecificItems;
+    if(session.role === "teacher"){
+      roleSpecificItems = <Nav.Link key="dashboard" className={getColor("/dashboard")} href="/teacher/dashboard">DashBoard</Nav.Link>;
+    }
+    else{
+      roleSpecificItems = <Nav.Link key="dashboard" className={getColor("/dashboard")} href="/dashboard">DashBoard</Nav.Link>;
+    }
     navItems = <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link key="dashboard" className={getColor("/dashboard")} href="/dashboard">DashBoard</Nav.Link>
+                  {roleSpecificItems}
               </Nav>
               <Nav>
                 <NavDropdown title="More">

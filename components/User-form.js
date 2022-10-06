@@ -2,15 +2,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 
-export default function UserForm({handleSubmit, formFields, error}) {
-    const handleChange = function (event){
-        let name = event.target.name;
-        let val = event.target.value;
-        setFormData({
-          ...formData,
-          [name]: val
-        });
-    }
+export default function UserForm({handleChange, handleSubmit, formFields, error}) {
     return (
         <Form onChange={handleChange}  onSubmit={handleSubmit} >  
             {

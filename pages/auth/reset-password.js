@@ -20,14 +20,6 @@ export default function PasswordResetPage({userProps}){
       "newPassword2":""
     });
     const [error, setError] = useState("");
-    const handleChange = function (event){
-      let name = event.target.name;
-      let val = event.target.value;
-      setFormData({
-        ...formData,
-        [name]: val
-      });
-    }
     const handleSubmit = async function(event){
         event.preventDefault();
         if(formData.newPassword1 !== formData.newPassword2){
@@ -83,7 +75,7 @@ export default function PasswordResetPage({userProps}){
            <main className={global.main}>
              <div className='row justify-content-center'>
                <div className="col-lg-6 col-12 p-3">
-                  <UserForm handleChange={handleChange} handleSubmit={handleSubmit} formFields={formFields} error={error} />
+                  <UserForm handleSubmit={handleSubmit} formFields={formFields} error={error} />
                </div>
              </div>
            </main>

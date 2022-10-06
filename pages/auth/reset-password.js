@@ -1,13 +1,10 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import 'bootstrap/dist/css/bootstrap.min.css'
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 import Head from 'next/head'
 import global from 'styles/Global.module.scss'
 import { getSession } from 'next-auth/react'
+import UserForm from "components/User-form"
 
 
 /*
@@ -50,6 +47,30 @@ export default function PasswordResetPage({userProps}){
           setError(error.response.data.error);
         });  
     }
+    const formFields = [
+      {
+        "label": "Current Password",
+        "type": "password",
+        "name": "currentPassword",
+        "placeholder": "Current Password",
+        "required": true
+      },
+      {
+        "label": "New Password",
+        "type": "password",
+        "name": "newPassword1",
+        "placeholder": "New Password",
+        "required": true
+      },
+      {
+        "label": "Confirm New Password",
+        "type": "password",
+        "name": "newPassword2",
+        "placeholder": "Confirm New Password",
+        "required": true
+      },
+    ]
+
     return (
          <>
          <div className={global.container}>
@@ -62,24 +83,7 @@ export default function PasswordResetPage({userProps}){
            <main className={global.main}>
              <div className='row justify-content-center'>
                <div className="col-lg-6 col-12 p-3">
-                    <Form onChange={handleChange} onSubmit={handleSubmit} > 
-                        <Form.Group className="mb-3">
-                            <Form.Label>Current Password</Form.Label>
-                            <Form.Control type="password" name="currentPassword" placeholder="Current Password" required />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>New Password</Form.Label>
-                            <Form.Control type="password" name="newPassword1" placeholder="New Password" required />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Confirm New Password</Form.Label>
-                            <Form.Control type="password" name="newPassword2" placeholder="Confirm New Password" required />
-                        </Form.Group>
-                        { error && <Alert variant="danger"> {error} </Alert>}
-                        <Button variant="primary" type="submit">
-                            Submit
-                        </Button>
-                    </Form>
+                  <UserForm handleChange={handleChange} handleSubmit={handleSubmit} formFields={formFields} error={error} />
                </div>
              </div>
            </main>

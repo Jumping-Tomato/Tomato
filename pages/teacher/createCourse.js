@@ -62,7 +62,7 @@ export default function CreateCoursePage() {
                         <option disbled="true"></option>
                         { 
                           getNextTwoSemesters().map((semester)=>{
-                            return <option disbled={semester}>{semester}</option>
+                            return <option key={semester} value={semester}>{semester}</option>
                           })
                         }
                     </Form.Select>

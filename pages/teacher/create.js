@@ -7,15 +7,20 @@ import Footer from 'components/Footer'
 import { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import Alert from 'react-bootstrap/Alert';
 
 export default function createPage() {
+    const router = useRouter();
     const [formData, setFormData] = useState({
       "type":"",
       "name":"",
+      "length": "",
       "startDate": "",
       "deadline":""
     });
+    const [error, setError] = useState("");
     const handleChange = function (event){
       let name = event.target.name;
       let val = event.target.value;
@@ -24,17 +29,26 @@ export default function createPage() {
         [name]: val
       });
     }
-    const [dates, setDates] = useState({
-      "startDate":"",
-      "deadline":""
-    });
     const handleOnDateChange = (date, name) => {
-      setDates({
-        ...dates,
+      setFormData({
+        ...formData,
         [name]: date
       });
     }
-    const [error, setError] = useState("");
+    const types = {
+      quiz: "/api/create-quiz"
+    }
+    const handleSubmit = async function(event){
+      event.preventDefault();
+      const url = types[formData.type];
+      axios.post(url, formData)
+      .then(function (response) {
+        router.push("/teacher/dashboard");
+      })
+      .catch(function (error) {
+        setError(error.response.data.error);
+      });       
+    }
     return(
         <>
         <Topbar />
@@ -49,12 +63,12 @@ export default function createPage() {
           <main className={global.main}>
             <div className='row justify-content-center'>
               <div className="col-lg-6 col-12 p-3">
-                <Form onChange={handleChange}>  
+                <Form onChange={handleChange} onSubmit={handleSubmit}>  
                   <Form.Group className="mb-3">
                       <Form.Label>Type</Form.Label>
                       <Form.Select name="type" required>
-                          <option disbled></option>
-                          <option value="Quiz">Quiz</option>
+                          <option disbled="true"></option>
+                          <option value="quiz">Quiz</option>
                       </Form.Select>
                   </Form.Group>
                   <Form.Group className="mb-3">
@@ -62,9 +76,13 @@ export default function createPage() {
                     <Form.Control type="text" name="name" placeholder="name" required />
                   </Form.Group>
                   <Form.Group className="mb-3">
+                    <Form.Label>Length (minutes)</Form.Label>
+                    <Form.Control type="number" name="length" min="1" max="30" placeholder="length of the assignment, quiz, or exam" required />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
                     <Form.Label>Start Date</Form.Label>
                     <DatePicker
-                        selected={ dates.startDate }
+                        selected={ formData.startDate }
                         onChange={(date) => handleOnDateChange(date, "startDate") }
                         name="startDate"
                         showTimeSelect
@@ -78,7 +96,7 @@ export default function createPage() {
                   <Form.Group className="mb-3">
                     <Form.Label>deadline</Form.Label>
                     <DatePicker
-                        selected={ dates.deadline }
+                        selected={ formData.deadline }
                         onChange={(date) => handleOnDateChange(date, "deadline") }
                         name="deadline"
                         showTimeSelect

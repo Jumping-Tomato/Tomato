@@ -11,7 +11,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Alert from 'react-bootstrap/Alert';
 
-export default function createPage() {
+export default function createTestPage() {
     const router = useRouter();
     const [formData, setFormData] = useState({
       "type":"",

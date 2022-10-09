@@ -5,7 +5,7 @@ import Topbar from 'components/Topbar'
 import Footer from 'components/Footer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-
+import  Link  from 'next/link';
 
 export default function TeacherDashboard() {
     const { data: session } = useSession();
@@ -23,10 +23,12 @@ export default function TeacherDashboard() {
                     <div className='row'>
                         <div className="col-12 pt-1">
                             <div className="col-12 pt-5">
-                                <button type="button" className="float-end btn btn-primary">
-                                    <FontAwesomeIcon icon={faPlus} size="1x" />&nbsp;
-                                    Create
-                                </button>
+                                <Link href="/teacher/createCourse">
+                                    <button type="button" className="float-end btn btn-primary">
+                                        <FontAwesomeIcon icon={faPlus} size="1x" />&nbsp;
+                                        Create
+                                    </button>
+                                </Link>
                             </div>
                             <div className="col-12 pt-5">
                                 {/* this will be a list of exam */}

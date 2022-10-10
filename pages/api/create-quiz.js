@@ -1,5 +1,5 @@
 import { getToken } from "next-auth/jwt"
-import { quiz } from "database/quiz"
+import { quizzes } from "database/quizzes"
 
 
 export default async function createQuiz(req, res) {
@@ -21,7 +21,7 @@ export default async function createQuiz(req, res) {
         return res.status(406).send({"error": `Not enough time to finish the ${type}. Please shorten the length or change the start date or deadline.`});
     }
     try {
-        await quiz.createNewQuiz(req_data);
+        await quizzes.createNewQuiz(req_data);
         res.status(200).send("success");
     }
     catch(error){

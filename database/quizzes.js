@@ -10,7 +10,7 @@ dbPromise.then((value) => {
 });
 
 
-export const quiz = {
+export const quizzes = {
     createNewQuiz,    
 };
 

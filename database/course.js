@@ -1,5 +1,13 @@
-import db from "database/mongodb-config";
+import dbPromise from "database/mongodb-config";
 
+let db;
+dbPromise.then((value) => {
+    const client = value;
+    db = client.db("Tomato");
+})
+.catch((error)=>{
+    console.error(error);
+});
 
 export const course = {
     createCourse,    

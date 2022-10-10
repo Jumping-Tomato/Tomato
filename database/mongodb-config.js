@@ -8,6 +8,7 @@ const options = {
 
 let client;
 let dbPromise;
+let db;
 
 if (!process.env.MONGODB_URI) {
   throw new Error('Please add your Mongo URI to .env.local')
@@ -27,7 +28,16 @@ if (process.env.NODE_ENV === 'development') {
   dbPromise = client.connect()
 }
 
+dbPromise.then((value) => {
+  const client = value;
+  db = client.db("Tomato");
+})
+.catch((error)=>{
+  console.error(error);
+});
+
 // Export a module-scoped MongoClient promise. By doing this in a
 // separate module, the client can be shared across functions.
 
-export default dbPromise
+export default db
+

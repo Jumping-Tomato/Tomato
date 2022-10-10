@@ -1,5 +1,5 @@
 import { getToken } from "next-auth/jwt"
-import { courses } from "database/course"
+import { courses } from "database/courses"
 
 
 export default async function createCourse(req, res) {

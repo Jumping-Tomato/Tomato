@@ -51,7 +51,7 @@ export default function TeacherDashboard() {
                                      <ul class="list-group">
                                         {
                                         courses.map((course) => {
-                                            return  (<li className="list-group-item" key={course.name}>
+                                            return  (<li className="list-group-item" key={course._id}>
                                                         {course.name}
                                                     </li>);
                                         })

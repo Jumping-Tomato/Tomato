@@ -9,8 +9,11 @@ dbPromise.then((value) => {
     console.error(error);
 });
 
-export const course = {
-    createCourse,    
+export const courses = {
+    createCourse,
+    getCoursesForTeacher: async teacher_id => {
+        return await db.collection("courses").find({"teacher_id": teacher_id});
+    }     
 };
 
 async function createCourse(courseData) {

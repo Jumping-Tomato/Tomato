@@ -10,7 +10,10 @@ export async function middleware(req) {
     if (session && is_unprotected_page) {
       return NextResponse.redirect(process.env.NEXTAUTH_URL); 
     }
-    if(session && session.role == "student" && req.url.includes("/teacher")){
+    if(session && session.role != "teacher" && req.url.includes("/teacher")){
+      return NextResponse.redirect(process.env.NEXTAUTH_URL + "/error/forbidden"); 
+    }
+    if(session && session.role != "student" && req.url.includes("/student")){
       return NextResponse.redirect(process.env.NEXTAUTH_URL + "/error/forbidden"); 
     }
     if (!session && !is_unprotected_page){

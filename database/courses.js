@@ -12,7 +12,8 @@ dbPromise.then((value) => {
 export const courses = {
     createCourse,
     getCoursesForTeacher: async teacher_id => {
-        return await db.collection("courses").find({"teacher_id": teacher_id});
+        return await db.collection("courses").find({"teacher_id": teacher_id})
+        .project({ name: 1, semester: 1 }).toArray();
     }     
 };
 

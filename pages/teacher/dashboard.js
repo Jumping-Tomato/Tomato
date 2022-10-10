@@ -6,9 +6,23 @@ import Footer from 'components/Footer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import  Link  from 'next/link';
+import Spinner from 'react-bootstrap/Spinner';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export default function TeacherDashboard() {
     const { data: session } = useSession();
+    const [courses, setCourses] = useState("");
+    useEffect(() => {
+        axios.get("/api/getCoursesForTeacher")
+        .then(function (response) {
+            let courses = response.data.courses;
+            setCourses(courses)
+        })
+        .catch(function (error) {
+            
+        }); 
+    });
     return(
         <>
             <Topbar />
@@ -31,14 +45,19 @@ export default function TeacherDashboard() {
                                 </Link>
                             </div>
                             <div className="col-12 pt-5">
-                                {/* this will be a list of exam */}
-                                <ul class="list-group">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Morbi leo risus</li>
-                                    <li class="list-group-item">Porta ac consectetur ac</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                </ul>
+                                { !courses.length ?
+                                    <Spinner animation="border" />
+                                     :
+                                     <ul class="list-group">
+                                        {
+                                        courses.map((course) => {
+                                            return  (<li className="list-group-item" key={course.name}>
+                                                        {course.name}
+                                                    </li>);
+                                        })
+                                        }
+                                    </ul>
+                                }
                             </div>
                         </div>
                     </div>

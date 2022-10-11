@@ -14,7 +14,11 @@ export const courses = {
     getCoursesForTeacher: async teacher_id => {
         return await db.collection("courses").find({"teacher_id": teacher_id})
         .project({ name: 1, semester: 1 }).toArray();
-    }     
+    },
+    getCoursesForStudent: async user_id => {
+        return await db.collection("users").find({"_id": user_id}).project({ courses: 1});
+    },
+    findCourses: findCourses   
 };
 
 async function createCourse(courseData) {
@@ -40,4 +44,25 @@ async function createCourse(courseData) {
     db.collection("courses").insertOne(courseData).catch((error)=>{
         throw `Unable to create course`;
     });
+}
+
+
+async function findCourses(teacherFirstName, teacherLastName, course){
+    try{
+        let courses = await db.collection("courses").aggregate([
+            {
+              $lookup:{
+                    from: "users",
+                    localField: "teacher_id",
+                    foreignField: "_id",
+                    as: "teacher_info"
+                }
+            },
+        ]).toArray();
+        return courses;
+    }
+    catch(error) {
+        console.error(error);
+        throw error;
+    };
 }

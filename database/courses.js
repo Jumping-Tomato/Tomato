@@ -66,7 +66,15 @@ async function findCourses(teacherFirstname, teacherLastname, course){
                     {"teacher_info.lastName": {$regex :`.*${teacherLastname}.*`}}
                 ]
               }
-            }
+            },
+            {   
+                $project: { 
+                    name : 1, 
+                    semester: 1, 
+                    "teacher_info.firstName": 1, 
+                    "teacher_info.lastName": 1  
+                } 
+            } 
         ]).toArray();
         return courses;
     }

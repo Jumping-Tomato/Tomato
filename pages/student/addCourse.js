@@ -29,7 +29,7 @@ export default function CreateCoursePage() {
       const url = "/api/findCourses";
       axios.post(url, formData)
       .then(function (response) {
-        console.log(response)
+        console.log(response.data.courses)
       })
       .catch(function (error) {
         setError(error.response.data.error);
@@ -54,13 +54,13 @@ export default function CreateCoursePage() {
                         <Col>
                             <Form.Group className="mb-3">
                                 <Form.Label>Teacher's First Name</Form.Label>
-                                <Form.Control type="text" name="firstName" min="1" max="30" placeholder="Teacher's First Name" />
+                                <Form.Control type="text" name="teacherFirstName" min="1" max="30" placeholder="Teacher's First Name" />
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3">
                                 <Form.Label>Teacher's Last Name</Form.Label>
-                                <Form.Control type="text" name="lastName" min="1" max="30" placeholder="Teacher's Last Name" />
+                                <Form.Control type="text" name="teacherLastName" min="1" max="30" placeholder="Teacher's Last Name" />
                             </Form.Group>
                         </Col>
                     </Row> 

@@ -47,7 +47,7 @@ async function createCourse(courseData) {
 }
 
 
-async function findCourses(teacherFirstName, teacherLastName, course){
+async function findCourses(teacherFirstname, teacherLastname, course){
     try{
         let courses = await db.collection("courses").aggregate([
             {
@@ -58,6 +58,15 @@ async function findCourses(teacherFirstName, teacherLastName, course){
                     as: "teacher_info"
                 }
             },
+            {
+              $match:{
+                $and: [
+                    {name: course},
+                    {"teacher_info.firstName": teacherFirstname},
+                    {"teacher_info.lastName": teacherLastname}
+                ]
+              }
+            }
         ]).toArray();
         return courses;
     }

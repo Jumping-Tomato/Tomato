@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserForm from "components/User-form";
 
-export default function studentDashboard() {
+export default function StudentDashboard() {
     const { data: session } = useSession();
     const [courses, setCourses] = useState("");
     useEffect(() => {

@@ -53,20 +53,20 @@ export default function CreateCoursePage() {
                     <Row>
                         <Col>
                             <Form.Group className="mb-3">
-                                <Form.Label>Teacher's First Name</Form.Label>
-                                <Form.Control type="text" name="teacherFirstName" min="1" max="30" placeholder="Teacher's First Name" />
+                                <Form.Label>Teacher&#39;s First Name</Form.Label>
+                                <Form.Control type="text" name="teacherFirstName" min="1" max="30" placeholder="Teacher&#39;s First Name" />
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3">
-                                <Form.Label>Teacher's Last Name</Form.Label>
-                                <Form.Control type="text" name="teacherLastName" min="1" max="30" placeholder="Teacher's Last Name" />
+                                <Form.Label>Teacher&#39;s Last Name</Form.Label>
+                                <Form.Control type="text" name="teacherLastName" min="1" max="30" placeholder="Teacher&#39;s Last Name" />
                             </Form.Group>
                         </Col>
                     </Row> 
                     <Form.Group className="mb-3">
                         <Form.Label>Course</Form.Label>
-                        <Form.Control type="text" name="course" min="1" max="30" placeholder="Course's name" />
+                        <Form.Control type="text" name="course" min="1" max="30" placeholder="Course&#39;s name" />
                     </Form.Group>
                   { error && <Alert variant="danger"> {error} </Alert>}
                   <Button variant="primary" type="submit">

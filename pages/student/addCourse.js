@@ -6,7 +6,7 @@ import { useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import {Alert, Button, Form, Col, Row } from 'react-bootstrap';
+import {Alert, Button, Form, Col, Row, Spinner } from 'react-bootstrap';
 
 export default function CreateCoursePage() {
     const router = useRouter();
@@ -15,7 +15,9 @@ export default function CreateCoursePage() {
       "teacherLastName": "",
       "course":""
     });
+    const [courses, setCourses] = useState([]);
     const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const handleChange = function (event){
       let name = event.target.name;
       let val = event.target.value;
@@ -27,12 +29,15 @@ export default function CreateCoursePage() {
     const handleSubmit = (event) => {
       event.preventDefault();
       const url = "/api/findCourses";
+      setIsLoading(true)
       axios.post(url, formData)
       .then(function (response) {
-        console.log(response.data.courses)
+        setCourses(response.data.courses);
+        setIsLoading(false);
       })
       .catch(function (error) {
         setError(error.response.data.error);
+        setIsLoading(false);
       }); 
     }
     return(
@@ -65,7 +70,7 @@ export default function CreateCoursePage() {
                         </Col>
                     </Row> 
                     <Form.Group className="mb-3">
-                        <Form.Label>Course</Form.Label>
+                        <Form.Label>Course Name</Form.Label>
                         <Form.Control type="text" name="course" min="1" max="30" placeholder="Course&#39;s name" />
                     </Form.Group>
                   { error && <Alert variant="danger"> {error} </Alert>}
@@ -73,6 +78,35 @@ export default function CreateCoursePage() {
                     Search
                   </Button>
                 </Form>
+                <div className="pt-3">
+                  { 
+                    isLoading ? 
+                    <Spinner animation="border" />
+                      :
+                    <ul className="list-group">
+                    {
+                      courses.map((course) => {
+                          return  (
+                          <li className="list-group-item" key={course._id}>
+                            <div className='row'>
+                              <span className='col-4'>
+                                {course.name}
+                              </span>
+                              <span className='col-4'>
+                                {course.teacher_info[0].lastName}, {course.teacher_info[0].firstName}
+                              </span>
+                              <span className='col-4'>
+                                <Button variant="danger" size="sm">
+                                  Request to Join
+                                </Button>
+                              </span>
+                            </div>      
+                          </li>);
+                      })
+                    }
+                    </ul>
+                  }
+                </div>
               </div>
             </div>
           </main>

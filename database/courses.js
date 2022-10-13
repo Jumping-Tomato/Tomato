@@ -61,9 +61,9 @@ async function findCourses(teacherFirstname, teacherLastname, course){
             {
               $match:{
                 $and: [
-                    {name: {$regex :`.*${course}.*`}},
-                    {"teacher_info.firstName": {$regex :`.*${teacherFirstname}.*`}},
-                    {"teacher_info.lastName": {$regex :`.*${teacherLastname}.*`}}
+                    {name: {$regex :`.*${course}.*`, $options: "i"}},
+                    {"teacher_info.firstName": {$regex :`.*${teacherFirstname}.*`, $options: "i"}},
+                    {"teacher_info.lastName": {$regex :`.*${teacherLastname}.*`, $options: "i"}}
                 ]
               }
             },

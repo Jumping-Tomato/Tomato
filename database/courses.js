@@ -18,7 +18,8 @@ export const courses = {
     getCoursesForStudent: async user_id => {
         return await db.collection("users").find({"_id": user_id}).project({ courses: 1});
     },
-    findCourses: findCourses   
+    findCourses: findCourses,
+    requestToJoin:requestToJoin    
 };
 
 async function createCourse(courseData) {
@@ -82,4 +83,19 @@ async function findCourses(teacherFirstname, teacherLastname, course){
         console.error(error);
         throw error;
     };
+}
+
+async function requestToJoin(studentId, courseId){
+    try{
+        const course_id = Number(courseId);
+        const result = await db.collection("courses").updateOne(
+            {"_id": course_id},
+            {$push: { "pending_students": studentId }}
+        );
+        return result;
+    }
+    catch(error){
+        console.error(error);
+        throw error;
+    }
 }

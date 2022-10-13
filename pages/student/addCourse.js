@@ -40,6 +40,20 @@ export default function CreateCoursePage() {
         setIsLoading(false);
       }); 
     }
+    const requestToJoin = (event) =>{
+      const data = {
+        "course_id": event.target.value
+      };
+      const url = "/api/requestToJoin";
+      axios.post(url, data)
+      .then(function (response) {
+        
+      })
+      .catch(function (error) {
+        setError(error.response.data.error);
+        setIsLoading(false);
+      });
+    }
     return(
         <>
         <Topbar />
@@ -96,7 +110,7 @@ export default function CreateCoursePage() {
                                 {course.teacher_info[0].lastName}, {course.teacher_info[0].firstName}
                               </span>
                               <span className='col-4'>
-                                <Button variant="danger" size="sm">
+                                <Button variant="danger" size="sm" value={course._id} onClick={requestToJoin}>
                                   Request to Join
                                 </Button>
                               </span>

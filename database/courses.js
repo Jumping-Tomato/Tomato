@@ -48,7 +48,7 @@ async function createCourse(courseData) {
 }
 
 
-async function findCourses(teacherFirstname, teacherLastname, course){
+async function findCourses(teacherFirstname, teacherLastname, course, student_id){
     try{
         let courses = await db.collection("courses").aggregate([
             {
@@ -68,14 +68,62 @@ async function findCourses(teacherFirstname, teacherLastname, course){
                 ]
               }
             },
+            {
+                $addFields: {
+                  joined: {
+                    $cond: {
+                        if: {
+                            $and: [
+                                {
+                                  "$eq": [
+                                    {
+                                      $type: "$students"
+                                    },
+                                    "array"
+                                  ]
+                                },
+                                {
+                                  $in: [student_id, "$students"]
+                                }
+                            ]                                           
+                        }, 
+                        then: true,
+                        else: false,
+                      }
+                   },
+                   pending: {
+                    $cond: {
+                        if: {
+                            $and: [
+                                {
+                                  "$eq": [
+                                    {
+                                      $type: "$pending_students"
+                                    },
+                                    "array"
+                                  ]
+                                },
+                                {
+                                  $in: [student_id, "$pending_students"]
+                                }
+                            ]                                           
+                        }, 
+                        then: true,
+                        else: false,
+                      }
+                   }
+                }
+            },
             {   
                 $project: { 
-                    name : 1, 
-                    semester: 1, 
-                    "teacher_info.firstName": 1, 
-                    "teacher_info.lastName": 1  
+                name : 1, 
+                semester: 1,
+                joined: 1,
+                pending: 1, 
+                "teacher_info.firstName": 1, 
+                "teacher_info.lastName": 1  
                 } 
-            } 
+            }
         ]).toArray();
         return courses;
     }

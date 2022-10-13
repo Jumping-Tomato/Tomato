@@ -71,46 +71,26 @@ async function findCourses(teacherFirstname, teacherLastname, course, student_id
             {
                 $addFields: {
                   joined: {
-                    $cond: {
-                        if: {
-                            $and: [
-                                {
-                                  "$eq": [
-                                    {
-                                      $type: "$students"
-                                    },
-                                    "array"
-                                  ]
-                                },
-                                {
-                                  $in: [student_id, "$students"]
-                                }
-                            ]                                           
-                        }, 
-                        then: true,
-                        else: false,
-                      }
+                    $and: [
+                        {"$eq": [
+                            {
+                              $type: "$students"
+                            },
+                            "array"
+                        ]},
+                        {$in: [student_id, "$students"]}
+                    ]
                    },
                    pending: {
-                    $cond: {
-                        if: {
-                            $and: [
-                                {
-                                  "$eq": [
-                                    {
-                                      $type: "$pending_students"
-                                    },
-                                    "array"
-                                  ]
-                                },
-                                {
-                                  $in: [student_id, "$pending_students"]
-                                }
-                            ]                                           
-                        }, 
-                        then: true,
-                        else: false,
-                      }
+                    $and: [
+                        {"$eq": [
+                            {
+                              $type: "$pending_students"
+                            },
+                            "array"
+                        ]},
+                        {$in: [student_id, "$pending_students"]}
+                    ]    
                    }
                 }
             },

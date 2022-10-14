@@ -118,7 +118,7 @@ async function requestToJoin(studentId, courseId){
         const course_id = Number(courseId);
         const result = await db.collection("courses").updateOne(
             {"_id": course_id},
-            {$push: { "pending_students": studentId }}
+            {$addToSet: { "pending_students": studentId }}
         );
         return result;
     }

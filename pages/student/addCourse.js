@@ -41,13 +41,17 @@ export default function CreateCoursePage() {
       }); 
     }
     const requestToJoin = (event) =>{
+      const course_id = event.target.value;
       const data = {
-        "course_id": event.target.value
+        "course_id": course_id
       };
       const url = "/api/requestToJoin";
       axios.post(url, data)
       .then(function (response) {
-        
+        const new_courses = [...courses];
+        const index = event.target.getAttribute("data-index");
+        new_courses[index]["pending"] = true;
+        setCourses(new_courses);
       })
       .catch(function (error) {
         setError(error.response.data.error);
@@ -99,7 +103,7 @@ export default function CreateCoursePage() {
                       :
                     <ul className="list-group">
                     {
-                      courses.map((course) => {
+                      courses.map((course, index) => {
                           return  (
                           <li className="list-group-item" key={course._id}>
                             <div className='row'>
@@ -109,10 +113,12 @@ export default function CreateCoursePage() {
                               <span className='col-4'>
                                 {course.teacher_info[0].lastName}, {course.teacher_info[0].firstName}
                               </span>
-                              <span className='col-4'>
-                                <Button variant="danger" size="sm" value={course._id} onClick={requestToJoin}>
-                                  Request to Join
-                                </Button>
+                              <span className='col-4'>               
+                                  {
+                                    course.pending ? <Button variant="secondary" size="sm" data-index={index} disabled>Pending</Button>
+                                    : course.joined ? <Button variant="secondary" size="sm" data-index={index} disabled>Joined</Button> 
+                                    : <Button variant="danger" size="sm" value={course._id} data-index={index} onClick={requestToJoin}>Join</Button> 
+                                  }
                               </span>
                             </div>      
                           </li>);

@@ -14,7 +14,7 @@ export default function TeacherDashboard() {
     const { data: session } = useSession();
     const [courses, setCourses] = useState("");
     useEffect(() => {
-        axios.get("/api/getCoursesForTeacher")
+        axios.get("/api/teacher/getCoursesForTeacher")
         .then(function (response) {
             let courses = response.data.courses;
             setCourses(courses)

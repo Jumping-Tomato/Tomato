@@ -6,10 +6,11 @@ export default async function getStudentsByCourseId(req, res) {
     if(!session || session.role != "teacher"){
         return res.status(403).json({ error: "forbidden" })
     }
-    const {course_id} = req.body; 
+    let {course_id} = req.query; 
+    course_id = Number(course_id);
     try {
-        const student_list = await courses.getStudentsByCourseId(course_id);
-        return res.status(200).json({"students": student_list});
+        const students= await courses.getStudentsByCourseId(course_id);
+        return res.status(200).json(students);
     }
     catch(error){
         return res.status(500).send({"error": error})

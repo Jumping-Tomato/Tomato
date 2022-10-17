@@ -21,9 +21,7 @@ export const courses = {
     getCourseById: async course_id => {
         return await db.collection("courses").findOne({"_id": course_id});
     },
-    getStudentsByCourseId: async course_id =>{
-        return await db.collection("courses").findOne({"_id": course_id}, {projection: { pending_students: 1, students:1, _id:0 }})  
-    },
+    getStudentsByCourseId: getStudentsByCourseId,
     findCourses: findCourses,
     requestToJoin:requestToJoin    
 };
@@ -117,6 +115,27 @@ async function findCourses(teacherFirstname, teacherLastname, course, student_id
         console.error(error);
         throw error;
     };
+}
+
+async function getStudentsByCourseId(course_id){
+    const course_document = await db.collection("courses").findOne({"_id": course_id});
+    const pending_student_ids = course_document.pending_students;
+    const student_ids = course_document.students;
+    const students = await db.collection("users").find(
+            {"_id":{$in: student_ids}},
+            {projection: {firstName:1, lastName:1}}
+        ).toArray();
+    const pending_students = await db.collection("users").find(
+            {"_id": {$in: pending_student_ids}},
+            {projection: {firstName:1, lastName:1}}
+        ).toArray();
+    const result = {
+        "students":{
+            "pending_students":pending_students,
+            "students": students
+        }
+    }
+    return result;
 }
 
 async function requestToJoin(studentId, courseId){

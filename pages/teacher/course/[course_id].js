@@ -2,7 +2,7 @@ import Head from 'next/head';
 import global from 'styles/Global.module.scss';
 import Topbar from 'components/Topbar';
 import Footer from 'components/Footer';
-import { useRouter } from "next/router";
+import axios from 'axios';
 import { Tab, Col, Nav, Row} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { getSession } from 'next-auth/react';
@@ -13,7 +13,18 @@ export default function CourseManagementPage({props}) {
     const [pendingStudents, setPendingStudents] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
-      
+      const url = '/api/teacher/getStudentsByCourseId';
+      const params = {params: {course_id: props.course_id}};
+      setIsLoading(true);
+      axios.get(url, params)
+        .then(function (response) {
+          console.log(response)
+          setIsLoading(false);
+        })
+        .catch(function (error) {
+          setError(error.response.data.error);
+          setIsLoading(false);
+        }); 
     });
     return (
         <>
@@ -85,10 +96,10 @@ export async function getServerSideProps(context) {
       }
     }
   }
-  let userProps = {
-    teacher_id: uid
+  let props = {
+    course_id: course_id
   };
   return {
-    props: {userProps}
+    props: {props}
   }
 }

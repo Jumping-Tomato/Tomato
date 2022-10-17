@@ -12,20 +12,23 @@ export default function CourseManagementPage({props}) {
     const [enrolledStudents, setEnrolledStudents] = useState([]);
     const [pendingStudents, setPendingStudents] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    useEffect(() => {
+    function loadStudents(){
       const url = '/api/teacher/getStudentsByCourseId';
       const params = {params: {course_id: props.course_id}};
       setIsLoading(true);
       axios.get(url, params)
-        .then(function (response) {
-          console.log(response)
-          setIsLoading(false);
-        })
-        .catch(function (error) {
-          setError(error.response.data.error);
-          setIsLoading(false);
-        }); 
-    });
+      .then(function (response) {
+        console.log(response)
+        setIsLoading(false);
+      })
+      .catch(function (error) {
+        setError(error.response.data.error);
+        setIsLoading(false);
+      }); 
+    }
+    useEffect(() => {
+      loadStudents();
+    },[]);
     return (
         <>
         <Topbar />
@@ -39,7 +42,7 @@ export default function CourseManagementPage({props}) {
           <main className={global.main}>
             <div className='row justify-content-center'>
               <div className="col-12 p-5">
-              <Tab.Container defaultActiveKey="student">
+              <Tab.Container id="course-tab" defaultActiveKey="student">
                 <Row>
                   <Col sm={3}>
                     <Nav variant="pills" className="flex-column">

@@ -18,6 +18,12 @@ export const courses = {
     getCoursesForStudent: async user_id => {
         return await db.collection("users").find({"_id": user_id}).project({ courses: 1});
     },
+    getCourseById: async course_id => {
+        return await db.collection("courses").findOne({"_id": course_id});
+    },
+    getStudentsByCourseId: async course_id =>{
+        return await db.collection("courses").findOne({"_id": course_id}, {projection: { pending_students: 1, students:1, _id:0 }})  
+    },
     findCourses: findCourses,
     requestToJoin:requestToJoin    
 };
@@ -127,3 +133,4 @@ async function requestToJoin(studentId, courseId){
         throw error;
     }
 }
+

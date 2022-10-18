@@ -10,6 +10,7 @@ dbPromise.then((value) => {
 });
 
 export const courses = {
+    approveStudent: approveStudent,
     createCourse,
     getCoursesForTeacher: async teacher_id => {
         return await db.collection("courses").find({"teacher_id": teacher_id})
@@ -25,6 +26,23 @@ export const courses = {
     findCourses: findCourses,
     requestToJoin:requestToJoin    
 };
+
+async function approveStudent(course_id, student_id){
+    try{
+        const result = await db.collection("courses").updateOne(
+            {"_id": Number(course_id)},
+            {
+                $addToSet: { "students": student_id },
+                $pull: { "pending_students": student_id }
+            }
+        );
+        return result;
+    }
+    catch(error){
+        console.error(error);
+        throw error;
+    }
+}
 
 async function createCourse(courseData) {
     // generate new user id

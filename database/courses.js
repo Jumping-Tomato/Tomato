@@ -28,12 +28,14 @@ export const courses = {
 };
 
 async function approveStudent(course_id, student_id){
+    const num_course_id = Number(course_id);
+    const num_student_id = Number(student_id);
     try{
         const result = await db.collection("courses").updateOne(
             {"_id": Number(course_id)},
             {
-                $addToSet: { "students": student_id },
-                $pull: { "pending_students": student_id }
+                $addToSet: { "students": num_student_id },
+                $pull: { "pending_students": num_student_id }
             }
         );
         return result;
@@ -137,8 +139,8 @@ async function findCourses(teacherFirstname, teacherLastname, course, student_id
 
 async function getStudentsByCourseId(course_id){
     const course_document = await db.collection("courses").findOne({"_id": course_id});
-    const pending_student_ids = course_document.pending_students;
-    const student_ids = course_document.students;
+    const pending_student_ids = course_document.pending_students ? course_document.pending_students : [];
+    const student_ids = course_document.students ? course_document.students : [];
     const students = await db.collection("users").find(
             {"_id":{$in: student_ids}},
             {projection: {firstName:1, lastName:1}}

@@ -32,7 +32,7 @@ async function approveStudent(course_id, student_id){
     const num_student_id = Number(student_id);
     try{
         const result = await db.collection("courses").updateOne(
-            {"_id": Number(course_id)},
+            {"_id": num_course_id},
             {
                 $addToSet: { "students": num_student_id },
                 $pull: { "pending_students": num_student_id }

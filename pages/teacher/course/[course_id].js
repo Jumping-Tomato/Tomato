@@ -65,6 +65,22 @@ export default function CourseManagementPage({props}) {
     function rejectStudent(event){
       event.preventDefault();
       const _id = event.target.value;
+      const index = Number(event.target.getAttribute("data-index"));
+      const url = "/api/teacher/denyStudent"
+      const data = {
+        "course_id": props.course_id,
+        "student_id": _id
+      };
+      axios.post(url, data)
+      .then(function (response) {
+        let new_students_state = {...students};
+        new_students_state.type.pending.splice(index,1);  
+        setStudents(new_students_state);
+      })
+      .catch(function (error) {
+        setError(error.response.data.error);
+        setIsLoading(false);
+      });
     }
     useEffect(() => {
       loadStudents();

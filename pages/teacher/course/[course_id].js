@@ -3,11 +3,11 @@ import global from 'styles/Global.module.scss';
 import Topbar from 'components/Topbar';
 import Footer from 'components/Footer';
 import axios from 'axios';
-import { Tab, Col, Nav, Row} from 'react-bootstrap';
+import { Button, Tab, Col, Nav, Row,Spinner,} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { getSession } from 'next-auth/react';
 import { courses } from 'database/courses';
-import Button from 'react-bootstrap/Button';
+
 
 export default function CourseManagementPage({props}) {
     const [students, setStudents] = useState({
@@ -119,6 +119,9 @@ export default function CourseManagementPage({props}) {
                         <div className='p-2'>
                           <ul className="list-group">
                             {
+                              isLoading ?
+                              <Spinner animation="border" />
+                              :
                               students.type.enrolled.length ?
                               students.type.enrolled.map(function(student){
                                 return (
@@ -140,6 +143,9 @@ export default function CourseManagementPage({props}) {
                         <div className='p-2 mt-5'>
                           <ul className="list-group">
                             {
+                            isLoading ?
+                            <Spinner animation="border" />
+                            :
                             students.type.pending.length ?
                               students.type.pending.map(function(student,index){
                                 return (
@@ -155,7 +161,7 @@ export default function CourseManagementPage({props}) {
                                     </div>      
                                   </li>);
                               })
-                            :
+                              :
                             <li className="list-group-item">
                               No pending student
                             </li>

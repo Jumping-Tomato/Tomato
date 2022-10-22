@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import {Alert, Button, Form, Col, Row, Spinner } from 'react-bootstrap';
 
-export default function CreateCoursePage() {
+export default function SearchCoursePage() {
     const router = useRouter();
     const [formData, setFormData] = useState({
       "teacherFirstName":"",

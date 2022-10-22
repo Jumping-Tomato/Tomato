@@ -40,41 +40,23 @@ export default function CourseManagementPage({props}) {
         setIsLoading(false);
       }); 
     }
-    function approveStudent(event){
-      event.preventDefault();
+    function handleStudent(event){
       const _id = event.target.value;
       const index = Number(event.target.getAttribute("data-index"));
-      const url = "/api/teacher/approveStudent"
       const data = {
         "course_id": props.course_id,
         "student_id": _id
       };
+      const action_type = event.target.getAttribute("data-action-type");
+      const url = action_type == "approve" ? "/api/teacher/approveStudent" : "/api/teacher/denyStudent"
       axios.post(url, data)
       .then(function (response) {
         let student = Object.assign({}, students.type.pending[index]);
         let new_students_state = {...students};
         new_students_state.type.pending.splice(index,1);
-        new_students_state.type.enrolled.push(student);
-        setStudents(new_students_state);
-      })
-      .catch(function (error) {
-        setError(error.response.data.error);
-        setIsLoading(false);
-      });
-    }
-    function rejectStudent(event){
-      event.preventDefault();
-      const _id = event.target.value;
-      const index = Number(event.target.getAttribute("data-index"));
-      const url = "/api/teacher/denyStudent"
-      const data = {
-        "course_id": props.course_id,
-        "student_id": _id
-      };
-      axios.post(url, data)
-      .then(function (response) {
-        let new_students_state = {...students};
-        new_students_state.type.pending.splice(index,1);  
+        if (action_type == "approve"){
+          new_students_state.type.enrolled.push(student);
+        }
         setStudents(new_students_state);
       })
       .catch(function (error) {
@@ -154,9 +136,9 @@ export default function CourseManagementPage({props}) {
                                       <span className='col-9'>
                                         {student.lastName}, {student.firstName}
                                       </span>
-                                      <span className='col-3'>               
-                                        <Button variant="primary" className="m-1" size="sm" data-index={index} value={student._id} onClick={approveStudent}>Approve</Button>
-                                        <Button variant="danger" className="m-1" size="sm" data-index={index} value={student._id} onClick={rejectStudent}>Reject</Button>             
+                                      <span className='col-3' onClick={handleStudent}>               
+                                        <Button variant="primary" className="m-1" size="sm" data-index={index} data-action-type="approve" value={student._id}>Approve</Button>
+                                        <Button variant="danger"  className="m-1" size="sm" data-index={index} data-action-type="reject" value={student._id}>Reject</Button>             
                                       </span>
                                     </div>      
                                   </li>);

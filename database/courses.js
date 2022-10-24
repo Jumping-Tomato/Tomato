@@ -68,17 +68,14 @@ async function approveStudent(course_id, student_id){
                 return;
             }
         }, transactionOptions);
-        if (transactionResults) {
-            console.log("The student is approved.");
-        } else {
-            const error = "An error has occur while trying to approve a student.";
-            console.error(error);
-            throw error;
+        if (!transactionResults) {
+            throw Error("An error has occur while trying to approve a student.");
         }
+        return true;
     }
     catch(error){
         console.error(error);
-        throw error;
+        return false;
     }
     finally {
         await session.endSession();

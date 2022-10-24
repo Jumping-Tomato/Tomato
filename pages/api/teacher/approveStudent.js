@@ -9,8 +9,12 @@ export default async function approveStudent(req, res) {
     }
     const {course_id, student_id} = req.body;
     try {
-        await courses.approveStudent(course_id, student_id);
-        return res.status(200).send("success");
+        const approved = await courses.approveStudent(course_id, student_id);
+        if(approved){
+            return res.status(200).send("success");
+        }
+        return res.status(500).send("failure");
+        
     }
     catch(error){
         return res.status(500).send({"error": error})

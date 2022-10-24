@@ -1,8 +1,9 @@
 import dbPromise from "database/mongodb-config";
 
 let db;
+let client;
 dbPromise.then((value) => {
-    const client = value;
+    client = value;
     db = client.db("Tomato");
 })
 .catch((error)=>{
@@ -31,19 +32,56 @@ export const courses = {
 async function approveStudent(course_id, student_id){
     const num_course_id = Number(course_id);
     const num_student_id = Number(student_id);
+    const session = client.startSession();
+    const transactionOptions = {
+        readPreference: 'primary',
+        readConcern: { level: 'local' },
+        writeConcern: { w: 'majority' }
+    };
+    const coursesCollection = client.db("Tomato").collection("courses");
+    const usersCollection = client.db("Tomato").collection("users");
     try{
-        const result = await db.collection("courses").updateOne(
-            {"_id": num_course_id},
-            {
-                $addToSet: { "students": num_student_id },
-                $pull: { "pending_students": num_student_id }
+        const transactionResults = await session.withTransaction(async () => {
+            await coursesCollection.updateOne(
+                {"_id": num_course_id},
+                {
+                    $addToSet: { "students": num_student_id },
+                    $pull: { "pending_students": num_student_id }
+                },
+                { session }
+            );
+            await usersCollection.updateOne(
+                {"_id": num_student_id},
+                {
+                    $addToSet: { "courses": num_course_id },
+                },
+                { session }
+            );
+            const updatedCourse = await coursesCollection.findOne(
+                { "_id": num_course_id, students: { $in: [num_student_id] } },
+                { session });
+            const updatedUser = await usersCollection.findOne(
+                { "_id": num_student_id, courses: { $in: [num_course_id] } },
+                { session });
+            if(!updatedCourse || !updatedUser){
+                await session.abortTransaction();
+                return;
             }
-        );
-        return result;
+        }, transactionOptions);
+        if (transactionResults) {
+            console.log("The student is approved.");
+        } else {
+            const error = "An error has occur while trying to approve a student.";
+            console.error(error);
+            throw error;
+        }
     }
     catch(error){
         console.error(error);
         throw error;
+    }
+    finally {
+        await session.endSession();
     }
 }
 

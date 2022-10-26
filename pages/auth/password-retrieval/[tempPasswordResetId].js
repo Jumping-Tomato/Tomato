@@ -104,7 +104,7 @@ export async function getServerSideProps(context) {
     }
   }
   const props = {
-    user_id: passwordResetData.user_id,
+    user_id: passwordResetData.user_id.toString(),
     pw_reset_id: tempPasswordResetId
   };
   return {

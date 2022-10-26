@@ -1,4 +1,5 @@
 import dbPromise from "database/mongodb-config";
+const { ObjectId } = require('mongodb')
 
 let db;
 dbPromise.then((value) => {
@@ -15,7 +16,7 @@ export const usersRepo = {
         return await db.collection("users").find({}).toArray();
     },
     getById: async _id => {
-        return await db.collection("users").findOne({"_id": _id});
+        return await db.collection("users").findOne({"_id": ObjectId(_id)});
     },
     find: async email => {
         return await db.collection("users").findOne({"email": email});
@@ -25,21 +26,7 @@ export const usersRepo = {
     delete: _delete
 };
 
-async function create(user) {
-    // generate new user id
-    let uid;
-    const collections = await db.listCollections().toArray();
-    const collectionNames = collections.map(collection => collection.name);
-  
-    if(collectionNames.indexOf("users") == -1){
-        uid = 1;
-    }
-    else{
-        const newest_user = await db.collection("users").find({}).sort({"_id":-1}).limit(1).toArray();
-        uid = newest_user[0]["_id"] + 1;
-    }
-    user._id = uid;
-    
+async function create(user) {    
     // set date created and updated
     user.dateCreated = new Date().toISOString();
     user.dateUpdated = new Date().toISOString();
@@ -51,7 +38,7 @@ async function create(user) {
 }
 
 function update(_id, params) {
-    return db.collection("users").updateOne({"_id":_id},{$set: params})
+    return db.collection("users").updateOne({"_id": ObjectId(_id)},{$set: params})
     .then((result)=>{
         console.log(`user with id "${_id}" is updated is mongoDB`);
         console.log(result);

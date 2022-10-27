@@ -1,11 +1,12 @@
 import { usersRepo } from 'database/user-repo';
 const bcrypt = require('bcryptjs');
+const { ObjectId } = require('mongodb')
 
 export default async function resetPasswordHandler(req, res) {
     const { id, password, newPassword } = req.body;
     let user;
     try{
-        user = await usersRepo.getById(id);
+        user = await usersRepo.getById(ObjectId(id));
     }
     catch(erorr){
         console.error("user id: "+ id);

@@ -38,6 +38,7 @@ async function create(user) {
 }
 
 function update(_id, params) {
+    params.dateUpdated = new Date().toISOString();
     return db.collection("users").updateOne({"_id": ObjectId(_id)},{$set: params})
     .then((result)=>{
         console.log(`user with id "${_id}" is updated is mongoDB`);

@@ -172,7 +172,7 @@ export default function CourseManagementPage({props}) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  const course_id = Number(context.params.course_id);
+  const course_id = context.params.course_id;
   const uid = session._id;
   const course_data = await courses.getCourseById(course_id);
   if(!course_data){

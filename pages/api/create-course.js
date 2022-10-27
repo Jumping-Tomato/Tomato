@@ -1,5 +1,6 @@
 import { getToken } from "next-auth/jwt"
 import { courses } from "database/courses"
+const { ObjectId } = require('mongodb')
 
 
 export default async function createCourse(req, res) {
@@ -8,7 +9,7 @@ export default async function createCourse(req, res) {
         return res.status(403).json({ error: "forbidden" })
     }
     const course_data = req.body;
-    course_data["teacher_id"] = session._id;
+    course_data["teacher_id"] = ObjectId(session._id);
     course_data["students"] = []
     try {
         await courses.createCourse(course_data);

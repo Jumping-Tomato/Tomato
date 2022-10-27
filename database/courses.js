@@ -1,4 +1,5 @@
 import dbPromise from "database/mongodb-config";
+const { ObjectId } = require('mongodb')
 
 let db;
 let client;
@@ -19,10 +20,10 @@ export const courses = {
         .project({ name: 1, semester: 1 }).toArray();
     },
     getCoursesForStudent: async user_id => {
-        return await db.collection("users").find({"_id": user_id}).project({ courses: 1});
+        return await db.collection("users").find({"_id": ObjectId(user_id)}).project({ courses: 1});
     },
     getCourseById: async course_id => {
-        return await db.collection("courses").findOne({"_id": course_id});
+        return await db.collection("courses").findOne({"_id": ObjectId(course_id)});
     },
     getStudentsByCourseId: getStudentsByCourseId,
     findCourses: findCourses,
@@ -30,8 +31,8 @@ export const courses = {
 };
 
 async function approveStudent(course_id, student_id){
-    const num_course_id = Number(course_id);
-    const num_student_id = Number(student_id);
+    course_id = ObjectId(course_id);
+    student_id = ObjectId(student_id);
     const session = client.startSession();
     const transactionOptions = {
         readPreference: 'primary',
@@ -43,25 +44,25 @@ async function approveStudent(course_id, student_id){
     try{
         const transactionResults = await session.withTransaction(async () => {
             await coursesCollection.updateOne(
-                {"_id": num_course_id},
+                {"_id": course_id},
                 {
-                    $addToSet: { "students": num_student_id },
-                    $pull: { "pending_students": num_student_id }
+                    $addToSet: { "students": student_id },
+                    $pull: { "pending_students": student_id }
                 },
                 { session }
             );
             await usersCollection.updateOne(
-                {"_id": num_student_id},
+                {"_id": student_id},
                 {
-                    $addToSet: { "courses": num_course_id },
+                    $addToSet: { "courses": course_id },
                 },
                 { session }
             );
             const updatedCourse = await coursesCollection.findOne(
-                { "_id": num_course_id, students: { $in: [num_student_id] } },
+                { "_id": course_id, students: { $in: [student_id] } },
                 { session });
             const updatedUser = await usersCollection.findOne(
-                { "_id": num_student_id, courses: { $in: [num_course_id] } },
+                { "_id": student_id, courses: { $in: [course_id] } },
                 { session });
             if(!updatedCourse || !updatedUser){
                 await session.abortTransaction();
@@ -82,21 +83,7 @@ async function approveStudent(course_id, student_id){
     }
 }
 
-async function createCourse(courseData) {
-    // generate new user id
-    let course_id;
-    const collections = await db.listCollections().toArray();
-    const collectionNames = collections.map(collection => collection.name);
-  
-    if(collectionNames.indexOf("courses") == -1){
-        course_id = 1;
-    }
-    else{
-        const latest_course = await db.collection("courses").find({}).sort({"_id":-1}).limit(1).toArray();
-        course_id = latest_course[0]["_id"] + 1;
-    }
-    courseData._id = course_id;
-    
+async function createCourse(courseData) { 
     // set date created and updated
     courseData.dateCreated = new Date().toISOString();
     courseData.dateUpdated = new Date().toISOString();
@@ -109,12 +96,10 @@ async function createCourse(courseData) {
 
 async function denyStudent(course_id, student_id){
     try{
-        const num_course_id = Number(course_id);
-        const num_student_id = Number(student_id);
         const result = await db.collection("courses").updateOne(
-            {"_id": num_course_id},
+            {"_id": ObjectId(course_id)},
             {
-                $pull: { "pending_students": num_student_id }
+                $pull: { "pending_students": ObjectId(student_id) }
             }
         );
         return result;
@@ -126,6 +111,8 @@ async function denyStudent(course_id, student_id){
 }
 
 async function findCourses(teacherFirstname, teacherLastname, course, student_id){
+    student_id = ObjectId(student_id)
+    console.log(course)
     try{
         let courses = await db.collection("courses").aggregate([
             {
@@ -191,7 +178,7 @@ async function findCourses(teacherFirstname, teacherLastname, course, student_id
 }
 
 async function getStudentsByCourseId(course_id){
-    const course_document = await db.collection("courses").findOne({"_id": course_id});
+    const course_document = await db.collection("courses").findOne({"_id": ObjectId(course_id)});
     const pending_student_ids = course_document.pending_students ? course_document.pending_students : [];
     const student_ids = course_document.students ? course_document.students : [];
     const students = await db.collection("users").find(
@@ -213,9 +200,10 @@ async function getStudentsByCourseId(course_id){
 
 async function requestToJoin(studentId, courseId){
     try{
-        const course_id = Number(courseId);
+        studentId = ObjectId(studentId);
+        courseId = ObjectId(courseId);
         const result = await db.collection("courses").updateOne(
-            {"_id": course_id},
+            {"_id": courseId},
             {$addToSet: { "pending_students": studentId }}
         );
         return result;

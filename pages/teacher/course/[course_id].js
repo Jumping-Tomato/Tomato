@@ -7,6 +7,8 @@ import { Button, Tab, Col, Nav, Row,Spinner,} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { getSession } from 'next-auth/react';
 import { courses } from 'database/courses';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 
 export default function CourseManagementPage({props}) {
@@ -152,7 +154,12 @@ export default function CourseManagementPage({props}) {
                         </div>
                       </Tab.Pane>
                       <Tab.Pane eventKey="quiz">
-                        <h1>wakanda 2</h1>
+                        <div>
+                          <Button variant="primary" className="float-end" size="sm">
+                            <FontAwesomeIcon icon={faPlus} size="1x" />&nbsp;
+                                    Create a Quiz
+                          </Button>
+                        </div>
                       </Tab.Pane>
                       <Tab.Pane eventKey="score">
                         <h1>wakanda 3</h1>

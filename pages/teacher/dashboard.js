@@ -6,7 +6,7 @@ import Footer from 'components/Footer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import  Link  from 'next/link';
-import { Spinner } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -42,10 +42,10 @@ export default function TeacherDashboard() {
                         <div className="col-12 pt-1">
                             <div className="col-12 pt-5">
                                 <Link href="/teacher/createCourse">
-                                    <button type="button" className="float-end btn btn-primary">
+                                    <Button variant="primary" className="m-1 float-end" size="sm">
                                         <FontAwesomeIcon icon={faPlus} size="1x" />&nbsp;
                                         Create
-                                    </button>
+                                    </Button>
                                 </Link>
                             </div>
                             <div className="col-12 pt-5">

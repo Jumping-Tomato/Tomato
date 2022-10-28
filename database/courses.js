@@ -16,7 +16,7 @@ export const courses = {
     createCourse,
     denyStudent: denyStudent,
     getCoursesForTeacher: async teacher_id => {
-        return await db.collection("courses").find({"teacher_id": teacher_id})
+        return await db.collection("courses").find({"teacher_id": ObjectId(teacher_id)})
         .project({ name: 1, semester: 1 }).toArray();
     },
     getCoursesForStudent: async user_id => {

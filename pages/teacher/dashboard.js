@@ -6,23 +6,27 @@ import Footer from 'components/Footer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import  Link  from 'next/link';
-import Spinner from 'react-bootstrap/Spinner';
+import { Spinner } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+
 
 export default function TeacherDashboard() {
     const { data: session } = useSession();
     const [courses, setCourses] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
+        setIsLoading(true);
         axios.get("/api/teacher/getCoursesForTeacher")
         .then(function (response) {
             let courses = response.data.courses;
-            setCourses(courses)
+            setCourses(courses);
+            setIsLoading(false);
         })
         .catch(function (error) {
             
         }); 
-    });
+    },[]);
     return(
         <>
             <Topbar />
@@ -45,16 +49,20 @@ export default function TeacherDashboard() {
                                 </Link>
                             </div>
                             <div className="col-12 pt-5">
-                                { !courses.length ?
-                                    <Spinner animation="border" />
+                                { 
+                                isLoading ? 
+                                <Spinner animation="border" />
+                                :
+                                !courses.length ?
+                                    <h1>No Cources</h1>
                                      :
                                      <ul class="list-group">
                                         {
-                                        courses.map((course) => {
-                                            return  (<li className="list-group-item" key={course._id}>
-                                                        {course.name}
-                                                    </li>);
-                                        })
+                                            courses.map((course) => {
+                                                return  (<li className="list-group-item" key={course._id}>
+                                                            <Link href={"/teacher/course/" + course._id}>{course.name}</Link>
+                                                        </li>);
+                                            })
                                         }
                                     </ul>
                                 }

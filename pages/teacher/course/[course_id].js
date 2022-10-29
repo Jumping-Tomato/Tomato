@@ -2,14 +2,14 @@ import Head from 'next/head';
 import global from 'styles/Global.module.scss';
 import Topbar from 'components/Topbar';
 import Footer from 'components/Footer';
+import CreateTestForm from 'components/CreateTestForm';
 import axios from 'axios';
-import { Button, Tab, Col, Nav, Row,Spinner,} from 'react-bootstrap';
+import { Button, Tab, Col, Nav, Row,Spinner, Modal, Form} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { getSession } from 'next-auth/react';
 import { courses } from 'database/courses';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-
 
 export default function CourseManagementPage({props}) {
     const [students, setStudents] = useState({
@@ -20,6 +20,7 @@ export default function CourseManagementPage({props}) {
     });
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    let [showCreateQuizModal, setShowCreateQuizModal] = useState(false);
     function loadStudents(){
       const url = '/api/teacher/getStudentsByCourseId';
       const params = {params: {course_id: props.course_id}};
@@ -69,6 +70,9 @@ export default function CourseManagementPage({props}) {
     useEffect(() => {
       loadStudents();
     },[]);
+    function closeCreateQuizModal() {
+      setShowCreateQuizModal(false);
+    }
     return (
         <>
         <Topbar />
@@ -155,7 +159,7 @@ export default function CourseManagementPage({props}) {
                       </Tab.Pane>
                       <Tab.Pane eventKey="quiz">
                         <div>
-                          <Button variant="primary" className="float-end" size="sm">
+                          <Button variant="primary" className="float-end" size="sm" onClick={()=>{setShowCreateQuizModal(true)}}>
                             <FontAwesomeIcon icon={faPlus} size="1x" />&nbsp;
                                     Create a Quiz
                           </Button>
@@ -173,6 +177,14 @@ export default function CourseManagementPage({props}) {
           </main>
         </div>
         <Footer />
+        <Modal show={showCreateQuizModal} onHide={closeCreateQuizModal}>
+          <Modal.Header closeButton={true}>
+            <Modal.Title>Create a Quiz</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <CreateTestForm onSuccessCallback={closeCreateQuizModal}/>
+          </Modal.Body>          
+        </Modal>
       </>
     );
 }

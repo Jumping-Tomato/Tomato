@@ -1,4 +1,5 @@
 import dbPromise from "database/mongodb-config";
+const { ObjectId } = require('mongodb')
 
 let db;
 dbPromise.then((value) => {
@@ -10,17 +11,17 @@ dbPromise.then((value) => {
 });
 
 
-export const quizzes = {
-    createNewQuiz,    
+export const tests = {
+    createTest    
 };
 
-async function createNewQuiz(quizData) {
+async function createTest(testData) {
     // set date created and updated
-    quizData.dateCreated = new Date().toISOString();
-    quizData.dateUpdated = new Date().toISOString();
+    testData.dateCreated = new Date().toISOString();
+    testData.dateUpdated = new Date().toISOString();
 
     // add and save user
-    db.collection("quizzes").insertOne(quizData).catch((error)=>{
+    db.collection("tests").insertOne(testData).catch((error)=>{
         throw `Unable to create quiz with the email`;
     });
 }

@@ -32,7 +32,7 @@ export default function CreateTestForm({onSuccessCallback}) {
     }
     const handleSubmit = async function(event){
       event.preventDefault();
-      const url = "/api/create-quiz";
+      const url = "/api/teacher/createTest";
       axios.post(url, formData)
       .then(function (response) {
         onSuccessCallback && onSuccessCallback();

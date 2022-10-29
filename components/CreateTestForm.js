@@ -1,6 +1,5 @@
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -9,7 +8,6 @@ import { useRouter } from 'next/router';
 import Alert from 'react-bootstrap/Alert';
 
 export default function CreateTestForm({onSuccessCallback}) {
-    const router = useRouter();
     const [formData, setFormData] = useState({
       "type":"",
       "name":"",

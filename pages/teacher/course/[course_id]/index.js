@@ -18,6 +18,7 @@ export default function CourseManagementPage({props}) {
         "pending":[]
       }
     });
+    const [tests, setTests] = useState();
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     let [showCreateQuizModal, setShowCreateQuizModal] = useState(false);
@@ -41,6 +42,28 @@ export default function CourseManagementPage({props}) {
       .catch(function (error) {
         setError(error.response.data.error);
         setIsLoading(false);
+      }); 
+    }
+    function loadTests(){
+      const url = '/api/teacher/getTestsByCourseId';
+      const params = {params: {course_id: props.course_id}};
+      axios.get(url, params)
+      .then(function(response){
+        const test_array_object = {};
+        const testArray = response.data.tests; 
+        testArray.forEach((test)=>{
+          const type = test.type;
+          if(test_array_object[type]){
+            test_array_object[type].push(test);
+          }
+          else{
+            test_array_object[type] = [test];
+          }
+        });
+        setTests(test_array_object);
+      })
+      .catch(function (error) {
+        setError(error.response.data.error);
       }); 
     }
     function handleStudent(event){
@@ -69,6 +92,7 @@ export default function CourseManagementPage({props}) {
     }
     useEffect(() => {
       loadStudents();
+      loadTests();
     },[]);
     function closeCreateQuizModal() {
       setShowCreateQuizModal(false);

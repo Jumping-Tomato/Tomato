@@ -12,7 +12,10 @@ dbPromise.then((value) => {
 
 
 export const tests = {
-    createTest    
+    createTest,
+    getTestsByCourseId: async course_id => {
+        return await db.collection("tests").find({"course_id": ObjectId(course_id)}).toArray();
+    } 
 };
 
 async function createTest(testData) {

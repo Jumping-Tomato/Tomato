@@ -7,8 +7,9 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Alert from 'react-bootstrap/Alert';
 
-export default function CreateTestForm({onSuccessCallback}) {
+export default function CreateTestForm({course_id, onSuccessCallback}) {
     const [formData, setFormData] = useState({
+      "course_id": course_id,
       "type":"",
       "name":"",
       "length": "",
@@ -30,7 +31,7 @@ export default function CreateTestForm({onSuccessCallback}) {
         [name]: date
       });
     }
-    const handleSubmit = async function(event){
+    const handleSubmit = function(event){
       event.preventDefault();
       const url = "/api/teacher/createTest";
       axios.post(url, formData)

@@ -182,7 +182,7 @@ export default function CourseManagementPage({props}) {
             <Modal.Title>Create a Quiz</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <CreateTestForm onSuccessCallback={closeCreateQuizModal}/>
+            <CreateTestForm course_id={props.course_id} onSuccessCallback={closeCreateQuizModal}/>
           </Modal.Body>          
         </Modal>
       </>

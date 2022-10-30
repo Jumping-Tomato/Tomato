@@ -20,8 +20,11 @@ export default async function createTest(req, res) {
     if(timeDiff < length){
         return res.status(406).send({"error": `Not enough time to finish the ${type}. Please shorten the length or change the start date or deadline.`});
     }
-    req_data["teacher_id"] = ObjectId(session._id);
-    
+
+    if(req_data["course_id"]){
+        req_data["course_id"] = ObjectId(req_data["course_id"]);
+    }  
+
     try {
         await tests.createTest(req_data);
         res.status(200).send("success");

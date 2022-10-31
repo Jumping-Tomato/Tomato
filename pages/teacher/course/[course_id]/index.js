@@ -121,9 +121,6 @@ export default function CourseManagementPage({props}) {
                       <Nav.Item>
                         <Nav.Link eventKey="test">Test</Nav.Link>
                       </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link eventKey="score">Score</Nav.Link>
-                      </Nav.Item>
                     </Nav>
                   </Col>
                   <Col sm={9}>
@@ -215,9 +212,6 @@ export default function CourseManagementPage({props}) {
                             }
                           </div>
                         </div>
-                      </Tab.Pane>
-                      <Tab.Pane eventKey="score">
-                        <h1>wakanda 3</h1>
                       </Tab.Pane>
                     </Tab.Content>
                   </Col>

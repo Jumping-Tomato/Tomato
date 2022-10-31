@@ -10,6 +10,7 @@ import { getSession } from 'next-auth/react';
 import { courses } from 'database/courses';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import  Link  from 'next/link';
 
 export default function CourseManagementPage({props}) {
     const [students, setStudents] = useState({
@@ -18,7 +19,7 @@ export default function CourseManagementPage({props}) {
         "pending":[]
       }
     });
-    const [tests, setTests] = useState();
+    const [tests, setTests] = useState({});
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     let [showCreateQuizModal, setShowCreateQuizModal] = useState(false);
@@ -118,7 +119,7 @@ export default function CourseManagementPage({props}) {
                         <Nav.Link eventKey="student">Student</Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
-                        <Nav.Link eventKey="quiz">Quiz</Nav.Link>
+                        <Nav.Link eventKey="test">Test</Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
                         <Nav.Link eventKey="score">Score</Nav.Link>
@@ -181,12 +182,38 @@ export default function CourseManagementPage({props}) {
                           </ul>
                         </div>
                       </Tab.Pane>
-                      <Tab.Pane eventKey="quiz">
+                      <Tab.Pane eventKey="test">
                         <div>
                           <Button variant="primary" className="float-end" size="sm" onClick={()=>{setShowCreateQuizModal(true)}}>
                             <FontAwesomeIcon icon={faPlus} size="1x" />&nbsp;
-                                    Create a Quiz
+                                    Create a Test
                           </Button>
+                          <div className='pt-3'>
+                            { 
+                              Object.entries(tests).map(([type, items]) => {
+                                return (
+                                  <>
+                                    <h4>{type}</h4>
+                                    <ul className="list-group">
+                                      {
+                                        items.map((item)=>{
+                                          return (
+                                            <li className="list-group-item" key={item._id}>
+                                              <div className="row">
+                                                  <span className="col-12">
+                                                    <Link href={"/teacher/course/"+ props.course_id + "/" + item._id}>{item.name}</Link>
+                                                  </span>
+                                              </div>
+                                            </li>
+                                          );
+                                        })
+                                      }
+                                    </ul>
+                                  </>
+                                  );
+                              })
+                            }
+                          </div>
                         </div>
                       </Tab.Pane>
                       <Tab.Pane eventKey="score">

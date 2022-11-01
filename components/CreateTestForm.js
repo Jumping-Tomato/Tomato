@@ -10,9 +10,7 @@ import Alert from 'react-bootstrap/Alert';
 export default function CreateTestForm({course_id, onSuccessCallback}) {
     const [formData, setFormData] = useState({
       "course_id": course_id,
-      "type":"",
       "name":"",
-      "length": "",
       "startDate": "",
       "deadline":""
     });
@@ -45,19 +43,8 @@ export default function CreateTestForm({course_id, onSuccessCallback}) {
     return(
           <Form onChange={handleChange} onSubmit={handleSubmit}>  
             <Form.Group className="mb-3">
-                <Form.Label>Type</Form.Label>
-                <Form.Select name="type" required>
-                    <option disbled="true"></option>
-                    <option value="quiz">Quiz</option>
-                </Form.Select>
-            </Form.Group>
-            <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
               <Form.Control type="text" name="name" placeholder="name" required />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Length (minutes)</Form.Label>
-              <Form.Control type="number" name="length" min="1" max="30" placeholder="length of the assignment, quiz, or exam" required />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Start Date</Form.Label>

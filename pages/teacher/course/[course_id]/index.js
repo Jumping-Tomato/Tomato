@@ -50,18 +50,12 @@ export default function CourseManagementPage({props}) {
       const params = {params: {course_id: props.course_id}};
       axios.get(url, params)
       .then(function(response){
-        const test_array_object = {};
-        const testArray = response.data.tests; 
-        testArray.forEach((test)=>{
-          const type = test.type;
-          if(test_array_object[type]){
-            test_array_object[type].push(test);
-          }
-          else{
-            test_array_object[type] = [test];
-          }
+        let test_array = [];
+        const res_array = response.data.tests; 
+        res_array.forEach((test)=>{
+          test_array.push(test);
         });
-        setTests(test_array_object);
+        setTests(test_array);
       })
       .catch(function (error) {
         setError(error.response.data.error);
@@ -95,8 +89,12 @@ export default function CourseManagementPage({props}) {
       loadStudents();
       loadTests();
     },[]);
-    function closeCreateQuizModal() {
+    function closeCreateTestModal() {
       setShowCreateQuizModal(false);
+    }
+    function createTestOnSuccessCallback(){
+      closeCreateTestModal();
+      loadTests();
     }
     return (
         <>
@@ -186,30 +184,21 @@ export default function CourseManagementPage({props}) {
                                     Create a Test
                           </Button>
                           <div className='pt-3'>
-                            { 
-                              Object.entries(tests).map(([type, items]) => {
-                                return (
-                                  <>
-                                    <h4>{type}</h4>
-                                    <ul className="list-group">
-                                      {
-                                        items.map((item)=>{
-                                          return (
-                                            <li className="list-group-item" key={item._id}>
-                                              <div className="row">
-                                                  <span className="col-12">
-                                                    <Link href={"/teacher/course/"+ props.course_id + "/" + item._id}>{item.name}</Link>
-                                                  </span>
-                                              </div>
-                                            </li>
-                                          );
-                                        })
-                                      }
-                                    </ul>
-                                  </>
-                                  );
-                              })
-                            }
+                              <ul className="list-group">
+                                {
+                                  tests.map((test)=>{
+                                    return (
+                                        <li className="list-group-item" key={test._id}>
+                                          <div className="row">
+                                              <span className="col-12">
+                                                <Link href={"/teacher/course/"+ test.course_id + "/" + test._id}>{test.name}</Link>
+                                              </span>
+                                          </div>
+                                        </li>
+                                    )
+                                  })
+                                } 
+                              </ul>
                           </div>
                         </div>
                       </Tab.Pane>
@@ -222,12 +211,12 @@ export default function CourseManagementPage({props}) {
           </main>
         </div>
         <Footer />
-        <Modal show={showCreateQuizModal} onHide={closeCreateQuizModal}>
+        <Modal show={showCreateQuizModal} onHide={closeCreateTestModal}>
           <Modal.Header closeButton={true}>
             <Modal.Title>Create a Quiz</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <CreateTestForm course_id={props.course_id} onSuccessCallback={closeCreateQuizModal}/>
+            <CreateTestForm course_id={props.course_id} onSuccessCallback={createTestOnSuccessCallback} />
           </Modal.Body>          
         </Modal>
       </>

@@ -1,9 +1,9 @@
 function getNextTwoSemesters(){
     const today = new Date();
-    const cuurrentMonth = today.getMonth();
+    const currentMonth = today.getMonth();
     const currentYear = today.getFullYear();
-    const currentSeason = getSeasonByMonth(cuurrentMonth);
-    let futureMonth = cuurrentMonth + 3;
+    const currentSeason = getSeasonByMonth(currentMonth);
+    let futureMonth = currentMonth + 3;
     let futureYear = currentYear;
     if(futureMonth > 12){
         futureMonth = (currentMonth + 3) % 12;

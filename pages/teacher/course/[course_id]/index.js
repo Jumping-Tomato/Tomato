@@ -19,7 +19,7 @@ export default function CourseManagementPage({props}) {
         "pending":[]
       }
     });
-    const [tests, setTests] = useState({});
+    const [tests, setTests] = useState([]);
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     let [showCreateQuizModal, setShowCreateQuizModal] = useState(false);

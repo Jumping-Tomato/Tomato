@@ -15,7 +15,7 @@ export const tests = {
     createTest,
     getTestsByCourseId: async course_id => {
         return await db.collection("tests").find({"course_id": ObjectId(course_id)})
-        .project({ name: 1, course_id:1 }).toArray();
+        .project({ name: 1 }).toArray();
     } 
 };
 

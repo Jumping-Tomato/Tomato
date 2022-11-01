@@ -191,7 +191,7 @@ export default function CourseManagementPage({props}) {
                                         <li className="list-group-item" key={test._id}>
                                           <div className="row">
                                               <span className="col-12">
-                                                <Link href={"/teacher/course/"+ test.course_id + "/" + test._id}>{test.name}</Link>
+                                                <Link href={"/teacher/course/"+ props.course_id + "/" + test._id}>{test.name}</Link>
                                               </span>
                                           </div>
                                         </li>

@@ -16,6 +16,9 @@ export const tests = {
     getTestsByCourseId: async course_id => {
         return await db.collection("tests").find({"course_id": ObjectId(course_id)})
         .project({ name: 1 }).toArray();
+    },
+    getTestById: async test_id => {
+        return await db.collection("tests").findOne({"_id": ObjectId(test_id)});
     } 
 };
 

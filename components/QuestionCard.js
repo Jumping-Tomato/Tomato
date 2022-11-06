@@ -33,6 +33,7 @@ export default function QuestionCard({props}) {
         delete new_mcq.choices[choice];
         setMcq(new_mcq);
     }
+
     return (
         <Card>
             <Card.Header>{props.title}</Card.Header>
@@ -41,56 +42,47 @@ export default function QuestionCard({props}) {
                     <Form.Group className="mb-3">
                         <Form.Label>Type</Form.Label>
                         <Form.Select name="type" onChange={toggleQuestionType} required>
-                            <option disbled></option>
                             <option value="multiple choice">Multiple Choice</option>
                             <option value="short answer">Short Answer</option>
                         </Form.Select>
                     </Form.Group>
+                    {/* multiple choice */}
+                    <Form.Group className="mb-3">
+                        <Form.Label>Question:</Form.Label>
+                        <Form.Control as="textarea" row={3} />
+                    </Form.Group>
                     {
-                        questionType == "multiple choice" || !questionType
-                        ?
-                        <>
-                            {/* multiple choice */}
-                            <Form.Group className="mb-3">
-                                <Form.Label>Question:</Form.Label>
-                                <Form.Control as="textarea" row={3} />
-                            </Form.Group>
-                            {
-                                Object.entries(mcq.choices).map(([key, value], index)=>{
-                                    return(
-                                        <Form.Group className="mb-3" as={Row} >
-                                            <Col xs={1}>
-                                                <Form.Label>
-                                                    <h4>{key.toUpperCase()}:</h4>
-                                                </Form.Label>
-                                            </Col>
-                                            <Col xs={5}>
-                                                <Form.Control type="text" name="choice-a" value={value} required />
-                                            </Col>
-                                            <Col xs={5}>
-                                                {
-                                                    !index &&
-                                                    <button type="button" className="btn btn-sm btn-primary" onClick={addChoice}>
-                                                        <FontAwesomeIcon icon={faPlus} size="sm" />&nbsp; 
-                                                    </button>
-                                                }
-                                                {
-                                                    index > 0 && index == Object.keys(mcq.choices).length - 1 &&
-                                                    <button type="button" className="btn btn-sm btn-danger" value={key} onClick={removeChoice}>
-                                                        <FontAwesomeIcon icon={faMinus} size="sm" />&nbsp; 
-                                                    </button>
-                                                }                                               
-                                            </Col>
-                                        </Form.Group>
-                                        )
-                                })
-                            }                
-                        </>
-                        :
-                        <>
-                            <h1>short Answer placeholder</h1>
-                        </>
-                    }
+                        questionType == "multiple choice"
+                        &&
+                        Object.entries(mcq.choices).map(([key, value], index)=>{
+                            return(
+                                <Form.Group className="mb-3" as={Row}>
+                                    <Col xs={1}>
+                                        <Form.Label>
+                                            <h4>{key.toUpperCase()}:</h4>
+                                        </Form.Label>
+                                    </Col>
+                                    <Col xs={5}>
+                                        <Form.Control type="text" name="choice-a" value={value} required />
+                                    </Col>
+                                    <Col xs={5}>
+                                        {
+                                            !index &&
+                                            <button type="button" className="btn btn-sm btn-primary" onClick={addChoice}>
+                                                <FontAwesomeIcon icon={faPlus} size="sm" />&nbsp; 
+                                            </button>
+                                        }
+                                        {
+                                            index > 0 && index == Object.keys(mcq.choices).length - 1 &&
+                                            <button type="button" className="btn btn-sm btn-danger" value={key} onClick={removeChoice}>
+                                                <FontAwesomeIcon icon={faMinus} size="sm" />&nbsp; 
+                                            </button>
+                                        }                                               
+                                    </Col>
+                                </Form.Group>
+                                )
+                            })
+                    }       
                     <br />
                     <Button variant="primary">Confirm</Button>&nbsp;
                     <Button variant="danger">Cancel</Button>  

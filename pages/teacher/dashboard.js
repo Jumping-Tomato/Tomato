@@ -39,7 +39,7 @@ export default function TeacherDashboard() {
 
                 <main className={global.main}>
                     <div className='row'>
-                        <div className="col-12 pt-1">
+                        <div className="col-12 pt-1 row">
                             <div className="col-12 pt-5">
                                 <Link href="/teacher/createCourse">
                                     <Button variant="primary" className="m-1 float-end" size="sm">

@@ -178,12 +178,14 @@ export default function CourseManagementPage({props}) {
                         </div>
                       </Tab.Pane>
                       <Tab.Pane eventKey="test">
-                        <div>
-                          <Button variant="primary" className="float-end" size="sm" onClick={()=>{setShowCreateQuizModal(true)}}>
-                            <FontAwesomeIcon icon={faPlus} size="1x" />&nbsp;
-                                    Create a Test
-                          </Button>
-                          <div className='pt-3'>
+                        <div className="row">
+                          <div className="col-12 pt-1">
+                            <Button variant="primary" className="float-end" size="sm" onClick={()=>{setShowCreateQuizModal(true)}}>
+                              <FontAwesomeIcon icon={faPlus} size="1x" />&nbsp;
+                                      Create a Test
+                            </Button>
+                          </div>
+                          <div className='pt-3 col-12'>
                               <ul className="list-group">
                                 {
                                   tests.map((test)=>{

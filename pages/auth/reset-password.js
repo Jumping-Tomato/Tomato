@@ -4,7 +4,7 @@ import axios from 'axios';
 import Head from 'next/head'
 import global from 'styles/Global.module.scss'
 import { getSession } from 'next-auth/react'
-import UserForm from "components/User-form"
+import { UserForm } from "components"
 
 
 /*

@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import global from 'styles/Global.module.scss'
-import Topbar from 'components/Topbar'
-import Footer from 'components/Footer'
+import {Topbar, Footer} from 'components'
 
 export default function Home() {
   return (

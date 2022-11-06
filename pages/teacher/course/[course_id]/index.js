@@ -1,8 +1,6 @@
 import Head from 'next/head';
 import global from 'styles/Global.module.scss';
-import Topbar from 'components/Topbar';
-import Footer from 'components/Footer';
-import CreateTestForm from 'components/CreateTestForm';
+import { Topbar, Footer, CreateTestForm } from 'components';
 import axios from 'axios';
 import { Button, Tab, Col, Nav, Row,Spinner, Modal, Form} from 'react-bootstrap';
 import { useState, useEffect } from 'react';

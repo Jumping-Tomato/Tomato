@@ -1,5 +1,4 @@
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

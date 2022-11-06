@@ -2,8 +2,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Head from 'next/head'
 import global from 'styles/Global.module.scss'
-import Topbar from 'components/Topbar'
-import Footer from 'components/Footer'
+import {Topbar, Footer} from 'components'
 import { useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';

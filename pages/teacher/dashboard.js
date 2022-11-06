@@ -1,8 +1,7 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import global from 'styles/Global.module.scss'
-import Topbar from 'components/Topbar'
-import Footer from 'components/Footer'
+import { Topbar, Footer} from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import  Link  from 'next/link';

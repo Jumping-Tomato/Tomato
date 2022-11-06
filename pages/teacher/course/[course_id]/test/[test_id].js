@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import global from 'styles/Global.module.scss';
-import Topbar from 'components/Topbar';
-import QuestionCard from 'components/QuestionCard';
-import Footer from 'components/Footer';
+import { Topbar,QuestionCard, Footer } from 'components';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { getSession } from 'next-auth/react';
 import { courses } from 'database/courses';
 import { tests } from 'database/tests';
-
+import { Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export default function TestManagementPage({props}) {
     const [questions, setQuestions] = useState([]);
@@ -24,7 +24,13 @@ export default function TestManagementPage({props}) {
      
           <main className={global.main}>
             <div className='row justify-content-center'>
-              <div className="col-12 p-5">
+              <div className="col-12 p-5 row">
+                <div className="col-12 pt-1">
+                  <Button variant="primary" className="float-end" size="sm">
+                    <FontAwesomeIcon icon={faPlus} size="1x" />&nbsp;
+                            Create a Test
+                  </Button>
+                </div>
                 <h1>{props.name}</h1>
                 <QuestionCard props={{title:"hey"}}/>
               </div>

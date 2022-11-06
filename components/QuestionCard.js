@@ -33,12 +33,24 @@ export default function QuestionCard({props}) {
         delete new_mcq.choices[choice];
         setMcq(new_mcq);
     }
-
+    function handleChange(event){
+        const inputName = event.target.getAttribute("data-input-name");
+        let value = event.target.value;
+        if(inputName == "question"){
+            setMcq({...mcq, "question" : value});
+        }
+        else if(inputName == "choice"){
+            let new_mcq = Object.assign({}, mcq);
+            const choice = event.target.getAttribute("data-choice");
+            new_mcq.choices[choice] = value;
+            setMcq(new_mcq);
+        }
+    }
     return (
         <Card>
             <Card.Header>{props.title}</Card.Header>
             <Card.Body> 
-                <Form>
+                <Form onChange={handleChange}>
                     <Form.Group className="mb-3">
                         <Form.Label>Type</Form.Label>
                         <Form.Select name="type" onChange={toggleQuestionType} required>
@@ -47,9 +59,9 @@ export default function QuestionCard({props}) {
                         </Form.Select>
                     </Form.Group>
                     {/* multiple choice */}
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-3" >
                         <Form.Label>Question:</Form.Label>
-                        <Form.Control as="textarea" row={3} />
+                        <Form.Control as="textarea" data-input-name="question" name="question" row={3} />
                     </Form.Group>
                     {
                         questionType == "multiple choice"
@@ -63,7 +75,7 @@ export default function QuestionCard({props}) {
                                         </Form.Label>
                                     </Col>
                                     <Col xs={5}>
-                                        <Form.Control type="text" name="choice-a" value={value} required />
+                                        <Form.Control data-input-name="choice" data-choice={key} type="text" value={value} required />
                                     </Col>
                                     <Col xs={5}>
                                         {

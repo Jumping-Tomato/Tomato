@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import global from 'styles/Global.module.scss';
 import Topbar from 'components/Topbar';
+import QuestionCard from 'components/QuestionCard';
 import Footer from 'components/Footer';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -25,6 +26,7 @@ export default function TestManagementPage({props}) {
             <div className='row justify-content-center'>
               <div className="col-12 p-5">
                 <h1>{props.name}</h1>
+                <QuestionCard props={{title:"hey"}}/>
               </div>
             </div>
           </main>

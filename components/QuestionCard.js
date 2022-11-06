@@ -56,7 +56,7 @@ export default function QuestionCard({props}) {
                         &&
                         Object.entries(mcq.choices).map(([key, value], index)=>{
                             return(
-                                <Form.Group className="mb-3" as={Row}>
+                                <Form.Group className="mb-3" as={Row} key={index}>
                                     <Col xs={1}>
                                         <Form.Label>
                                             <h4>{key.toUpperCase()}:</h4>

@@ -58,7 +58,7 @@ export default function TestManagementPage({props}) {
                       question.title = "Question " + (index + 1)
                       return  (
                               <li className="list-group-item border-0" key={index}>
-                                <QuestionCard props={question} handleRemoveButtonClick={removeQuestionCard} cardIndex={index}/>
+                                <QuestionCard props={question} handleRemoveButtonClick={ ()=>{ removeQuestionCard(index) } }/>
                               </li>
                             );
                     })

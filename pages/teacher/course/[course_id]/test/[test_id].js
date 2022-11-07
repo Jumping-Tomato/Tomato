@@ -27,6 +27,11 @@ export default function TestManagementPage({props}) {
       }
       setQuestions(currentQuestions => [...currentQuestions, newQuestion])
     }
+    function removeQuestionCard(questionCardIndex){
+      let new_questions = [...questions];
+      new_questions.splice(questionCardIndex,1);
+      setQuestions(new_questions);
+    }
     return (
         <>
         <Topbar />
@@ -46,14 +51,14 @@ export default function TestManagementPage({props}) {
                             add a question
                   </Button>
                 </div>
-                <h1>{props.name}</h1>
+                <h1>{"Test -" +  props.name}</h1>
                 <ul className="list-group">
                   {
                     questions.map((question, index)=>{
                       question.title = "Question " + (index + 1)
                       return  (
                               <li className="list-group-item border-0" key={index}>
-                                <QuestionCard props={question} />
+                                <QuestionCard props={question} handleRemoveButtonClick={removeQuestionCard} cardIndex={index}/>
                               </li>
                             );
                     })

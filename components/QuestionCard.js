@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 
-export default function QuestionCard({props}) {
+export default function QuestionCard({props,handleRemoveButtonClick, cardIndex}) {
     const [questionType, setQuestionType] = useState(props.type ? props.type : "multiple choice");
     const [mcq, setMcq] = useState(
         props.question ? props.question :
@@ -56,7 +56,9 @@ export default function QuestionCard({props}) {
                 <button type="button" className="btn btn-sm btn-danger rounded-circle float-end" 
                     style={{padding:"0 4px",
                             transform: "translate(20px, -15px)"
-                    }}>
+                    }}
+                    onClick={function(){handleRemoveButtonClick({cardIndex})}}
+                    >
                     <FontAwesomeIcon icon={faMinus} size="xs" />
                 </button>
             </Card.Header>
@@ -105,10 +107,7 @@ export default function QuestionCard({props}) {
                                 </Form.Group>
                                 )
                             })
-                    }       
-                    <br />
-                    <Button variant="primary">Confirm</Button>&nbsp;
-                    <Button variant="danger">Cancel</Button>  
+                    }
                 </Form>   
             </Card.Body>
         </Card>

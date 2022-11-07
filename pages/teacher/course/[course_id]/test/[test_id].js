@@ -12,6 +12,21 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export default function TestManagementPage({props}) {
     const [questions, setQuestions] = useState([]);
+    function addQuestion(event){
+      event.preventDefault();
+      const newQuestion = {
+        type: "multiple choice",
+        question:
+        {
+          question:"",
+          choices:{
+              a:""
+          },
+          correct_choice:""
+        }
+      }
+      setQuestions(currentQuestions => [...currentQuestions, newQuestion])
+    }
     return (
         <>
         <Topbar />
@@ -26,13 +41,24 @@ export default function TestManagementPage({props}) {
             <div className='row justify-content-center'>
               <div className="col-12 p-5 row">
                 <div className="col-12 pt-1">
-                  <Button variant="primary" className="float-end" size="sm">
+                  <Button variant="primary" className="float-end" size="sm" onClick={addQuestion}>
                     <FontAwesomeIcon icon={faPlus} size="1x" />&nbsp;
-                            Create a Test
+                            add a question
                   </Button>
                 </div>
                 <h1>{props.name}</h1>
-                <QuestionCard props={{title:"hey"}}/>
+                <ul className="list-group">
+                  {
+                    questions.map((question, index)=>{
+                      question.title = "Question " + (index + 1)
+                      return  (
+                              <li className="list-group-item border-0" key={index}>
+                                <QuestionCard props={question} />
+                              </li>
+                            );
+                    })
+                  }
+                </ul>     
               </div>
             </div>
           </main>

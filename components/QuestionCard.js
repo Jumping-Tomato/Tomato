@@ -5,10 +5,11 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 
 export default function QuestionCard({props,handleRemoveButtonClick,updateQuestion}) {
     var choices = props.multipleChoice.choices;
-    const [questionType, setQuestionType] = useState(props.type ? props.type : "multipleChoice");
     function toggleQuestionType (event){
         let value = event.target.value;
-        setQuestionType(value);
+        let new_props = {...props};
+        new_props.type = value;
+        updateQuestion(new_props);
     }
     function addChoice(event){
         event.preventDefault();
@@ -49,12 +50,12 @@ export default function QuestionCard({props,handleRemoveButtonClick,updateQuesti
                     <Form.Group className="mb-3">
                         <Form.Label>Type</Form.Label>
                         <Form.Select name="type" onChange={toggleQuestionType} required>
-                            <option value="multiple choice">Multiple Choice</option>
-                            <option value="short answer">Short Answer</option>
+                            <option value="multipleChoice">Multiple Choice</option>
+                            <option value="shortAnswer">Short Answer</option>
                         </Form.Select>
                     </Form.Group>
                     {
-                        questionType == "multipleChoice"
+                        props.type == "multipleChoice"
                         ?
                         <>
                             <Form.Group className="mb-3" >

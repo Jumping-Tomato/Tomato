@@ -15,14 +15,19 @@ export default function TestManagementPage({props}) {
     function addQuestion(event){
       event.preventDefault();
       const newQuestion = {
-        type: "multiple choice",
-        question:
+        type: "multipleChoice",
+        multipleChoice:
         {
           question:"",
           choices:{
               a:""
           },
           correct_choice:""
+        },
+        shrotAnswer:
+        {
+          question:"",
+          correct_answer:""
         }
       }
       setQuestions(currentQuestions => [...currentQuestions, newQuestion])
@@ -30,6 +35,12 @@ export default function TestManagementPage({props}) {
     function removeQuestionCard(questionCardIndex){
       let new_questions = [...questions];
       new_questions.splice(questionCardIndex,1);
+      setQuestions(new_questions);
+    }
+    function updateQuestion(index, question){
+      let new_questions = [...questions];
+      new_questions[index] = question;
+      console.log(index)
       setQuestions(new_questions);
     }
     return (
@@ -58,7 +69,7 @@ export default function TestManagementPage({props}) {
                       question.title = "Question " + (index + 1)
                       return  (
                               <li className="list-group-item border-0" key={index}>
-                                <QuestionCard props={question} handleRemoveButtonClick={ ()=>{ removeQuestionCard(index) } }/>
+                                <QuestionCard props={question} updateQuestion={function(question){updateQuestion(index, question)}} handleRemoveButtonClick={ ()=>{ removeQuestionCard(index) } }/>
                               </li>
                             );
                     })

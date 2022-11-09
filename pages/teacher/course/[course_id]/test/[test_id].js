@@ -40,7 +40,6 @@ export default function TestManagementPage({props}) {
     function updateQuestion(index, question){
       let new_questions = [...questions];
       new_questions[index] = question;
-      console.log(index)
       setQuestions(new_questions);
     }
     return (

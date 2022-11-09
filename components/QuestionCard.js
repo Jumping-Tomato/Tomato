@@ -9,13 +9,14 @@ export default function QuestionCard({props,handleRemoveButtonClick,updateQuesti
         let value = event.target.value;
         let new_props = {...props};
         new_props.type = value;
+        console.log(new_props)
         updateQuestion(new_props);
     }
     function addChoice(event){
         event.preventDefault();
         const num_of_choices = Object.keys(choices).length;
         if(num_of_choices < 5){
-            let new_props = Object.assign({}, props);
+            let new_props = {...props};
             let new_choice = String.fromCharCode(94 + 3 + num_of_choices);
             new_props.multipleChoice.choices[new_choice] = "";
             updateQuestion(new_props);
@@ -23,13 +24,24 @@ export default function QuestionCard({props,handleRemoveButtonClick,updateQuesti
     }
     function removeChoice(event){
         const choice = event.currentTarget.value;
-        let new_props = Object.assign({}, props);
+        let new_props = {...props};
         delete new_props.multipleChoice.choices[choice];
         updateQuestion(new_props);
     }
     function handleChange(event){
         const inputName = event.target.getAttribute("data-input-name");
         let value = event.target.value;
+        const new_props = JSON.parse(JSON.stringify(props));
+        if(inputName == "choice"){
+            const choice = event.target.getAttribute("data-choice");
+            new_props.multipleChoice.choices[choice] = value;
+            updateQuestion(new_props);
+        }
+        else{
+            const questionType = props.type;
+            new_props[questionType][inputName] = value;
+            updateQuestion(new_props);
+        }
         
     }
     return (
@@ -60,7 +72,7 @@ export default function QuestionCard({props,handleRemoveButtonClick,updateQuesti
                         <>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
-                                <Form.Control as="textarea" data-input-name="multipleChoiceQuestion" name="question" row={3} />
+                                <Form.Control as="textarea" data-input-name="question" name="question" row={3} />
                             </Form.Group>
                             {
                                 Object.entries(choices).map(([key, value], index)=>{
@@ -92,12 +104,22 @@ export default function QuestionCard({props,handleRemoveButtonClick,updateQuesti
                                         )
                                     })
                             }
+                            <Form.Group className="mb-3">
+                                <Form.Label>Correct Answer</Form.Label>
+                                <Form.Select data-input-name="correct_answer" required>
+                                    {
+                                        Object.keys(choices).map((key)=>{
+                                            return <option value={key}>{key.toUpperCase()}</option>
+                                        })     
+                                    }
+                                </Form.Select>
+                            </Form.Group>
                         </>
                         :
                         <>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
-                                <Form.Control as="textarea" data-input-name="shortAnswerQuestion" name="question" row={3} />
+                                <Form.Control as="textarea" data-input-name="question" row={3} />
                             </Form.Group>
                         </>
                             

@@ -5,13 +5,6 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 
 export default function QuestionCard({props,handleRemoveButtonClick,updateQuestion}) {
     var choices = props.multipleChoice.choices;
-    function toggleQuestionType (event){
-        let value = event.target.value;
-        let new_props = {...props};
-        new_props.type = value;
-        console.log(new_props)
-        updateQuestion(new_props);
-    }
     function addChoice(event){
         event.preventDefault();
         const num_of_choices = Object.keys(choices).length;
@@ -32,7 +25,11 @@ export default function QuestionCard({props,handleRemoveButtonClick,updateQuesti
         const inputName = event.target.getAttribute("data-input-name");
         let value = event.target.value;
         const new_props = JSON.parse(JSON.stringify(props));
-        if(inputName == "choice"){
+        if (inputName == "questionType"){
+            new_props.type = value;
+            updateQuestion(new_props);
+        }
+        else if(inputName == "choice"){
             const choice = event.target.getAttribute("data-choice");
             new_props.multipleChoice.choices[choice] = value;
             updateQuestion(new_props);
@@ -61,7 +58,7 @@ export default function QuestionCard({props,handleRemoveButtonClick,updateQuesti
                 <Form onChange={handleChange}>
                     <Form.Group className="mb-3">
                         <Form.Label>Type</Form.Label>
-                        <Form.Select name="type" onChange={toggleQuestionType} required>
+                        <Form.Select name="type" data-input-name="questionType" required>
                             <option value="multipleChoice">Multiple Choice</option>
                             <option value="shortAnswer">Short Answer</option>
                         </Form.Select>

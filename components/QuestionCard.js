@@ -69,7 +69,7 @@ export default function QuestionCard({props,handleRemoveButtonClick,updateQuesti
                         <>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
-                                <Form.Control as="textarea" data-input-name="question" name="question" row={3} />
+                                <Form.Control as="textarea" data-input-name="question" name="question" row={3} value={props.multipleChoice.question} />
                             </Form.Group>
                             {
                                 Object.entries(choices).map(([key, value], index)=>{
@@ -116,7 +116,11 @@ export default function QuestionCard({props,handleRemoveButtonClick,updateQuesti
                         <>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
-                                <Form.Control as="textarea" data-input-name="question" row={3} />
+                                <Form.Control as="textarea" data-input-name="question" row={3} value={props.shortAnswer.question} />
+                            </Form.Group>
+                            <Form.Group className="mb-3" >
+                                <Form.Label>Correct Answer:</Form.Label>
+                                <Form.Control as="textarea" data-input-name="correct_answer" row={3} value={props.shortAnswer.correct_answer} />
                             </Form.Group>
                         </>
                             

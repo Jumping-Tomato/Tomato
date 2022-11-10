@@ -24,7 +24,7 @@ export default function TestManagementPage({props}) {
           },
           correct_choice:""
         },
-        shrotAnswer:
+        shortAnswer:
         {
           question:"",
           correct_answer:""

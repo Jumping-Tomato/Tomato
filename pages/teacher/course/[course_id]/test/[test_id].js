@@ -7,13 +7,17 @@ import {useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 import { courses } from 'database/courses';
 import { tests } from 'database/tests';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export default function TestManagementPage({props}) {
     const router = useRouter();
     const [questions, setQuestions] = useState([]);
+    const [modalData, setModalData] = useState({
+      show: true,
+      message:""
+    });
     function addQuestion(event){
       event.preventDefault();
       const newQuestion = {
@@ -54,11 +58,23 @@ export default function TestManagementPage({props}) {
       }
       axios.put(url, data)
       .then(function (response) {
-        // router.push("/teacher/dashboard");
+        const modal_data = {
+          show: true,
+          message: "Question(s) have been saved."
+        }
+        setModalData(modal_data);
       })
       .catch(function (error) {
         console.error(error);
       }); 
+    }
+    function closeModal(event){
+      event.preventDefault();
+      const modal_data = {
+        show: false,
+        message: ""
+      }
+      setModalData(modal_data)
     }
     return (
         <>
@@ -102,6 +118,17 @@ export default function TestManagementPage({props}) {
             </div>
           </main>
         </div>
+        <Modal show={modalData.show} onHide={closeModal}>
+          <Modal.Header closeButton={true}>
+            <Modal.Title>Success!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{modalData.message}</Modal.Body>
+          <Modal.Footer>
+            <Button variant="danger" onClick={closeModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <Footer />
       </>
     );

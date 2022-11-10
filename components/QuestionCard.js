@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 
-export default function QuestionCard({props,handleRemoveButtonClick,updateQuestion}) {
+export default function QuestionCard({props,title,handleRemoveButtonClick,updateQuestion}) {
     var choices = props.multipleChoice.choices;
     function addChoice(event){
         event.preventDefault();
@@ -44,7 +44,7 @@ export default function QuestionCard({props,handleRemoveButtonClick,updateQuesti
     return (
         <Card className="p-0">
             <Card.Header>
-                {props.title}
+                {title}
                 <button type="button" className="btn btn-sm btn-danger rounded-circle float-end" 
                     style={{padding:"0 4px",
                             transform: "translate(20px, -15px)"

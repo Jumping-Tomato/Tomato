@@ -65,10 +65,9 @@ export default function TestManagementPage({props}) {
                 <ul className="list-group">
                   {
                     questions.map((question, index)=>{
-                      question.title = "Question " + (index + 1)
                       return  (
                               <li className="list-group-item border-0" key={index}>
-                                <QuestionCard props={question} updateQuestion={function(question){updateQuestion(index, question)}} handleRemoveButtonClick={ ()=>{ removeQuestionCard(index) } }/>
+                                <QuestionCard props={question} title={"Question " + (index + 1)} updateQuestion={function(question){updateQuestion(index, question)}} handleRemoveButtonClick={ ()=>{ removeQuestionCard(index) } }/>
                               </li>
                             );
                     })

@@ -19,7 +19,8 @@ export const tests = {
     },
     getTestById: async test_id => {
         return await db.collection("tests").findOne({"_id": ObjectId(test_id)});
-    } 
+    },
+    updateQuestions: updateQuestions
 };
 
 async function createTest(testData) {
@@ -31,4 +32,33 @@ async function createTest(testData) {
     db.collection("tests").insertOne(testData).catch((error)=>{
         throw `Unable to create quiz with the email`;
     });
+}
+
+async function updateQuestions(test_id, questions_data){
+    try{
+        const dateUpdated = new Date().toISOString();
+        let questions = [];
+        questions_data.forEach((item)=>{
+            const type = item.type;
+            const question = item[type];
+            const question_obj = {
+                type: type,
+                detail:question
+            }
+            questions.push(question_obj);
+        });
+        const result = await db.collection("tests").updateOne(
+                                                        {"_id": ObjectId(test_id)},
+                                                        {$set: {
+                                                            "questions": questions,
+                                                            "dateUpdated": dateUpdated
+                                                        }},
+                                                        {upsert: true}
+                                                    );
+        return result;
+    }
+    catch(error){
+        console.error(error);
+        throw `Unable to update question of test "${test_id}". Error: "${error}"`;
+    }
 }

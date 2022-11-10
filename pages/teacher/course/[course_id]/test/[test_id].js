@@ -3,6 +3,7 @@ import global from 'styles/Global.module.scss';
 import { Topbar,QuestionCard, Footer } from 'components';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import {useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 import { courses } from 'database/courses';
 import { tests } from 'database/tests';
@@ -11,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export default function TestManagementPage({props}) {
+    const router = useRouter();
     const [questions, setQuestions] = useState([]);
     function addQuestion(event){
       event.preventDefault();
@@ -22,7 +24,7 @@ export default function TestManagementPage({props}) {
           choices:{
               a:""
           },
-          correct_choice:""
+          correct_choice: "a"
         },
         shortAnswer:
         {
@@ -41,6 +43,22 @@ export default function TestManagementPage({props}) {
       let new_questions = [...questions];
       new_questions[index] = question;
       setQuestions(new_questions);
+    }
+    function handleSave(event){
+      event.preventDefault();
+      const test_id  = router.query.test_id;
+      const url = "/api/teacher/saveQuestions";
+      const data = {
+        test_id: test_id,
+        questions_data:questions,
+      }
+      axios.put(url, data)
+      .then(function (response) {
+        // router.push("/teacher/dashboard");
+      })
+      .catch(function (error) {
+        console.error(error);
+      }); 
     }
     return (
         <>
@@ -73,6 +91,13 @@ export default function TestManagementPage({props}) {
                     })
                   }
                 </ul>     
+              </div>
+              <div className="col-12 p-2 row">
+                <div className="col-2 ps-xl-5 row">
+                  <Button variant="primary" onClick={handleSave}>
+                      Save
+                  </Button>
+                </div>
               </div>
             </div>
           </main>

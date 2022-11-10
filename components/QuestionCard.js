@@ -103,7 +103,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                             }
                             <Form.Group className="mb-3">
                                 <Form.Label>Correct Answer</Form.Label>
-                                <Form.Select data-input-name="correct_answer" required>
+                                <Form.Select data-input-name="correct_choice" required>
                                     {
                                         Object.keys(choices).map((key)=>{
                                             return <option value={key} key={key}>{key.toUpperCase()}</option>

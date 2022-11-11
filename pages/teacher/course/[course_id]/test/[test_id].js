@@ -7,7 +7,7 @@ import {useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 import { courses } from 'database/courses';
 import { tests } from 'database/tests';
-import { Button, Modal } from 'react-bootstrap';
+import { Alert, Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
@@ -15,7 +15,7 @@ export default function TestManagementPage({props}) {
     const router = useRouter();
     const [questions, setQuestions] = useState([]);
     const [modalData, setModalData] = useState({
-      show: true,
+      show: false,
       message:""
     });
     function addQuestion(event){
@@ -50,6 +50,10 @@ export default function TestManagementPage({props}) {
     }
     function handleSave(event){
       event.preventDefault();
+      if(!questions.length){
+        showModal(false,"No Questions to Save!");
+        return;
+      }
       const test_id  = router.query.test_id;
       const url = "/api/teacher/saveQuestions";
       const data = {
@@ -58,15 +62,19 @@ export default function TestManagementPage({props}) {
       }
       axios.put(url, data)
       .then(function (response) {
-        const modal_data = {
-          show: true,
-          message: "Question(s) have been saved."
-        }
-        setModalData(modal_data);
+        showModal(true,"Question(s) have been saved.");
       })
       .catch(function (error) {
-        console.error(error);
+        showModal(false,error.response.data.error);
       }); 
+    }
+    function showModal(isSuccess, message){
+      const modal_data = {
+        show: true,
+        type: (isSuccess ? "success": "error"),
+        message: message
+      }
+      setModalData(modal_data);
     }
     function closeModal(event){
       event.preventDefault();
@@ -120,9 +128,13 @@ export default function TestManagementPage({props}) {
         </div>
         <Modal show={modalData.show} onHide={closeModal}>
           <Modal.Header closeButton={true}>
-            <Modal.Title>Success!</Modal.Title>
+            <Modal.Title>{ modalData.type }!</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{modalData.message}</Modal.Body>
+          <Modal.Body>
+            <Alert variant={ modalData.type == "success" ? "primary" : "danger" }>
+              {modalData.message}
+            </Alert>
+          </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={closeModal}>
               Close

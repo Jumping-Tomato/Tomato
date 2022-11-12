@@ -18,24 +18,42 @@ export default function TestManagementPage({props}) {
       show: false,
       message:""
     });
+    useEffect(() => {
+      //populate the questions
+      const currentQuestions = props.questions;
+      let questionsArray = []
+      currentQuestions.forEach((each)=>{
+        const question = structuredClone(emptyQuestion)
+        question.type = each.type;
+        if(each.type == "multipleChoice"){
+          question.multipleChoice = each.detail;
+        }
+        else{
+          question.shortAnswer = each.detail;
+        }
+        questionsArray.push(question);
+      });
+      setQuestions(questionsArray);
+    },[]);
+    const emptyQuestion = {
+      type: "multipleChoice",
+      multipleChoice:
+      {
+        question:"",
+        choices:{
+            a:""
+        },
+        correct_choice: "a"
+      },
+      shortAnswer:
+      {
+        question:"",
+        correct_answer:""
+      }
+    }
     function addQuestion(event){
       event.preventDefault();
-      const newQuestion = {
-        type: "multipleChoice",
-        multipleChoice:
-        {
-          question:"",
-          choices:{
-              a:""
-          },
-          correct_choice: "a"
-        },
-        shortAnswer:
-        {
-          question:"",
-          correct_answer:""
-        }
-      }
+      const newQuestion = structuredClone(emptyQuestion);
       setQuestions(currentQuestions => [...currentQuestions, newQuestion])
     }
     function removeQuestionCard(questionCardIndex){
@@ -172,7 +190,8 @@ export async function getServerSideProps(context) {
     }
   }
   let props = {
-    name: test_data.name
+    name: test_data.name,
+    questions: test_data.questions
   };
   return {
     props: {props}

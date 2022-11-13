@@ -58,7 +58,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                 <Form onChange={handleChange}>
                     <Form.Group className="mb-3">
                         <Form.Label>Type</Form.Label>
-                        <Form.Select name="type" data-input-name="questionType" required>
+                        <Form.Select name="type" data-input-name="questionType" defaultValue={props.type} required>
                             <option value="multipleChoice">Multiple Choice</option>
                             <option value="shortAnswer">Short Answer</option>
                         </Form.Select>

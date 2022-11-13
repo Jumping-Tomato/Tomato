@@ -189,9 +189,10 @@ export async function getServerSideProps(context) {
       notFound: true
     }
   }
+  const questions = test_data.questions ?  test_data.questions : []
   let props = {
     name: test_data.name,
-    questions: test_data.questions
+    questions: questions
   };
   return {
     props: {props}

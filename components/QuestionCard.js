@@ -69,7 +69,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                         <>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
-                                <Form.Control as="textarea" data-input-name="question" name="question" row={3} value={props.multipleChoice.question} />
+                                <Form.Control as="textarea" data-input-name="question" name="question" row={3} defaultValue={props.multipleChoice.question} />
                             </Form.Group>
                             {
                                 Object.entries(choices).map(([key, value], index)=>{
@@ -81,7 +81,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                                 </Form.Label>
                                             </Col>
                                             <Col xs={5}>
-                                                <Form.Control data-input-name="choice" data-choice={key} type="text" value={value} required />
+                                                <Form.Control data-input-name="choice" data-choice={key} type="text" defaultValue={value} required />
                                             </Col>
                                             <Col xs={5}>
                                                 {
@@ -103,10 +103,10 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                             }
                             <Form.Group className="mb-3">
                                 <Form.Label>Correct Answer</Form.Label>
-                                <Form.Select data-input-name="correct_choice" value={props.multipleChoice.correct_choice} required>
+                                <Form.Select data-input-name="correct_choice" defaultValue={props.multipleChoice.correct_choice} required>
                                     {
                                         Object.keys(choices).map((key)=>{
-                                            return <option value={key} key={key}>{key.toUpperCase()}</option>
+                                            return <option defaultValue={key} key={key}>{key.toUpperCase()}</option>
                                         })     
                                     }
                                 </Form.Select>
@@ -116,11 +116,11 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                         <>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
-                                <Form.Control as="textarea" data-input-name="question" row={3} value={props.shortAnswer.question} />
+                                <Form.Control as="textarea" data-input-name="question" row={3} defaultValue={props.shortAnswer.question} />
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Correct Answer:</Form.Label>
-                                <Form.Control as="textarea" data-input-name="correct_answer" row={3} value={props.shortAnswer.correct_answer} />
+                                <Form.Control as="textarea" data-input-name="correct_answer" row={3} defaultValue={props.shortAnswer.correct_answer} />
                             </Form.Group>
                         </>
                             

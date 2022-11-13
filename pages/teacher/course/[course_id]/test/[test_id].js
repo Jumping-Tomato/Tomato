@@ -43,12 +43,12 @@ export default function TestManagementPage({props}) {
         choices:{
             a:""
         },
-        correct_choice: "a"
+        correct_choices: ["a"]
       },
       shortAnswer:
       {
         question:"",
-        correct_answer:""
+        correct_answer:[""]
       }
     }
     function addQuestion(event){

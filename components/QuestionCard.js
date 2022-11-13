@@ -21,6 +21,15 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         delete new_props.multipleChoice.choices[choice];
         updateQuestion(new_props);
     }
+    function addCorrectChoice(event){
+        event.preventDefault();
+        const num_of_choices = Object.keys(choices).length;
+        if(num_of_choices < 5){
+            let new_props = {...props};
+            new_props.multipleChoice.correct_choices.push("a");
+            updateQuestion(new_props);
+        } 
+    }
     function handleChange(event){
         const inputName = event.target.getAttribute("data-input-name");
         let value = event.target.value;
@@ -102,14 +111,38 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                     })
                             }
                             <Form.Group className="mb-3">
-                                <Form.Label>Correct Answer</Form.Label>
-                                <Form.Select data-input-name="correct_choice" defaultValue={props.multipleChoice.correct_choice} required>
-                                    {
-                                        Object.keys(choices).map((key)=>{
-                                            return <option defaultValue={key} key={key}>{key.toUpperCase()}</option>
-                                        })     
-                                    }
-                                </Form.Select>
+                                <Form.Label>Correct Answer: </Form.Label>
+                                {
+                                   props.multipleChoice.correct_choices.map((each, index)=>{        
+                                        return (
+                                            <Row className="mb-3" key={index}>
+                                                <Col xs={8}>
+                                                    <Form.Select data-input-name="correct_choices" defaultValue={each} required>
+                                                        {
+                                                            Object.keys(choices).map((key)=>{
+                                                                return <option value={key} key={index + key}>{key.toUpperCase()}</option>
+                                                            })  
+                                                        }
+                                                    </Form.Select>
+                                                </Col>
+                                                <Col xs={3}>
+                                                    {
+                                                        !index && Object.keys(choices).length > 1 &&
+                                                        <button type="button" className="btn btn-sm btn-primary" onClick={addCorrectChoice}>
+                                                            <FontAwesomeIcon icon={faPlus} size="sm" />&nbsp; 
+                                                        </button>
+                                                    }
+                                                    {
+                                                        index > 0 && index == Object.keys(props.multipleChoice.correct_choices).length - 1 &&
+                                                        <button type="button" className="btn btn-sm btn-danger">
+                                                            <FontAwesomeIcon icon={faMinus} size="sm" />&nbsp; 
+                                                        </button>
+                                                    }   
+                                                </Col>
+                                            </Row>
+                                        )             
+                                   }) 
+                                }
                             </Form.Group>
                         </>
                         :

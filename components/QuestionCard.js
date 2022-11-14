@@ -2,6 +2,7 @@ import {Button, Card, Form, Row, Col} from 'react-bootstrap';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+import Multiselect from 'multiselect-react-dropdown';
 
 export default function QuestionCard({props,title,handleRemoveButtonClick,updateQuestion}) {
     var choices = props.multipleChoice.choices;
@@ -21,14 +22,10 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         delete new_props.multipleChoice.choices[choice];
         updateQuestion(new_props);
     }
-    function addCorrectChoice(event){
-        event.preventDefault();
-        const num_of_choices = Object.keys(choices).length;
-        if(num_of_choices < 5){
-            let new_props = {...props};
-            new_props.multipleChoice.correct_choices.push("a");
-            updateQuestion(new_props);
-        } 
+    function updateCorrectChoices(selectedList, selectedItem){
+        let new_props = {...props};
+        new_props.multipleChoice.correct_choices = selectedList.map((each)=>{return each.value}).sort();
+        updateQuestion(new_props);
     }
     function handleChange(event){
         const inputName = event.target.getAttribute("data-input-name");
@@ -111,38 +108,22 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                     })
                             }
                             <Form.Group className="mb-3">
-                                <Form.Label>Correct Answer: </Form.Label>
-                                {
-                                   props.multipleChoice.correct_choices.map((each, index)=>{        
-                                        return (
-                                            <Row className="mb-3" key={index}>
-                                                <Col xs={8}>
-                                                    <Form.Select data-input-name="correct_choices" defaultValue={each} required>
-                                                        {
-                                                            Object.keys(choices).map((key)=>{
-                                                                return <option value={key} key={index + key}>{key.toUpperCase()}</option>
-                                                            })  
-                                                        }
-                                                    </Form.Select>
-                                                </Col>
-                                                <Col xs={3}>
-                                                    {
-                                                        !index && Object.keys(choices).length > 1 &&
-                                                        <button type="button" className="btn btn-sm btn-primary" onClick={addCorrectChoice}>
-                                                            <FontAwesomeIcon icon={faPlus} size="sm" />&nbsp; 
-                                                        </button>
-                                                    }
-                                                    {
-                                                        index > 0 && index == Object.keys(props.multipleChoice.correct_choices).length - 1 &&
-                                                        <button type="button" className="btn btn-sm btn-danger">
-                                                            <FontAwesomeIcon icon={faMinus} size="sm" />&nbsp; 
-                                                        </button>
-                                                    }   
-                                                </Col>
-                                            </Row>
-                                        )             
-                                   }) 
-                                }
+                                <Form.Label>Correct Answers: </Form.Label>
+                                <Multiselect 
+                                    onSelect={updateCorrectChoices}
+                                    onRemove={updateCorrectChoices}
+                                    options={ 
+                                        Object.keys(props.multipleChoice.choices).map((key)=>{
+                                            return {name: key.toUpperCase(), value: key};
+                                        })
+                                    }
+                                    selectedValues={
+                                        props.multipleChoice.correct_choices.map((each)=> {
+                                            return {name: each.toUpperCase(), value: each}
+                                        })
+                                    }
+                                    displayValue="name"
+                                />
                             </Form.Group>
                         </>
                         :

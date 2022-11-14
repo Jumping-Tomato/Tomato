@@ -48,7 +48,7 @@ export default function TestManagementPage({props}) {
       shortAnswer:
       {
         question:"",
-        correct_answer:[""]
+        correct_answers:[""]
       }
     }
     function addQuestion(event){

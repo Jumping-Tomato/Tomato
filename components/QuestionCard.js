@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import Multiselect from 'multiselect-react-dropdown';
-import {removeItemsFromArrayByValue} from 'helpers/functions'
+import {removeItemsFromArrayByValue} from 'helpers/functions';
 
 export default function QuestionCard({props,title,handleRemoveButtonClick,updateQuestion}) {
     var choices = props.multipleChoice.choices;
@@ -24,6 +24,22 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         new_props.multipleChoice.correct_choices = removeItemsFromArrayByValue(new_props.multipleChoice.correct_choices, choice);
         updateQuestion(new_props);
     }
+    function addShortAnswer(event){
+        event.preventDefault();
+        const num_of_correct_answers = props.shortAnswer.correct_answers.length;
+        if(num_of_correct_answers < 5){
+            let new_props = {...props};
+            new_props.shortAnswer.correct_answers.push("");
+            updateQuestion(new_props);
+        } 
+    }
+    function removeShortAnswer(event){
+        event.preventDefault();
+        const index = event.currentTarget.value;
+        let new_props = {...props};
+        new_props.shortAnswer.correct_answers.splice(index,1);
+        updateQuestion(new_props);
+    }
     function updateCorrectChoices(selectedList, selectedItem){
         let new_props = {...props};
         new_props.multipleChoice.correct_choices = selectedList.map((each)=>{return each.value}).sort();
@@ -42,12 +58,16 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
             new_props.multipleChoice.choices[choice] = value;
             updateQuestion(new_props);
         }
+        else if(inputName == "correct_answers"){
+            const index = event.target.getAttribute("data-index");
+            new_props.shortAnswer.correct_answers[index] = value;
+            updateQuestion(new_props);
+        }
         else{
             const questionType = props.type;
             new_props[questionType][inputName] = value;
             updateQuestion(new_props);
-        }
-        
+        } 
     }
     return (
         <Card className="p-0">
@@ -135,8 +155,32 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                 <Form.Control as="textarea" data-input-name="question" row={3} defaultValue={props.shortAnswer.question} />
                             </Form.Group>
                             <Form.Group className="mb-3" >
-                                <Form.Label>Correct Answer:</Form.Label>
-                                <Form.Control as="textarea" data-input-name="correct_answer" row={3} defaultValue={props.shortAnswer.correct_answer} />
+                                <Form.Label>Correct Answers:</Form.Label>
+                                {
+                                    props.shortAnswer.correct_answers.map((each, index)=>{
+                                        return (
+                                                <Row key={index} className="mb-3">
+                                                    <Col xs={8}>
+                                                        <Form.Control as="textarea" data-input-name="correct_answers" data-index={index} row={3} defaultValue={each} />
+                                                    </Col>
+                                                    <Col xs={4}>
+                                                        {
+                                                            !index &&
+                                                            <button type="button" className="btn btn-sm btn-primary" onClick={addShortAnswer}>
+                                                                <FontAwesomeIcon icon={faPlus} size="sm" />&nbsp; 
+                                                            </button>
+                                                        }
+                                                        {
+                                                            index > 0 && index < 5 &&
+                                                            <button type="button" className="btn btn-sm btn-danger" value={index} onClick={removeShortAnswer}>
+                                                                <FontAwesomeIcon icon={faMinus} size="sm" />&nbsp; 
+                                                            </button>
+                                                        }
+                                                    </Col>
+                                                </Row>
+                                            )
+                                    })
+                                }                        
                             </Form.Group>
                         </>
                             

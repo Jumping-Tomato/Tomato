@@ -28,9 +28,29 @@ function getSeasonByMonth(month){
     }
     return "Invalid Month";
 }
+
+/**
+ * Remove all items that has the value from an array.
+ *
+ * @param {array} arr The array in which you are removing the items
+ * @param {number/string} value The value of the items you are removing.
+ * @return {array} x the array after you remove the items
+ */
+function removeItemsFromArrayByValue(arr, value) {
+    var i = 0;
+    while (i < arr.length) {
+      if (arr[i] === value) {
+        arr.splice(i, 1);
+      } else {
+        ++i;
+      }
+    }
+    return arr;
+}
  
 export {
     getNextTwoSemesters,
-    getSeasonByMonth
+    getSeasonByMonth,
+    removeItemsFromArrayByValue
 };
 

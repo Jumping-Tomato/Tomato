@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import Multiselect from 'multiselect-react-dropdown';
+import {removeItemsFromArrayByValue} from 'helpers/functions'
 
 export default function QuestionCard({props,title,handleRemoveButtonClick,updateQuestion}) {
     var choices = props.multipleChoice.choices;
@@ -20,6 +21,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         const choice = event.currentTarget.value;
         let new_props = {...props};
         delete new_props.multipleChoice.choices[choice];
+        new_props.multipleChoice.correct_choices = removeItemsFromArrayByValue(new_props.multipleChoice.correct_choices, choice);
         updateQuestion(new_props);
     }
     function updateCorrectChoices(selectedList, selectedItem){

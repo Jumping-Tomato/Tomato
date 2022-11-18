@@ -10,6 +10,7 @@ import { tests } from 'database/tests';
 import { Alert, Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { nanoid } from 'nanoid'
 
 export default function TestManagementPage({props}) {
     const router = useRouter();
@@ -36,6 +37,7 @@ export default function TestManagementPage({props}) {
       setQuestions(questionsArray);
     },[]);
     const emptyQuestion = {
+      id: nanoid(), //The id is temporary and needed for key in map function
       type: "multipleChoice",
       multipleChoice:
       {
@@ -126,7 +128,7 @@ export default function TestManagementPage({props}) {
                   {
                     questions.map((question, index)=>{
                       return  (
-                              <li className="list-group-item border-0" key={index}>
+                              <li className="list-group-item border-0" key={question.id}>
                                 <QuestionCard props={question} title={"Question " + (index + 1)} updateQuestion={function(question){updateQuestion(index, question)}} handleRemoveButtonClick={ ()=>{ removeQuestionCard(index) } }/>
                               </li>
                             );

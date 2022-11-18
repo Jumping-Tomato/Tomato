@@ -97,7 +97,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                         <>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
-                                <Form.Control as="textarea" data-input-name="question" name="question" row={3} defaultValue={props.multipleChoice.question} />
+                                <Form.Control as="textarea" data-input-name="question" row={3} value={props.multipleChoice.question} />
                             </Form.Group>
                             {
                                 Object.entries(choices).map(([key, value], index)=>{
@@ -152,7 +152,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                         <>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
-                                <Form.Control as="textarea" data-input-name="question" row={3} defaultValue={props.shortAnswer.question} />
+                                <Form.Control as="textarea" data-input-name="question" row={3} value={props.shortAnswer.question} />
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Correct Answers:</Form.Label>

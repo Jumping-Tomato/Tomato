@@ -1,5 +1,5 @@
-import {Button, Card, Form, Row, Col} from 'react-bootstrap';
-import { useState } from 'react';
+import { Card, Form, Row, Col} from 'react-bootstrap';
+import { Fragment } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import Multiselect from 'multiselect-react-dropdown';
@@ -94,10 +94,10 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                     {
                         props.type == "multipleChoice"
                         ?
-                        <>
+                        <Fragment key="multipleChoice">
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
-                                <Form.Control as="textarea" data-input-name="question" row={3} value={props.multipleChoice.question} />
+                                <Form.Control as="textarea" data-input-name="question" row={3} defaultValue={props.multipleChoice.question} />
                             </Form.Group>
                             {
                                 Object.entries(choices).map(([key, value], index)=>{
@@ -147,12 +147,12 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                     displayValue="name"
                                 />
                             </Form.Group>
-                        </>
+                        </Fragment>
                         :
-                        <>
+                        <Fragment key="shortAnswer">
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
-                                <Form.Control as="textarea" data-input-name="question" row={3} value={props.shortAnswer.question} />
+                                <Form.Control as="textarea" data-input-name="question" row={3} defaultValue={props.shortAnswer.question} />
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Correct Answers:</Form.Label>
@@ -182,7 +182,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                     })
                                 }                        
                             </Form.Group>
-                        </>
+                        </Fragment>
                             
                     }
                 </Form>   

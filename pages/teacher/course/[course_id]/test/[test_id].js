@@ -11,6 +11,7 @@ import { Alert, Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { nanoid } from 'nanoid'
+import { useBeforeunload } from 'react-beforeunload';
 
 export default function TestManagementPage({props}) {
     const router = useRouter();
@@ -19,6 +20,7 @@ export default function TestManagementPage({props}) {
       show: false,
       message:""
     });
+    const [hasUnsaved, setHasUnsaved] = useState(false);
     useEffect(() => {
       //populate the questions
       const currentQuestions = props.questions;
@@ -36,6 +38,14 @@ export default function TestManagementPage({props}) {
       });
       setQuestions(questionsArray);
     },[]);
+    useEffect(()=>{
+      setHasUnsaved(true);
+    },[questions]);
+    useBeforeunload((event) => {
+      if (hasUnsaved) {
+        event.preventDefault();
+      }
+    });
     const emptyQuestion = {
       id: nanoid(), //The id is temporary and needed for key in map function
       type: "multipleChoice",
@@ -83,6 +93,7 @@ export default function TestManagementPage({props}) {
       axios.put(url, data)
       .then(function (response) {
         showModal(true,"Question(s) have been saved.");
+        setHasUnsaved(false);
       })
       .catch(function (error) {
         showModal(false,error.response.data.error);

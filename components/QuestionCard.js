@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import Multiselect from 'multiselect-react-dropdown';
 import {removeItemsFromArrayByValue} from 'helpers/functions';
+import { nanoid } from 'nanoid'
 
 export default function QuestionCard({props,title,handleRemoveButtonClick,updateQuestion}) {
     var choices = props.multipleChoice.choices;
@@ -29,7 +30,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         const num_of_correct_answers = props.shortAnswer.correct_answers.length;
         if(num_of_correct_answers < 5){
             let new_props = {...props};
-            new_props.shortAnswer.correct_answers.push("");
+            new_props.shortAnswer.correct_answers.push({key:nanoid(), answer:""});
             updateQuestion(new_props);
         } 
     }
@@ -60,7 +61,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         }
         else if(inputName == "correct_answers"){
             const index = event.target.getAttribute("data-index");
-            new_props.shortAnswer.correct_answers[index] = value;
+            new_props.shortAnswer.correct_answers[index]["answer"] = value;
             updateQuestion(new_props);
         }
         else{
@@ -159,9 +160,9 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                 {
                                     props.shortAnswer.correct_answers.map((each, index)=>{
                                         return (
-                                                <Row key={index} className="mb-3">
+                                                <Row key={each.key} className="mb-3">
                                                     <Col xs={8}>
-                                                        <Form.Control as="textarea" data-input-name="correct_answers" data-index={index} row={3} defaultValue={each} />
+                                                        <Form.Control as="textarea" data-input-name="correct_answers" data-index={index} row={3} defaultValue={each.answer} />
                                                     </Col>
                                                     <Col xs={4}>
                                                         {

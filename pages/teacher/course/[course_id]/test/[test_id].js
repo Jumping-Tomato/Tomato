@@ -60,7 +60,12 @@ export default function TestManagementPage({props}) {
       shortAnswer:
       {
         question:"",
-        correct_answers:[""]
+        correct_answers:[
+          {
+            key: nanoid(),
+            answer: ""
+          }
+        ]
       }
     }
     function addQuestion(event){

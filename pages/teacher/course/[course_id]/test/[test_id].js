@@ -26,7 +26,8 @@ export default function TestManagementPage({props}) {
       const currentQuestions = props.questions;
       let questionsArray = []
       currentQuestions.forEach((each)=>{
-        const question = structuredClone(emptyQuestion)
+        const question = structuredClone(emptyQuestion);
+        question.key = each.key;
         question.type = each.type;
         if(each.type == "multipleChoice"){
           question.multipleChoice = each.detail;
@@ -47,7 +48,7 @@ export default function TestManagementPage({props}) {
       }
     });
     const emptyQuestion = {
-      id: nanoid(), //The id is temporary and needed for key in map function
+      key: nanoid(),
       type: "multipleChoice",
       multipleChoice:
       {
@@ -144,7 +145,7 @@ export default function TestManagementPage({props}) {
                   {
                     questions.map((question, index)=>{
                       return  (
-                              <li className="list-group-item border-0" key={question.id}>
+                              <li className="list-group-item border-0" key={question.key}>
                                 <QuestionCard props={question} title={"Question " + (index + 1)} updateQuestion={function(question){updateQuestion(index, question)}} handleRemoveButtonClick={ ()=>{ removeQuestionCard(index) } }/>
                               </li>
                             );

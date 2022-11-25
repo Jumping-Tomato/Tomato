@@ -95,6 +95,24 @@ export default function CourseManagementPage({props}) {
       closeCreateTestModal();
       loadTests();
     }
+    function deleteTest(event){
+      const test_id = event.target.getAttribute("data-test-id");
+      const index = event.target.getAttribute("data-index");
+      const data = {
+        "test_id": test_id,
+      };
+      const url = "/api/teacher/deleteTestById";
+      axios.post(url, data)
+      .then(function (response) {
+          let new_tests = [...tests];
+          new_tests.splice(index,1);
+          setTests(new_tests);
+      })
+      .catch(function (error) {
+        setError(error.response.data.error);
+        setIsLoading(false);
+      });
+    }
     return (
         <>
         <Topbar />
@@ -187,7 +205,7 @@ export default function CourseManagementPage({props}) {
                           <div className='pt-3 col-12'>
                               <ul className="list-group">
                                 {
-                                  tests.map((test)=>{
+                                  tests.map((test, index)=>{
                                     return (
                                         <li className="list-group-item" key={test._id}>
                                           <div className="row">
@@ -209,7 +227,7 @@ export default function CourseManagementPage({props}) {
                                                   </Button>
                                                 </Row>
                                                 <Row className='pt-1'>
-                                                  <Button variant="primary" size="sm">
+                                                  <Button variant="danger" size="sm" data-index={index} data-test-id={test._id} onClick={deleteTest}>
                                                       Delete
                                                   </Button>
                                                 </Row>

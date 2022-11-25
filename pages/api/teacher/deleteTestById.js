@@ -1,6 +1,5 @@
-import { getToken } from "next-auth/jwt"
-import { tests } from "database/tests"
-const { ObjectId } = require('mongodb')
+import { getToken } from "next-auth/jwt";
+import { tests } from "database/tests";
 
 export default async function deleteTestById(req, res) {
     const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })

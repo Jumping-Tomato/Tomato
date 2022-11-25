@@ -9,6 +9,7 @@ import { courses } from 'database/courses';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import  Link  from 'next/link';
+import { getDateFromDate, geTimeFromDate } from 'helpers/functions';
 
 export default function CourseManagementPage({props}) {
     const [students, setStudents] = useState({
@@ -190,9 +191,29 @@ export default function CourseManagementPage({props}) {
                                     return (
                                         <li className="list-group-item" key={test._id}>
                                           <div className="row">
-                                              <span className="col-12">
-                                                <Link href={"/teacher/course/"+ props.course_id + "/test/" + test._id}>{test.name}</Link>
-                                              </span>
+                                              <div className="col-4 pt-3">
+                                                {test.name}
+                                              </div>
+                                              <div className="col-6 pt-3">
+                                                Earliest Start Time: { getDateFromDate(new Date(test.startDate)) } { geTimeFromDate(new Date(test.startDate)) }
+                                              </div>
+                                              <div className="col-2">
+                                                <Row className='pt-1'>
+                                                  <Button variant="primary" size="sm">
+                                                    Edit
+                                                  </Button>
+                                                </Row>          
+                                                <Row className='pt-1'>
+                                                  <Button variant="primary" size="sm">
+                                                      Score
+                                                  </Button>
+                                                </Row>
+                                                <Row className='pt-1'>
+                                                  <Button variant="primary" size="sm">
+                                                      Delete
+                                                  </Button>
+                                                </Row>
+                                              </div>
                                           </div>
                                         </li>
                                     )

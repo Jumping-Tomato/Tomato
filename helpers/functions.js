@@ -1,3 +1,19 @@
+/*
+* get the date in MM/DD/YYYY from a date object 
+*/
+function getDateFromDate(date){
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let year = date.getFullYear();
+    return month + "/" + day + "/" + year;
+}
+
+function geTimeFromDate(date){
+    let hour = date.getHours() > 10 ? date.getHours() :  ('0' + date.getHours());
+    let minute = date.getMinutes() > 10 ? date.getMinutes() : ('0' + date.getMinutes());
+    return hour + ":" + minute;
+}
+
 function getNextTwoSemesters(){
     const today = new Date();
     const currentMonth = today.getMonth();
@@ -49,6 +65,8 @@ function removeItemsFromArrayByValue(arr, value) {
 }
  
 export {
+    getDateFromDate,
+    geTimeFromDate,
     getNextTwoSemesters,
     getSeasonByMonth,
     removeItemsFromArrayByValue

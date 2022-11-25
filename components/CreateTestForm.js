@@ -57,6 +57,7 @@ export default function CreateTestForm({course_id, onSuccessCallback}) {
                   timeIntervals={15}
                   timeCaption="time"
                   dateFormat="MMMM d, yyyy h:mm aa"
+                  autoComplete='off'
             />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -71,6 +72,7 @@ export default function CreateTestForm({course_id, onSuccessCallback}) {
                   timeIntervals={15}
                   timeCaption="time"
                   dateFormat="MMMM d, yyyy h:mm aa"
+                  autoComplete='off'
               />
             </Form.Group>
             { error && <Alert variant="danger"> {error} </Alert>}

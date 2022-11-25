@@ -13,9 +13,18 @@ dbPromise.then((value) => {
 
 export const tests = {
     createTest,
+    deleteTestById: async test_id =>{
+        try{
+            const result = await db.collection("tests").deleteOne({"_id": ObjectId(test_id) });
+            return result
+        }
+        catch(error){
+            throw `Unable to delete the Test.\nError: "${error}"`;
+        }
+    },
     getTestsByCourseId: async course_id => {
         return await db.collection("tests").find({"course_id": ObjectId(course_id)})
-        .project({ name: 1 }).toArray();
+        .project({ name: 1, startDate:1, deadline:1 }).toArray();
     },
     getTestById: async test_id => {
         return await db.collection("tests").findOne({"_id": ObjectId(test_id)});

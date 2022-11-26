@@ -212,10 +212,10 @@ export default function CourseManagementPage({props}) {
                                               <div className="col-4 pt-3">
                                                 {test.name}
                                               </div>
-                                              <div className="col-6 pt-3">
+                                              <div className="col-5 pt-3">
                                                 Earliest Start Time: { getDateFromDate(new Date(test.startDate)) } { geTimeFromDate(new Date(test.startDate)) }
                                               </div>
-                                              <div className="col-2">
+                                              <div className="col-3">
                                                 <Row className='pt-1'>
                                                   <Button variant="warning" size="sm" href={`/teacher/course/${props.course_id}/test/${test._id}/questions`}>
                                                     Edit Questions

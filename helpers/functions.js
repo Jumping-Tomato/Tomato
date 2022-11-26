@@ -14,6 +14,13 @@ function geTimeFromDate(date){
     return hour + ":" + minute;
 }
 
+function getTomorrowDate(){
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow;
+}
+
 function getNextTwoSemesters(){
     const today = new Date();
     const currentMonth = today.getMonth();
@@ -67,6 +74,7 @@ function removeItemsFromArrayByValue(arr, value) {
 export {
     getDateFromDate,
     geTimeFromDate,
+    getTomorrowDate,
     getNextTwoSemesters,
     getSeasonByMonth,
     removeItemsFromArrayByValue

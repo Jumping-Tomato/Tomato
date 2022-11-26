@@ -3,7 +3,7 @@ import { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import { getTomorrowDate } from 'helpers/functions';
 import Alert from 'react-bootstrap/Alert';
 
 export default function CreateTestForm({course_id, onSuccessCallback}) {
@@ -53,7 +53,7 @@ export default function CreateTestForm({course_id, onSuccessCallback}) {
                   name="startDate"
                   showTimeSelect
                   timeFormat="HH:mm"
-                  minDate={new Date()}
+                  minDate={getTomorrowDate()}
                   timeIntervals={15}
                   timeCaption="time"
                   dateFormat="MMMM d, yyyy h:mm aa"
@@ -68,7 +68,7 @@ export default function CreateTestForm({course_id, onSuccessCallback}) {
                   name="deadline"
                   showTimeSelect
                   timeFormat="HH:mm"
-                  minDate={new Date()}
+                  minDate={getTomorrowDate()}
                   timeIntervals={15}
                   timeCaption="time"
                   dateFormat="MMMM d, yyyy h:mm aa"

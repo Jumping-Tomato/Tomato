@@ -217,7 +217,7 @@ export default function CourseManagementPage({props}) {
                                               </div>
                                               <div className="col-2">
                                                 <Row className='pt-1'>
-                                                  <Button variant="warning" size="sm">
+                                                  <Button variant="warning" size="sm" href={`/teacher/course/${props.course_id}/test/${test._id}/questions`}>
                                                     Edit Questions
                                                   </Button>
                                                 </Row>          

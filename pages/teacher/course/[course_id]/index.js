@@ -217,13 +217,13 @@ export default function CourseManagementPage({props}) {
                                               </div>
                                               <div className="col-2">
                                                 <Row className='pt-1'>
-                                                  <Button variant="primary" size="sm">
-                                                    Edit
+                                                  <Button variant="warning" size="sm">
+                                                    Edit Questions
                                                   </Button>
                                                 </Row>          
                                                 <Row className='pt-1'>
-                                                  <Button variant="primary" size="sm">
-                                                      Score
+                                                  <Button variant="success" size="sm">
+                                                      View Score
                                                   </Button>
                                                 </Row>
                                                 <Row className='pt-1'>

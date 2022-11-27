@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import global from 'styles/Global.module.scss';
-import { Topbar, Footer, CreateTestForm } from 'components';
+import { ConfirmationModal, Topbar, Footer, CreateTestForm } from 'components';
 import axios from 'axios';
 import { Button, Tab, Col, Nav, Row,Spinner, Modal, Form} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
@@ -22,6 +22,11 @@ export default function CourseManagementPage({props}) {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     let [showCreateQuizModal, setShowCreateQuizModal] = useState(false);
+    const [deleteConfirmationModalData, setDeleteConfirmationModalData] = useState({
+      show: false,
+      deleting_test_id: "",
+      deleting_test_index: null,
+    });
     function loadStudents(){
       const url = '/api/teacher/getStudentsByCourseId';
       const params = {params: {course_id: props.course_id}};
@@ -95,9 +100,7 @@ export default function CourseManagementPage({props}) {
       closeCreateTestModal();
       loadTests();
     }
-    function deleteTest(event){
-      const test_id = event.target.getAttribute("data-test-id");
-      const index = event.target.getAttribute("data-index");
+    function deleteTest(test_id, index){
       const data = {
         "test_id": test_id,
       };
@@ -111,6 +114,13 @@ export default function CourseManagementPage({props}) {
       .catch(function (error) {
         setError(error.response.data.error);
         setIsLoading(false);
+      })
+      .finally(function(){
+        setDeleteConfirmationModalData({
+          show: false,
+          deleting_test_id: "",
+          deleting_test_index: null,
+        });
       });
     }
     return (
@@ -227,7 +237,7 @@ export default function CourseManagementPage({props}) {
                                                   </Button>
                                                 </Row>
                                                 <Row className='pt-1'>
-                                                  <Button variant="danger" size="sm" data-index={index} data-test-id={test._id} onClick={deleteTest}>
+                                                  <Button variant="danger" size="sm" onClick={function(){setDeleteConfirmationModalData({show:true,deleting_test_id: test._id, deleting_test_index: index})}}>
                                                       Delete
                                                   </Button>
                                                 </Row>
@@ -258,6 +268,13 @@ export default function CourseManagementPage({props}) {
             <CreateTestForm course_id={props.course_id} onSuccessCallback={createTestOnSuccessCallback} />
           </Modal.Body>          
         </Modal>
+        <ConfirmationModal 
+          title="Are you sure?" 
+          message="Are you sure to delete the test" 
+          show={deleteConfirmationModalData.show} 
+          confirmationCallBack={function(){deleteTest(deleteConfirmationModalData.deleting_test_id, deleteConfirmationModalData.index)}}
+          closeModalCallBack={(e)=>{setDeleteConfirmationModalData({show:false, deleting_test_id:"", deleting_test_index: null})}}
+        />
       </>
     );
 }

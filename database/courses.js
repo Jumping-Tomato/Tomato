@@ -20,7 +20,9 @@ export const courses = {
         .project({ name: 1, semester: 1 }).toArray();
     },
     getCoursesForStudent: async user_id => {
-        return await db.collection("users").find({"_id": ObjectId(user_id)}).project({ courses: 1});
+        const student = await db.collection("users").findOne({"_id": ObjectId(user_id)});
+        const courses = await db.collection("courses").find({"_id" : { $in: student.courses }}).project({ name:1, semester:1}).toArray();
+        return courses;
     },
     getCourseById: async course_id => {
         return await db.collection("courses").findOne({"_id": ObjectId(course_id)});
@@ -112,7 +114,6 @@ async function denyStudent(course_id, student_id){
 
 async function findCourses(teacherFirstname, teacherLastname, course, student_id){
     student_id = ObjectId(student_id)
-    console.log(course)
     try{
         let courses = await db.collection("courses").aggregate([
             {

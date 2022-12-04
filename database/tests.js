@@ -48,7 +48,7 @@ async function updateQuestions(test_id, questions_data){
         const dateUpdated = new Date().toISOString();
         let questions = [];
         questions_data.forEach((item)=>{
-            const key = item.key;
+            const id = item.id;
             const type = item.type;
             const question = item[type];
             const question_obj = {

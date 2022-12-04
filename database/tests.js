@@ -52,7 +52,7 @@ async function updateQuestions(test_id, questions_data){
             const type = item.type;
             const question = item[type];
             const question_obj = {
-                key: key,
+                id: id,
                 type: type,
                 detail:question
             }

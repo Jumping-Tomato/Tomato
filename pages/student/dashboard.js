@@ -3,6 +3,7 @@ import Head from 'next/head'
 import global from 'styles/Global.module.scss'
 import { Topbar, Footer } from 'components'
 import { useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 import axios from 'axios';
 
 export default function StudentDashboard() {
@@ -43,8 +44,13 @@ export default function StudentDashboard() {
                                                                 <div className="col-6">
                                                                     {course.name} 
                                                                 </div>
-                                                                <div className="col-6">
+                                                                <div className="col-5">
                                                                     {course.semester}
+                                                                </div>
+                                                                <div className="col-1">
+                                                                    <Button href={`/student/course/${course._id}`}>
+                                                                        Go
+                                                                    </Button>
                                                                 </div>
                                                             </div>
                                                         </li>);

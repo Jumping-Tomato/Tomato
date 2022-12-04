@@ -8,7 +8,7 @@ function getDateFromDate(date){
     return month + "/" + day + "/" + year;
 }
 
-function geTimeFromDate(date){
+function getTimeFromDate(date){
     let hour = date.getHours() > 9 ? date.getHours() :  ('0' + date.getHours());
     let minute = date.getMinutes() > 9 ? date.getMinutes() : ('0' + date.getMinutes());
     return hour + ":" + minute;
@@ -73,7 +73,7 @@ function removeItemsFromArrayByValue(arr, value) {
  
 export {
     getDateFromDate,
-    geTimeFromDate,
+    getTimeFromDate,
     getTomorrowDate,
     getNextTwoSemesters,
     getSeasonByMonth,

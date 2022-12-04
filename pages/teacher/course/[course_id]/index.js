@@ -9,7 +9,7 @@ import { courses } from 'database/courses';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import  Link  from 'next/link';
-import { getDateFromDate, geTimeFromDate } from 'helpers/functions';
+import { getDateFromDate, getTimeFromDate } from 'helpers/functions';
 
 export default function CourseManagementPage({props}) {
     const [students, setStudents] = useState({
@@ -223,7 +223,7 @@ export default function CourseManagementPage({props}) {
                                                 {test.name}
                                               </div>
                                               <div className="col-5 pt-3">
-                                                Earliest Start Time: { getDateFromDate(new Date(test.startDate)) } { geTimeFromDate(new Date(test.startDate)) }
+                                                Earliest Start Time: { getDateFromDate(new Date(test.startDate)) } { getTimeFromDate(new Date(test.startDate)) }
                                               </div>
                                               <div className="col-3">
                                                 <Row className='pt-1'>

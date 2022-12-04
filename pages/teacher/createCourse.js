@@ -27,7 +27,7 @@ export default function CreateCoursePage() {
     }
     const handleSubmit = (event) => {
       event.preventDefault();
-      const url = "/api/create-course";
+      const url = "/api/teacher/create-course";
       axios.post(url, formData)
       .then(function (response) {
         router.push("/teacher/dashboard");

@@ -10,7 +10,7 @@ export default function StudentDashboard() {
     const { data: session } = useSession();
     const [courses, setCourses] = useState([]);
     useEffect(() => {
-        axios.get("/api/getCoursesForStudent")
+        axios.get("/api/student/getCoursesForStudent")
         .then(function (response) {
             let courses = response.data.courses;
             setCourses(courses)

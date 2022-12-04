@@ -27,7 +27,7 @@ export default function SearchCoursePage() {
     }
     const handleSubmit = (event) => {
       event.preventDefault();
-      const url = "/api/findCourses";
+      const url = "/api/student/findCourses";
       setIsLoading(true)
       axios.post(url, formData)
       .then(function (response) {
@@ -44,7 +44,7 @@ export default function SearchCoursePage() {
       const data = {
         "course_id": course_id
       };
-      const url = "/api/requestToJoin";
+      const url = "/api/student/requestToJoin";
       axios.post(url, data)
       .then(function (response) {
         const new_courses = [...courses];

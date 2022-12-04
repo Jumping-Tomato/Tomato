@@ -53,7 +53,7 @@ export default function StudentCoursePage({props}) {
                                                             Deadline: { getDateFromDate(new Date(test.deadline)) } { getTimeFromDate(new Date(test.deadline)) }
                                                         </div>
                                                         <div className="col-1">
-                                                            <Button href={`test/${test._id}`}>
+                                                            <Button href={`/course/${props.course_id}/test/${test._id}`}>
                                                                 Go
                                                             </Button>
                                                         </div>

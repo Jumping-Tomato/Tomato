@@ -6,7 +6,7 @@ import { courses } from 'database/courses';
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { Button } from 'react-bootstrap';
-import { getDateFromDate, getTimeFromDate } from 'helpers/functions';
+import { getDateFromDate, getTimeFromDate, isStudentInCourse } from 'helpers/functions';
 
 export default function StudentCoursePage({props}) {
     const [tests, setTests] = useState([]);
@@ -82,15 +82,7 @@ export async function getServerSideProps(context) {
             notFound: true
         }
     }
-    let isStudentInCourse = false;
-    let studentsArray = course.students;
-    for (let i = 0; i < studentsArray.length; i++){
-        if(studentsArray[i].toString() == uid){
-            isStudentInCourse = true;
-            break;
-        }
-    }
-    if(!isStudentInCourse){
+    if(!isStudentInCourse(course, uid)){
         return {
             redirect: {
                 destination: "/error/forbidden",

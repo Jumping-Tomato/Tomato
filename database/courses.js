@@ -29,7 +29,8 @@ export const courses = {
     },
     getStudentsByCourseId: getStudentsByCourseId,
     findCourses: findCourses,
-    requestToJoin:requestToJoin    
+    requestToJoin:requestToJoin,
+    isStudentInCourse: isStudentInCourse
 };
 
 async function approveStudent(course_id, student_id){
@@ -215,3 +216,21 @@ async function requestToJoin(studentId, courseId){
     }
 }
 
+async function isStudentInCourse(course_id, student_id){
+    try{
+        const course = await db.collection("courses").findOne({
+            $and: [
+                { "_id": ObjectId(course_id)},
+                { "students": {$in: [ObjectId(student_id)]}},
+            ]
+        });
+        if (course){
+            return true;
+        }
+        return false;
+    }
+    catch(error){
+        console.error(error);
+        throw error;
+    }
+}

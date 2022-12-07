@@ -70,16 +70,6 @@ function removeItemsFromArrayByValue(arr, value) {
     }
     return arr;
 }
-
-function isStudentInCourse(course_data, student_id){
-    let studentsArray = course_data.students;
-    for (let i = 0; i < studentsArray.length; i++){
-        if(studentsArray[i].toString() == student_id){
-            return true;
-        }
-    }
-    return false;
-}
  
 export {
     getDateFromDate,
@@ -87,7 +77,6 @@ export {
     getTomorrowDate,
     getNextTwoSemesters,
     getSeasonByMonth,
-    isStudentInCourse,
     removeItemsFromArrayByValue
 };
 

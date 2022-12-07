@@ -6,7 +6,7 @@ import { courses } from 'database/courses';
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { Button } from 'react-bootstrap';
-import { getDateFromDate, getTimeFromDate, isStudentInCourse } from 'helpers/functions';
+import { getDateFromDate, getTimeFromDate } from 'helpers/functions';
 
 export default function StudentCoursePage({props}) {
     const [tests, setTests] = useState([]);
@@ -53,7 +53,7 @@ export default function StudentCoursePage({props}) {
                                                             Deadline: { getDateFromDate(new Date(test.deadline)) } { getTimeFromDate(new Date(test.deadline)) }
                                                         </div>
                                                         <div className="col-1">
-                                                            <Button href={`/course/${props.course_id}/test/${test._id}`}>
+                                                            <Button href={`/student/course/${props.course_id}/test/${test._id}`}>
                                                                 Go
                                                             </Button>
                                                         </div>
@@ -82,7 +82,8 @@ export async function getServerSideProps(context) {
             notFound: true
         }
     }
-    if(!isStudentInCourse(course, uid)){
+    const studentInCourse = await courses.isStudentInCourse(course_id, uid);
+    if(!studentInCourse){
         return {
             redirect: {
                 destination: "/error/forbidden",

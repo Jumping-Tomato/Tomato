@@ -22,7 +22,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         const choice = event.currentTarget.value;
         let new_props = {...props};
         delete new_props.multipleChoice.choices[choice];
-        new_props.multipleChoice.correct_choices = removeItemsFromArrayByValue(new_props.multipleChoice.correct_choices, choice);
+        new_props.multipleChoice.correct_answers = removeItemsFromArrayByValue(new_props.multipleChoice.correct_answers, choice);
         updateQuestion(new_props);
     }
     function addShortAnswer(event){
@@ -43,7 +43,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
     }
     function updateCorrectChoices(selectedList, selectedItem){
         let new_props = {...props};
-        new_props.multipleChoice.correct_choices = selectedList.map((each)=>{return each.value}).sort();
+        new_props.multipleChoice.correct_answers = selectedList.map((each)=>{return each.value}).sort();
         updateQuestion(new_props);
     }
     function handleChange(event){
@@ -141,7 +141,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                         })
                                     }
                                     selectedValues={
-                                        props.multipleChoice.correct_choices.map((each)=> {
+                                        props.multipleChoice.correct_answers.map((each)=> {
                                             return {name: each.toUpperCase(), value: each}
                                         })
                                     }

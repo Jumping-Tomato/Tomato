@@ -56,7 +56,7 @@ export default function TestManagementPage({props}) {
         choices:{
             a:""
         },
-        correct_choices: ["a"]
+        correct_answers: ["a"]
       },
       shortAnswer:
       {

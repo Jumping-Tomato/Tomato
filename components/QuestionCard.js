@@ -148,6 +148,10 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                     displayValue="name"
                                 />
                             </Form.Group>
+                            <Form.Group className="mb-3" >
+                                <Form.Label>Time (seconds):</Form.Label>
+                                <Form.Control data-input-name="time" type="number" defaultValue={props.multipleChoice.time} required />
+                            </Form.Group>
                         </Fragment>
                         :
                         <Fragment key="shortAnswer">
@@ -182,6 +186,10 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                             )
                                     })
                                 }                        
+                            </Form.Group>
+                            <Form.Group className="mb-3" >
+                                <Form.Label>Time (seconds):</Form.Label>
+                                <Form.Control data-input-name="time" type="number" defaultValue={props.shortAnswer.time} required />
                             </Form.Group>
                         </Fragment>
                             

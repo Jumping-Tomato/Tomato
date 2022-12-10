@@ -56,7 +56,8 @@ export default function TestManagementPage({props}) {
         choices:{
             a:""
         },
-        correct_answers: ["a"]
+        correct_answers: ["a"],
+        time: 60
       },
       shortAnswer:
       {
@@ -66,7 +67,8 @@ export default function TestManagementPage({props}) {
             key: nanoid(),
             answer: ""
           }
-        ]
+        ],
+        time: 60
       }
     }
     function addQuestion(event){

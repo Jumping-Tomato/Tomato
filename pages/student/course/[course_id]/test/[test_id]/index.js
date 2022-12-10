@@ -3,6 +3,9 @@ import { courses } from "database/courses";
 import { tests } from "database/tests";
 import { testSubmissions } from 'database/testSubmissions';
 import { shuffle } from 'helpers/functions';
+import { ObjectId } from "mongodb";
+
+
 export default function TestTakingPage({props}) {
     
     return (
@@ -24,8 +27,9 @@ export async function getServerSideProps(context) {
       notFound: true
     }
   }
-  const studentInCourse = await courses.isStudentInCourse(course_id, uid);
-  if(!studentInCourse){
+  const studentInCourse = await courses.isStudentInCourse(course_id, uid); 
+  const testIsSubmitted = await testSubmissions.testIsSubmitted(test_id, uid);
+  if(!studentInCourse || testIsSubmitted){
     return {
         redirect: {
             destination: "/error/forbidden",
@@ -43,7 +47,9 @@ export async function getServerSideProps(context) {
   unanswered_questions = shuffle(unanswered_questions);
   const testSubmission_data = await testSubmissions.createTestSubmission({
     "test_id": test_data._id,
-    "unanswered_questions": shuffle(unanswered_questions)
+    "student_id": new ObjectId(uid),
+    "unanswered_questions": shuffle(unanswered_questions),
+    "answered_questions": []
   });
   const testSubmission_id =  testSubmission_data.insertedId.toString();
   let props = {

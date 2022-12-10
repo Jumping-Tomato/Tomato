@@ -12,7 +12,8 @@ dbPromise.then((value) => {
 
 
 export const testSubmissions = {
-    createTestSubmission
+    createTestSubmission,
+    testIsSubmitted: testIsSubmitted
 };
 
 async function createTestSubmission(submissionData) {
@@ -25,5 +26,23 @@ async function createTestSubmission(submissionData) {
     catch(error){
         console.error(error);
         throw `Unable to create a test submission.\n Error:"${error}"`;
+    }
+}
+
+async function testIsSubmitted(test_id, student_id) {
+    try{
+        const submission = await db.collection("testSubmissions").findOne({
+            $and: [
+                { "test_id": ObjectId(test_id)},
+                { "student_id": ObjectId(student_id)},
+            ]
+        });
+        if (submission){
+            return true;
+        }
+        return false;
+    }
+    catch(error){
+        throw `Unable to find the Test submission.\nError: "${error}"`;
     }
 }

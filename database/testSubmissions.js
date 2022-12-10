@@ -13,7 +13,8 @@ dbPromise.then((value) => {
 
 export const testSubmissions = {
     createTestSubmission,
-    testIsSubmitted: testIsSubmitted
+    testIsSubmitted: testIsSubmitted,
+    getUnansweredQuestion: getUnansweredQuestion
 };
 
 async function createTestSubmission(submissionData) {
@@ -44,5 +45,24 @@ async function testIsSubmitted(test_id, student_id) {
     }
     catch(error){
         throw `Unable to find the Test submission.\nError: "${error}"`;
+    }
+}
+
+async function getUnansweredQuestion(testSubmission_id){
+    try{
+        const submission = await db.collection("testSubmissions").findOne({
+            "_id": ObjectId(testSubmission_id)
+        });
+        let questions = [];
+        if(submission){
+            questions = submission.unanswered_questions;
+        }
+        if(questions.length){
+            return questions[0];
+        }
+        return null;
+    }
+    catch(error){
+        throw `Unable to get a question.\nError: "${error}"`;
     }
 }

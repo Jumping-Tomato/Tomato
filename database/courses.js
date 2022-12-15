@@ -62,11 +62,21 @@ async function approveStudent(course_id, student_id){
                 { session }
             );
             const updatedCourse = await coursesCollection.findOne(
-                { "_id": course_id, students: { $in: [student_id] } },
-                { session });
+                {
+                    $and: [
+                        {"_id": course_id, students: { $in: [student_id] }}
+                    ]
+                },
+                { session }
+            );
             const updatedUser = await usersCollection.findOne(
-                { "_id": student_id, courses: { $in: [course_id] } },
-                { session });
+                {
+                    $and: [
+                        { "_id": student_id, courses: { $in: [course_id] } },
+                    ]
+                },
+                { session }
+            );
             if(!updatedCourse || !updatedUser){
                 await session.abortTransaction();
                 return;

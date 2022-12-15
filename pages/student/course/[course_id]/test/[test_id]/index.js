@@ -13,7 +13,6 @@ import { Form, Row, Col} from 'react-bootstrap';
 export default function TestTakingPage({props}) {
     const [question, setQuestion] = useState(null);
     const [error, setError] = useState({});
-    const params = {params: {course_id: props.course_id}};
     function getUnansweredQuestion(){
       const params = {params: {testSubmissionId: props.testSubmission_id}};
       axios.get('/api/student/getTestQuestion', params)
@@ -27,6 +26,11 @@ export default function TestTakingPage({props}) {
     useEffect(() => {
       getUnansweredQuestion();
     },[]);
+    useEffect(() => {
+      if(question){
+        setTimeout(() => getUnansweredQuestion(), question.detail.time * 1000);
+      }
+    },[question]);
     return (
         <>
            <div className={global.container}>

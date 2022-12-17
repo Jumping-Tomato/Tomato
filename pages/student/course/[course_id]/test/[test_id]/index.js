@@ -12,25 +12,48 @@ import { Form, Row, Col} from 'react-bootstrap';
 
 export default function TestTakingPage({props}) {
     const [question, setQuestion] = useState(null);
+    const [numOfQuestions, setNumOfQuestions] = useState(props.numOfQuestions);
     const [error, setError] = useState({});
-    function getUnansweredQuestion(){
-      const params = {params: {testSubmissionId: props.testSubmission_id}};
-      axios.get('/api/student/getTestQuestion', params)
-      .then(function (response) {
-        setQuestion(response.data.question);
-      })
-      .catch(function (error) {
+    async function getUnansweredQuestion(){
+      try{
+        if(numOfQuestions){
+          const params = {params: {testSubmissionId: props.testSubmission_id}};
+          const response = await axios.get('/api/student/getTestQuestion', params)
+          setQuestion(response.data.question);
+          setNumOfQuestions(numOfQuestions-1);
+        } 
+      }
+      catch(error){
         setError(error)
-      }); 
+      }
+    }
+    async function submitQuestion(){
+      try{
+        const data = {
+          test_submission_id: props.testSubmission_id,
+          question_data: question
+        }
+        await axios.post('/api/student/submitTestQuestion', data);
+      }
+      catch(error){
+        setError(error)
+      }
     }
     useEffect(() => {
       getUnansweredQuestion();
     },[]);
+
     useEffect(() => {
-      if(question){
-        setTimeout(() => getUnansweredQuestion(), question.detail.time * 1000);
+      async function fetchMyAPI() {
+        if(question){
+          setTimeout(async () => {
+            await submitQuestion();
+            await getUnansweredQuestion();
+          }, question.detail.time * 1000);
+        }
       }
-    },[question]);
+      fetchMyAPI()
+    }, [question]);
     return (
         <>
            <div className={global.container}>
@@ -116,7 +139,6 @@ export async function getServerSideProps(context) {
     delete unanswered_question.detail.correct_answers;
     unanswered_questions.push(unanswered_question);
   });
-  unanswered_questions = shuffle(unanswered_questions);
   const testSubmission_data = await testSubmissions.createTestSubmission({
     "test_id": test_data._id,
     "student_id": new ObjectId(uid),
@@ -128,7 +150,8 @@ export async function getServerSideProps(context) {
     title: test_data.name,
     course_id: course_id,
     test_id: test_id,
-    testSubmission_id: testSubmission_id
+    testSubmission_id: testSubmission_id,
+    numOfQuestions: unanswered_questions.length
   };
   return {
     props: {props}

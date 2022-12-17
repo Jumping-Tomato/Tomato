@@ -8,7 +8,8 @@ import global from 'styles/Global.module.scss';
 import Head from 'next/head';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Form, Row, Col} from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
 export default function TestTakingPage({props}) {
     const [question, setQuestion] = useState(null);
@@ -69,6 +70,15 @@ export default function TestTakingPage({props}) {
                             {
                               question && 
                               <>
+                                <CountdownCircleTimer
+                                  isPlaying
+                                  duration={question.detail.time}
+                                  colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+                                  colorsTime={[10, 6, 3, 0]}
+                                  onComplete={() => ({ shouldRepeat: true, delay: 0 })}
+                                >
+                                  {renderTime}
+                                </CountdownCircleTimer>
                                 <h4>{question.detail.question}</h4>
                                 {
                                   question.type == "multipleChoice" ?
@@ -105,6 +115,14 @@ export default function TestTakingPage({props}) {
         </>
     );
 }
+
+const renderTime = ({ remainingTime }) => {
+  return (
+    <div className="timer">
+      <div className="value">{remainingTime}</div>
+    </div>
+  );
+};
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);

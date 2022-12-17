@@ -2,6 +2,7 @@ import ConfirmationModal from './ConfirmationModal';
 import CreateTestForm from './CreateTestForm';
 import Footer from './Footer';
 import QuestionCard from './QuestionCard';
+import TestQuestion from './TestQuestion';
 import Topbar from './Topbar';
 import UserForm from './User-form';
 
@@ -12,6 +13,7 @@ export {
     CreateTestForm,
     Footer,
     QuestionCard,
+    TestQuestion,
     Topbar,
     UserForm
 }

@@ -9,8 +9,8 @@ export default async function submitTestQuestion(req, res) {
     }
     try {
         const { test_submission_id, question_data } = req.body;
-        const question = await testSubmissions.submitTestQuestionById(test_submission_id, question_data);
-        return res.status(200).json({"question": question});
+        const result = await testSubmissions.submitTestQuestionById(test_submission_id, question_data);
+        return res.status(200).send("success");
     }
     catch(error){
         return res.status(500).send({"error": error})

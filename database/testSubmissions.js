@@ -83,13 +83,15 @@ async function submitTestQuestionById(test_submission_id, question_data){
         const transactionResults = await session.withTransaction(async () => {
             const submit_answered_question = await testSubmissionsCollection.updateOne(
                 {"_id": ObjectId(test_submission_id)},
-                {$push: {answered_questions: question_data}}
+                {$push: {answered_questions: question_data}},
+                { session }
             );
             console.log(`${submit_answered_question.matchedCount} document(s) found in the testSubmissions collection with the _id ${test_submission_id}.`);
             console.log(`${submit_answered_question.modifiedCount} document(s) was/were updated to append a new question to answered_questions array. question_id:  ${question_data.id}.`);
             const removed_unanswered_question = await testSubmissionsCollection.updateOne(
                 {"_id": ObjectId(test_submission_id)},
-                {$pop: {unanswered_questions: -1}}
+                {$pop: {unanswered_questions: -1}},
+                { session }
             );
             console.log(`${removed_unanswered_question.matchedCount} document(s) found in the testSubmissions collection with the _id ${test_submission_id}.`);
             console.log(`${removed_unanswered_question.modifiedCount} document(s) was/were updated to remove the first question question from unanswered_questions array. question_id:  ${question_data.id}.`);

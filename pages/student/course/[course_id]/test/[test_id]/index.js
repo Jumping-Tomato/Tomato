@@ -13,15 +13,15 @@ import { TestQuestion } from 'components';
 
 export default function TestTakingPage({props}) {
     const [question, setQuestion] = useState(null);
-    const [numOfQuestions, setNumOfQuestions] = useState(props.numOfQuestions);
+    const [questionNumber, setQuestionNumber] = useState(0);
     const [error, setError] = useState({});
     async function getUnansweredQuestion(){
       try{
-        if(numOfQuestions){
+        if(questionNumber < props.numOfQuestions){
           const params = {params: {testSubmissionId: props.testSubmission_id}};
           const response = await axios.get('/api/student/getTestQuestion', params)
           setQuestion(response.data.question);
-          setNumOfQuestions(numOfQuestions-1);
+          setQuestionNumber(questionNumber+1);
         } 
       }
       catch(error){
@@ -70,16 +70,25 @@ export default function TestTakingPage({props}) {
                             {
                               question && 
                               <>
-                                <CountdownCircleTimer
-                                  isPlaying
-                                  duration={question.detail.time}
-                                  colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-                                  colorsTime={[10, 6, 3, 0]}
-                                  onComplete={() => ({ shouldRepeat: true, delay: 0 })}
-                                >
-                                  {renderTime}
-                                </CountdownCircleTimer>
-                                <TestQuestion question={question} />
+                                <div className="row p-2">
+                                  {questionNumber}/{props.numOfQuestions}
+                                </div>
+                                <div className="row p-5">
+                                  <TestQuestion question={question} />
+                                </div>
+                                <div className="row">
+                                  <CountdownCircleTimer
+                                    isPlaying={true}
+                                    duration={question.detail.time}
+                                    size={60}
+                                    strokeWidth={6}
+                                    colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+                                    colorsTime={[10, 6, 3, 0]}
+                                    onComplete={() => ({ shouldRepeat: true, delay: 0 })}
+                                  >
+                                    {renderTime}
+                                  </CountdownCircleTimer>
+                                </div>  
                               </>
                             }
                         </div>
@@ -92,9 +101,9 @@ export default function TestTakingPage({props}) {
 
 const renderTime = ({ remainingTime }) => {
   return (
-    <div className="timer">
-      <div className="value">{remainingTime}</div>
-    </div>
+    <h6 style={{ marginLeft: '1.5rem',marginTop: '0.5rem'}}>  
+      {remainingTime}
+    </h6>
   );
 };
 

@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { TestQuestion } from 'components';
+import { Button } from 'react-bootstrap';
 
 export default function TestTakingPage({props}) {
     const [question, setQuestion] = useState(null);
@@ -20,7 +21,9 @@ export default function TestTakingPage({props}) {
         if(questionNumber < props.numOfQuestions){
           const params = {params: {testSubmissionId: props.testSubmission_id}};
           const response = await axios.get('/api/student/getTestQuestion', params)
-          setQuestion(response.data.question);
+          const questionObject = response.data.question;
+          questionObject.answers = []
+          setQuestion(questionObject);
           setQuestionNumber(questionNumber+1);
         } 
       }
@@ -66,17 +69,22 @@ export default function TestTakingPage({props}) {
 
                 <main className={global.main}>
                     <div className='row'>
-                        <div className="col-12 pt-5">
-                            {
+                        <div className="col-12 pt-1 row">
+                        {
                               question && 
                               <>
-                                <div className="row p-2">
+                                <div className="col-12 p-2">
                                   {questionNumber}/{props.numOfQuestions}
                                 </div>
-                                <div className="row p-5">
+                                <div className="col-12 pt-5 pb-1">
                                   <TestQuestion question={question} />
                                 </div>
-                                <div className="row">
+                                <div className="col-12 p-3">
+                                  <Button className="float-end" size="sm" variant="success">
+                                    Submit
+                                  </Button>
+                                </div>
+                                <div className="col-12 pt-5">
                                   <CountdownCircleTimer
                                     isPlaying={true}
                                     duration={question.detail.time}
@@ -101,7 +109,7 @@ export default function TestTakingPage({props}) {
 
 const renderTime = ({ remainingTime }) => {
   return (
-    <h6 style={{ marginLeft: '1.5rem',marginTop: '0.5rem'}}>  
+    <h6 style={{ marginTop: '0.5rem'}}>  
       {remainingTime}
     </h6>
   );

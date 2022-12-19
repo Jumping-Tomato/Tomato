@@ -95,6 +95,14 @@ async function submitTestQuestionById(test_submission_id, question_data){
             );
             console.log(`${removed_unanswered_question.matchedCount} document(s) found in the testSubmissions collection with the _id ${test_submission_id}.`);
             console.log(`${removed_unanswered_question.modifiedCount} document(s) was/were updated to remove the first question question from unanswered_questions array. question_id:  ${question_data.id}.`);
+            const date = new Date().toISOString();
+            const updated_date = await testSubmissionsCollection.updateOne(
+                {"_id": ObjectId(test_submission_id)},
+                {$set: {dateUpdated: date}},
+                { session }
+            );
+            console.log(`${updated_date.matchedCount} document(s) found in the testSubmissions collection with the _id ${test_submission_id}.`);
+            console.log(`${updated_date.modifiedCount} document(s) was/were updated to updated it dateUpdated field with _id  ${test_submission_id.id}. Date: ${date}`);
             const updatedTestSubmission = await testSubmissionsCollection.findOne(
                 {"_id": ObjectId(test_submission_id)},
                 { session }

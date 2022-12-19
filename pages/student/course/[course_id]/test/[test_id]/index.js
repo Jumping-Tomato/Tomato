@@ -7,7 +7,7 @@ import { ObjectId } from "mongodb";
 import global from 'styles/Global.module.scss';
 import Head from 'next/head';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { TestQuestion } from 'components';
 import { Button } from 'react-bootstrap';
@@ -16,13 +16,14 @@ export default function TestTakingPage({props}) {
     const [question, setQuestion] = useState(null);
     const [questionNumber, setQuestionNumber] = useState(0);
     const [error, setError] = useState({});
+    const answers = useRef([]);
     async function getUnansweredQuestion(){
       try{
         if(questionNumber < props.numOfQuestions){
           const params = {params: {testSubmissionId: props.testSubmission_id}};
           const response = await axios.get('/api/student/getTestQuestion', params)
           const questionObject = response.data.question;
-          questionObject.answers = []
+          answers.current = [];
           setQuestion(questionObject);
           setQuestionNumber(questionNumber+1);
         } 
@@ -31,13 +32,26 @@ export default function TestTakingPage({props}) {
         setError(error)
       }
     }
+    function handleQuestionChange(event){
+      const value = event.target.value;
+      const inputType = event.target.type;
+      if(inputType == 'checkbox'){
+        answers.current.push(value);
+      }
+      else{
+        answers.current = [value];
+      }
+    }
     async function submitQuestion(){
       try{
+        const questionObject = {...question};
+        questionObject.answers = answers.current;
         const data = {
           test_submission_id: props.testSubmission_id,
-          question_data: question
+          question_data: questionObject
         }
-        await axios.post('/api/student/submitTestQuestion', data);
+        const response = await axios.post('/api/student/submitTestQuestion', data);
+        console.log(response);
       }
       catch(error){
         setError(error)
@@ -50,14 +64,17 @@ export default function TestTakingPage({props}) {
     useEffect(() => {
       async function fetchMyAPI() {
         if(question){
-          setTimeout(async () => {
+          let timer = setTimeout(async () => {
             await submitQuestion();
             await getUnansweredQuestion();
           }, question.detail.time * 1000);
+          return () => {
+            clearTimeout(timer);
+          };
         }
       }
       fetchMyAPI()
-    }, [question]);
+    }, [questionNumber]);
     return (
         <>
            <div className={global.container}>
@@ -77,7 +94,7 @@ export default function TestTakingPage({props}) {
                                   {questionNumber}/{props.numOfQuestions}
                                 </div>
                                 <div className="col-12 pt-5 pb-1">
-                                  <TestQuestion question={question} />
+                                  <TestQuestion question={question} handleChange={handleQuestionChange} />
                                 </div>
                                 <div className="col-12 p-3">
                                   <Button className="float-end" size="sm" variant="success">

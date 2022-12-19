@@ -72,13 +72,13 @@ async function getUnansweredQuestion(testSubmission_id){
 }
 
 async function submitTestQuestionById(test_submission_id, question_data){
+    const session = client.startSession();
+    const transactionOptions = {
+        readPreference: 'primary',
+        readConcern: { level: 'local' },
+        writeConcern: { w: 'majority' }
+    };
     try{
-        const session = client.startSession();
-        const transactionOptions = {
-            readPreference: 'primary',
-            readConcern: { level: 'local' },
-            writeConcern: { w: 'majority' }
-        };
         const testSubmissionsCollection = client.db("Tomato").collection("testSubmissions");
         const transactionResults = await session.withTransaction(async () => {
             const submit_answered_question = await testSubmissionsCollection.updateOne(
@@ -114,8 +114,9 @@ async function submitTestQuestionById(test_submission_id, question_data){
             const unanswered_questions = updatedTestSubmission.unanswered_questions;
             if(unanswered_questions && unanswered_questions.length ){
                 const first_unanswered_question = unanswered_questions[0];
+                delete question_data['answers'];
                 if(isEqual(first_unanswered_question,question_data)){
-                    console.error(`The answered question was NOT removed to unanswered_questions array.\nTest Submission Id: "${test_submission_id}"`)
+                    console.error(`The answered question was NOT removed from unanswered_questions array.\nTest Submission Id: "${test_submission_id}"`)
                     await session.abortTransaction();
                     return;
                 }
@@ -130,5 +131,9 @@ async function submitTestQuestionById(test_submission_id, question_data){
         console.error(`Unable to submit the test question.\nError: "${error}"`);
         console.error(`Test Submission ID: "${id}"`)
         throw `Unable to submit the test question.\nError: "${error}"`;
+    }
+    finally {
+        console.log(`Question: "${question_data.id}" is successfully answered.`)
+        await session.endSession();
     }
 }

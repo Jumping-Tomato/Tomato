@@ -11,8 +11,11 @@ import { useState, useEffect, useRef } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { TestQuestion } from 'components';
 import { Button } from 'react-bootstrap';
+import { useRouter } from 'next/router';
+
 
 export default function TestTakingPage({props}) {
+    const router = useRouter();
     const [question, setQuestion] = useState(null);
     const [questionNumber, setQuestionNumber] = useState(0);
     const [error, setError] = useState({});
@@ -26,7 +29,10 @@ export default function TestTakingPage({props}) {
           answers.current = [];
           setQuestion(questionObject);
           setQuestionNumber(questionNumber+1);
-        } 
+        }
+        else{
+          router.push('/student/dashboard')
+        }
       }
       catch(error){
         setError(error)

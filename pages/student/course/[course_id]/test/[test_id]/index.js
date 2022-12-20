@@ -112,7 +112,7 @@ export default function TestTakingPage({props}) {
                                   {questionNumber}/{props.numOfQuestions}
                                 </div>
                                 <div className="col-12 pt-5 pb-1">
-                                  <TestQuestion question={question} handleChange={handleQuestionChange} />
+                                  <TestQuestion key={question.id} question={question} handleChange={handleQuestionChange} />
                                 </div>
                                 <div className="col-12 p-3">
                                   <Button className="float-end" size="sm" variant="success" onClick={submit}>

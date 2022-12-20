@@ -74,12 +74,12 @@ export default function TestTakingPage({props}) {
           timerRef.current = setTimeout(async () => {
             await submit();
           }, question.detail.time * 1000);
-          return () => {
-            clearTimer();
-          };
         }
       }
-      fetchMyAPI()
+      fetchMyAPI();
+      return () => {
+        clearTimer();
+      };
     }, [questionNumber]);
     
     function clearTimer(){

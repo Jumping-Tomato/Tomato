@@ -20,7 +20,7 @@ export default function TestTakingPage({props}) {
     const [questionNumber, setQuestionNumber] = useState(0);
     const [error, setError] = useState({});
     const answers = useRef([]);
-    const timer = useRef(null);
+    const timerInterval = useRef(null);
     const remainingTime = useRef(0);
     const pauseTimer = useRef(false);
     async function getUnansweredQuestion(){
@@ -80,7 +80,7 @@ export default function TestTakingPage({props}) {
           console.log("start timer")
           pauseTimer.current = false;
           remainingTime.current = question.detail.time;
-          timer.current = setInterval(async () => {
+          timerInterval.current = setInterval(async () => {
             if (!remainingTime.current){
               await submitQuestion();
               await getUnansweredQuestion();
@@ -98,7 +98,7 @@ export default function TestTakingPage({props}) {
     }, [questionNumber]);
 
     function clearTimer(){
-      clearInterval(timer.current);
+      clearInterval(timerInterval.current);
     }
 
     async function handleSubmit(event){

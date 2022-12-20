@@ -20,6 +20,7 @@ export default function TestTakingPage({props}) {
     const [questionNumber, setQuestionNumber] = useState(0);
     const [error, setError] = useState({});
     const answers = useRef([]);
+    const timerRef = useRef(null);
     async function getUnansweredQuestion(){
       try{
         if(questionNumber < props.numOfQuestions){
@@ -57,7 +58,7 @@ export default function TestTakingPage({props}) {
           question_data: questionObject
         }
         const response = await axios.post('/api/student/submitTestQuestion', data);
-        console.log(response);
+        clearTimer();
       }
       catch(error){
         setError(error)
@@ -70,17 +71,28 @@ export default function TestTakingPage({props}) {
     useEffect(() => {
       async function fetchMyAPI() {
         if(question){
-          let timer = setTimeout(async () => {
-            await submitQuestion();
-            await getUnansweredQuestion();
+          timerRef.current = setTimeout(async () => {
+            await submit();
           }, question.detail.time * 1000);
           return () => {
-            clearTimeout(timer);
+            clearTimer();
           };
         }
       }
       fetchMyAPI()
     }, [questionNumber]);
+    
+    function clearTimer(){
+      clearTimeout(timerRef.current);
+    }
+
+    async function submit(event){
+      if(event){
+        event.preventDefault();
+      }
+      await submitQuestion();
+      await getUnansweredQuestion();
+    }
     return (
         <>
            <div className={global.container}>
@@ -103,7 +115,7 @@ export default function TestTakingPage({props}) {
                                   <TestQuestion question={question} handleChange={handleQuestionChange} />
                                 </div>
                                 <div className="col-12 p-3">
-                                  <Button className="float-end" size="sm" variant="success">
+                                  <Button className="float-end" size="sm" variant="success" onClick={submit}>
                                     Submit
                                   </Button>
                                 </div>
@@ -112,6 +124,7 @@ export default function TestTakingPage({props}) {
                                     isPlaying={true}
                                     duration={question.detail.time}
                                     size={60}
+                                    key={question.id}
                                     strokeWidth={6}
                                     colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
                                     colorsTime={[10, 6, 3, 0]}

@@ -20,6 +20,9 @@ export default function TestTakingPage({props}) {
     const [questionNumber, setQuestionNumber] = useState(0);
     const [error, setError] = useState({});
     const answers = useRef([]);
+    const timer = useRef(null);
+    const remainingTime = useRef(0);
+    const pauseTimer = useRef(false);
     async function getUnansweredQuestion(){
       try{
         if(questionNumber < props.numOfQuestions){
@@ -50,6 +53,8 @@ export default function TestTakingPage({props}) {
     }
     async function submitQuestion(){
       try{
+        pauseTimer.current = true;
+        console.log("pause timer")
         const questionObject = {...question};
         questionObject.answers = answers.current;
         const data = {
@@ -57,10 +62,12 @@ export default function TestTakingPage({props}) {
           question_data: questionObject
         }
         const response = await axios.post('/api/student/submitTestQuestion', data);
-        console.log(response);
+        clearTimer();
       }
       catch(error){
-        setError(error)
+        setError(error);
+        pauseTimer.current = false;
+        console.log("pause timer")
       }
     }
     useEffect(() => {
@@ -70,17 +77,35 @@ export default function TestTakingPage({props}) {
     useEffect(() => {
       async function fetchMyAPI() {
         if(question){
-          let timer = setTimeout(async () => {
-            await submitQuestion();
-            await getUnansweredQuestion();
-          }, question.detail.time * 1000);
+          console.log("start timer")
+          pauseTimer.current = false;
+          remainingTime.current = question.detail.time;
+          timer.current = setInterval(async () => {
+            if (!remainingTime.current){
+              await submitQuestion();
+              await getUnansweredQuestion();
+            }
+            else if(!pauseTimer.current){
+              remainingTime.current = remainingTime.current - 1;
+            }
+          }, 1000);
           return () => {
-            clearTimeout(timer);
+            clearTimer();
           };
         }
       }
       fetchMyAPI()
     }, [questionNumber]);
+
+    function clearTimer(){
+      clearInterval(timer.current);
+    }
+
+    async function handleSubmit(event){
+      event.preventDefault();
+      await submitQuestion();
+      await getUnansweredQuestion();
+    }
     return (
         <>
            <div className={global.container}>
@@ -103,13 +128,13 @@ export default function TestTakingPage({props}) {
                                   <TestQuestion question={question} handleChange={handleQuestionChange} />
                                 </div>
                                 <div className="col-12 p-3">
-                                  <Button className="float-end" size="sm" variant="success">
+                                  <Button className="float-end" size="sm" variant="success" onClick={handleSubmit}>
                                     Submit
                                   </Button>
                                 </div>
                                 <div className="col-12 pt-5">
                                   <CountdownCircleTimer
-                                    isPlaying={true}
+                                    isPlaying={!pauseTimer.current}
                                     duration={question.detail.time}
                                     size={60}
                                     strokeWidth={6}

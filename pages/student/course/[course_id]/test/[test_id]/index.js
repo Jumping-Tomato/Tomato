@@ -21,6 +21,7 @@ export default function TestTakingPage({props}) {
     const [error, setError] = useState({});
     const answers = useRef([]);
     const timerIdRef = useRef(null);
+    const remainingSeconds = useRef(0);
     async function getUnansweredQuestion(){
       try{
         if(questionNumber < props.numOfQuestions){
@@ -71,20 +72,26 @@ export default function TestTakingPage({props}) {
     useEffect(() => {
       async function fetchMyAPI() {
         if(question){
-          timerIdRef.current = setTimeout(async () => {
-            await submit();
-          }, question.detail.time * 1000);
+          remainingSeconds.current = question.detail.time;
+          timerIdRef.current = setInterval(async () => {
+            if(!remainingSeconds.current){
+              await submit();
+            }
+            else{
+              remainingSeconds.current = remainingSeconds.current - 1;
+            }        
+          }, 1000);
         }
       }
       fetchMyAPI();
       return () => {
-        clearTimer();
+        clearInterval();
       };
     }, [questionNumber]);
 
     
     function clearTimer(){
-      clearTimeout(timerIdRef.current);
+      clearInterval(timerIdRef.current);
     }
 
     async function submit(event){

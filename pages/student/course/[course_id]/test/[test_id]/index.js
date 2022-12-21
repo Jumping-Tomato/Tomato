@@ -94,12 +94,16 @@ export default function TestTakingPage({props}) {
       clearInterval(timerIdRef.current);
     }
 
-    async function submit(event){
-      if(event){
-        event.preventDefault();
-      }
+    async function submit(){
       await submitQuestion();
       await getUnansweredQuestion();
+    }
+    function handleSubmitClick(event){
+      event.preventDefault();
+      if(remainingSeconds.current <= 1){
+        return;
+      }
+      submit();
     }
     return (
         <>
@@ -115,15 +119,15 @@ export default function TestTakingPage({props}) {
                         <div className="col-12 pt-1 row">
                         {
                               question && 
-                              <>
+                              <div key={question.id}>
                                 <div className="col-12 p-2">
                                   {questionNumber}/{props.numOfQuestions}
                                 </div>
                                 <div className="col-12 pt-5 pb-1">
-                                  <TestQuestion key={question.id} question={question} handleChange={handleQuestionChange} />
+                                  <TestQuestion question={question} handleChange={handleQuestionChange} />
                                 </div>
                                 <div className="col-12 p-3">
-                                  <Button className="float-end" size="sm" variant="success" onClick={submit}>
+                                  <Button className="float-end" size="sm" variant="success" onClick={handleSubmitClick}>
                                     Submit
                                   </Button>
                                 </div>
@@ -132,7 +136,6 @@ export default function TestTakingPage({props}) {
                                     isPlaying={true}
                                     duration={question.detail.time}
                                     size={60}
-                                    key={question.id}
                                     strokeWidth={6}
                                     colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
                                     colorsTime={[10, 6, 3, 0]}
@@ -141,7 +144,7 @@ export default function TestTakingPage({props}) {
                                     {renderTime}
                                   </CountdownCircleTimer>
                                 </div>  
-                              </>
+                              </div>
                             }
                         </div>
                     </div>

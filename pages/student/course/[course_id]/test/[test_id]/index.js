@@ -82,9 +82,6 @@ export default function TestTakingPage({props}) {
       };
     }, [questionNumber]);
 
-    useEffect(() => {
-      console.log(timerRef);
-    }, [timerRef]);
     
     function clearTimer(){
       clearTimeout(timerRef.current);

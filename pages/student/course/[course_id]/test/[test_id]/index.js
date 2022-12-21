@@ -100,7 +100,7 @@ export default function TestTakingPage({props}) {
     }
     function handleSubmitClick(event){
       event.preventDefault();
-      if(remainingSeconds.current <= 1){
+      if(remainingSeconds.current == 0){
         return;
       }
       submit();

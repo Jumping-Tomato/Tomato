@@ -38,11 +38,11 @@ export default function StudentCoursePage({props}) {
                         { 
                             tests.length > 0
                             &&
-                            <ul class="list-group">
+                            <ul className="list-group">
                                 {
                                     tests.map((test) => {
                                         return  (<li className="list-group-item" key={test._id}>
-                                                    <div class="row">
+                                                    <div className="row">
                                                         <div className="col-3">
                                                             {test.name} 
                                                         </div>

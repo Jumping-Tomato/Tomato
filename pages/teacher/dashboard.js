@@ -55,7 +55,7 @@ export default function TeacherDashboard() {
                                 !courses.length ?
                                     <h1>No Cources</h1>
                                      :
-                                     <ul class="list-group">
+                                     <ul className="list-group">
                                         {
                                             courses.map((course) => {
                                                 return  (<li className="list-group-item" key={course._id}>

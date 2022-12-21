@@ -36,11 +36,11 @@ export default function StudentDashboard() {
                                 { 
                                     courses.length > 0
                                     &&
-                                    <ul class="list-group">
+                                    <ul className="list-group">
                                         {
                                             courses.map((course) => {
                                                 return  (<li className="list-group-item" key={course._id}>
-                                                            <div class="row">
+                                                            <div className="row">
                                                                 <div className="col-6">
                                                                     {course.name} 
                                                                 </div>

@@ -33,6 +33,7 @@ export default function TestTakingPage({props}) {
           setQuestionNumber(questionNumber+1);
         }
         else{
+          clearTimer();
           router.push('/student/dashboard')
         }
       }
@@ -139,7 +140,6 @@ export default function TestTakingPage({props}) {
                                     strokeWidth={6}
                                     colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
                                     colorsTime={[10, 6, 3, 0]}
-                                    onComplete={() => ({ shouldRepeat: true, delay: 0 })}
                                   >
                                     {renderTime}
                                   </CountdownCircleTimer>
@@ -155,6 +155,11 @@ export default function TestTakingPage({props}) {
 }
 
 const renderTime = ({ remainingTime }) => {
+  if (remainingTime <= 0) {
+    return (<span style={{ marginLeft: '17px', fontSize: "12px"}}>  
+            Too Late!
+            </span>)
+  }
   return (
     <h6 style={{ marginTop: '0.5rem'}}>  
       {remainingTime}

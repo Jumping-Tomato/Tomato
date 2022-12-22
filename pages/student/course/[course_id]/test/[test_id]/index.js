@@ -74,7 +74,7 @@ export default function TestTakingPage({props}) {
         if(question){
           remainingSeconds.current = question.detail.time;
           timerIdRef.current = setInterval(async () => {
-            if(remainingSeconds.current == 1){
+            if(!remainingSeconds.current){
               await submit();
             }
             else{
@@ -100,7 +100,7 @@ export default function TestTakingPage({props}) {
     }
     function handleSubmitClick(event){
       event.preventDefault();
-      if(remainingSeconds.current <= 1){
+      if(remainingSeconds.current == 0){
         return;
       }
       submit();

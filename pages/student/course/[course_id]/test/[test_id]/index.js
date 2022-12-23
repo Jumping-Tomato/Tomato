@@ -71,6 +71,14 @@ export default function TestTakingPage({props}) {
     }
     useEffect(() => {
       getUnansweredQuestion();
+      
+      window.addEventListener('focus', handleFocus);
+      window.addEventListener('blur', handleBlur);
+
+      return () => {
+        window.removeEventListener('focus', handleFocus);
+        window.removeEventListener('blur', handleBlur);
+      };
     },[]);
 
     useEffect(() => {
@@ -126,15 +134,26 @@ export default function TestTakingPage({props}) {
       activities.current.push(actvity);
     }
     function handlePaste(event){
-      const value = event.clipboardData.getData('Text');
+      const pastedText = event.clipboardData.getData('Text');
       const actvity = {
         name: "paste",
-        value:  selection.toString()
+        value:  pastedText.toString()
       }
       activities.current.push(actvity);
     }
-    function handleExitTab(event){
-
+    function handleFocus(){
+      const actvity = {
+        name: "enter tab",
+        value:  "user enter tab"
+      }
+      activities.current.push(actvity);
+    }
+    function handleBlur(){
+      const actvity = {
+        name: "exit tab",
+        value:  "user exit tab"
+      }
+      activities.current.push(actvity);
     }
     return (
         <>

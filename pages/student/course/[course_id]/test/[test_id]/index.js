@@ -20,6 +20,7 @@ export default function TestTakingPage({props}) {
     const [questionNumber, setQuestionNumber] = useState(0);
     const [error, setError] = useState({});
     const answers = useRef([]);
+    const activities = useRef([]);
     const timerIdRef = useRef(null);
     const remainingSeconds = useRef(0);
     async function getUnansweredQuestion(){
@@ -29,6 +30,7 @@ export default function TestTakingPage({props}) {
           const response = await axios.get('/api/student/getTestQuestion', params)
           const questionObject = response.data.question;
           answers.current = [];
+          activities.current = [];
           setQuestion(questionObject);
           setQuestionNumber(questionNumber+1);
         }
@@ -55,6 +57,7 @@ export default function TestTakingPage({props}) {
       try{
         const questionObject = {...question};
         questionObject.answers = answers.current;
+        questionObject.activities = activities.current;
         const data = {
           test_submission_id: props.testSubmission_id,
           question_data: questionObject
@@ -106,6 +109,33 @@ export default function TestTakingPage({props}) {
       }
       submit();
     }
+    function handleCopy(){
+      const selection = document.getSelection();
+      const actvity = {
+        name: "copy",
+        value:  selection.toString()
+      }
+      activities.current.push(actvity);
+    }
+    function handleCut(){
+      const selection = document.getSelection();
+      const actvity = {
+        name: "cut",
+        value:  selection.toString()
+      }
+      activities.current.push(actvity);
+    }
+    function handlePaste(event){
+      const value = event.clipboardData.getData('Text');
+      const actvity = {
+        name: "paste",
+        value:  selection.toString()
+      }
+      activities.current.push(actvity);
+    }
+    function handleExitTab(event){
+
+    }
     return (
         <>
            <div className={global.container}>
@@ -125,7 +155,7 @@ export default function TestTakingPage({props}) {
                                   {questionNumber}/{props.numOfQuestions}
                                 </div>
                                 <div className="col-12 pt-5 pb-1">
-                                  <TestQuestion question={question} handleChange={handleQuestionChange} />
+                                  <TestQuestion question={question} handleChange={handleQuestionChange} handleCopy={handleCopy} handleCut={handleCut} handlePaste={handlePaste} />
                                 </div>
                                 <div className="col-12 p-3">
                                   <Button className="float-end" size="sm" variant="success" onClick={handleSubmitClick}>

@@ -1,8 +1,8 @@
 import { Form } from 'react-bootstrap';
 
-export default function TestQuestion({question, handleChange}) {
+export default function TestQuestion({question, handleChange, handleCopy, handleCut, handlePaste}) {
   return (
-        <>
+        <div onCopy={handleCopy} onCut={handleCut} onPaste={handlePaste}>
             <h4>{question.detail.question}</h4>   
                 <Form onChange={handleChange}>
                     {
@@ -30,6 +30,6 @@ export default function TestQuestion({question, handleChange}) {
                         </Form.Group>
                     }
                 </Form>     
-        </>           
+        </div>           
     );
 };

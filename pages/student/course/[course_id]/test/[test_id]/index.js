@@ -2,7 +2,7 @@ import { getSession } from 'next-auth/react';
 import { courses } from "database/courses";
 import { tests } from "database/tests";
 import { testSubmissions } from 'database/testSubmissions';
-import { shuffle } from 'helpers/functions';
+import { removeItemsFromArrayByValue, shuffle } from 'helpers/functions';
 import { ObjectId } from "mongodb";
 import global from 'styles/Global.module.scss';
 import Head from 'next/head';
@@ -12,7 +12,6 @@ import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { TestQuestion } from 'components';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-
 
 export default function TestTakingPage({props}) {
     const router = useRouter();
@@ -47,7 +46,7 @@ export default function TestTakingPage({props}) {
       const value = event.target.value;
       const inputType = event.target.type;
       if(inputType == 'checkbox'){
-        answers.current.push(value);
+        answers.current = toggleValueFromArray(answers.current, value);
       }
       else{
         answers.current = [value];
@@ -110,6 +109,7 @@ export default function TestTakingPage({props}) {
       await submitQuestion();
       await getUnansweredQuestion();
     }
+
     function handleSubmitClick(event){
       event.preventDefault();
       if(remainingSeconds.current == 0){
@@ -117,6 +117,17 @@ export default function TestTakingPage({props}) {
       }
       submit();
     }
+
+    function toggleValueFromArray(array, value){
+      if(array.indexOf(value) > -1){
+        array = removeItemsFromArrayByValue(array, value);
+      }
+      else{
+        array.push(value);
+      }
+      return array;
+    }
+
     function handleCopy(){
       const selection = document.getSelection();
       const actvity = {

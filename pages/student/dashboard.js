@@ -41,14 +41,14 @@ export default function StudentDashboard() {
                                             courses.map((course) => {
                                                 return  (<li className="list-group-item" key={course._id}>
                                                             <div className="row">
-                                                                <div className="col-6">
+                                                                <div className="col-4">
                                                                     {course.name} 
                                                                 </div>
-                                                                <div className="col-5">
+                                                                <div className="col-4">
                                                                     {course.semester}
                                                                 </div>
-                                                                <div className="col-1">
-                                                                    <Button href={`/student/course/${course._id}`}>
+                                                                <div className="col-4">
+                                                                    <Button className='float-end' href={`/student/course/${course._id}`}>
                                                                         Go
                                                                     </Button>
                                                                 </div>

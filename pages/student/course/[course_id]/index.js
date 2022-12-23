@@ -43,17 +43,15 @@ export default function StudentCoursePage({props}) {
                                     tests.map((test) => {
                                         return  (<li className="list-group-item" key={test._id}>
                                                     <div className="row">
-                                                        <div className="col-3">
-                                                            {test.name} 
+                                                        <div className="col-4">
+                                                            <h6>{test.name}</h6>
                                                         </div>
                                                         <div className="col-4">
-                                                            Earliest Start Time: { getDateFromDate(new Date(test.startDate)) } { getTimeFromDate(new Date(test.startDate)) }
+                                                            <h6>Earliest Start Time: { getDateFromDate(new Date(test.startDate)) } { getTimeFromDate(new Date(test.startDate)) } </h6>
+                                                            <h6>Deadline: { getDateFromDate(new Date(test.deadline)) } { getTimeFromDate(new Date(test.deadline)) }</h6>
                                                         </div>
-                                                        <div className="col-4">          
-                                                            Deadline: { getDateFromDate(new Date(test.deadline)) } { getTimeFromDate(new Date(test.deadline)) }
-                                                        </div>
-                                                        <div className="col-1">
-                                                            <Button href={`/student/course/${props.course_id}/test/${test._id}`}>
+                                                        <div className="col-4">
+                                                            <Button className='float-end' href={`/student/course/${props.course_id}/test/${test._id}`}>
                                                                 Go
                                                             </Button>
                                                         </div>

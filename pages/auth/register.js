@@ -8,6 +8,7 @@ import  Link  from 'next/link';
 import axios from 'axios';
 import Head from 'next/head'
 import global from 'styles/Global.module.scss'
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Resgister(){
     const router = useRouter();
@@ -19,6 +20,7 @@ export default function Resgister(){
       "password1":"",
       "password2":"",
     });
+    const [capctaValue, setCapctaValue] = useState("");
     const [error, setError] = useState("");
     const handleChange = function (event){
       let name = event.target.name;
@@ -30,6 +32,10 @@ export default function Resgister(){
     }
     const handleSubmit = async function(event){
         event.preventDefault();
+        if(!capctaValue){
+          setError('Prove that you are not a bot.');
+          return;
+        }
         if(formData.password1 !== formData.password2){
           setError("Passwords do NOT match");
           return;
@@ -90,6 +96,15 @@ export default function Resgister(){
                     <Form.Label>Repeat Password</Form.Label>
                     <Form.Control type="password" name="password2" placeholder="Password" required />
                   </Form.Group>
+                  <ReCAPTCHA
+                    className='pb-2'
+                    sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SECRET_KEY}
+                    onChange={
+                        (value)=>{
+                            setCapctaValue(value);
+                        }
+                    }
+                  />
                   { error && <Alert variant="danger"> {error} </Alert>}
                   <Button variant="primary" type="submit">
                     Submit

@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { signIn } from "next-auth/react";
 import  Link  from 'next/link';
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Signin(){
     const router = useRouter();
@@ -18,6 +19,7 @@ export default function Signin(){
       "password":"",
     });
     const [error, setError] = useState("");
+    const [capctaValue, setCapctaValue] = useState("");
     const handleChange = function (event){
       let name = event.target.name;
       let val = event.target.value;
@@ -29,6 +31,10 @@ export default function Signin(){
     const handleSubmit = async function(event){
         event.preventDefault();
         try{
+            if(!capctaValue){
+                setError('Prove that you are not a bot.');
+                return;
+            }
             const res = await signIn("credentials", {
                 redirect: false,
                 email: formData.email,
@@ -50,10 +56,19 @@ export default function Signin(){
             <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
                 <MDBInput wrapperClass='mb-4' label='Email address' name="email" type='email' required/>
                 <MDBInput wrapperClass='mb-4' label='Password' name="password" type='password' required />
+                <ReCAPTCHA
+                    sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SECRET_KEY}
+                    onChange={
+                        (value)=>{
+                            setCapctaValue(value);
+                        }
+                    }
+                />
+                <br/>
                 { error && <Alert variant="danger"> {error} </Alert>}
                 <div className="d-flex justify-content-between mx-3 mb-4">
                     <Link href="/auth/password-retrieval/forgot-password">Forgot password?</Link>
-                </div>
+                </div> 
                 <Button variant="primary" type="submit">
                         Sign In
                 </Button>

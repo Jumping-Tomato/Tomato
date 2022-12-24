@@ -27,7 +27,7 @@ export default function StudentCoursePage({props}) {
             <Topbar />
             <div className={global.container}>
                 <Head>
-                    <title></title>
+                    <title>{ props.course_name }</title>
                     <meta name="description" content="Studen Course Page" />
                     <link rel="icon" href="#" />
                 </Head>
@@ -89,7 +89,8 @@ export async function getServerSideProps(context) {
         }
     }
     let props = {
-        course_id: course_id
+        course_id: course_id,
+        course_name: course.name
     };
     return {
         props: {props}

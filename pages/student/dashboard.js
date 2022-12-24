@@ -5,6 +5,7 @@ import { Topbar, Footer } from 'components'
 import { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+import { capitalizeFirstLetter } from 'helpers/functions';
 
 export default function StudentDashboard() {
     const { data: session } = useSession();
@@ -19,12 +20,13 @@ export default function StudentDashboard() {
             
         }); 
     },[]);
+    const title = (session ? capitalizeFirstLetter(session.role) : "") + " Dashboard Page";
     return(
         <>
             <Topbar />
             <div className={global.container}>
                 <Head>
-                    <title>Dashboard Page - {session ? session.role : ""}</title>
+                    <title>{title}</title>
                     <meta name="description" content="Home Page" />
                     <link rel="icon" href="#" />
                 </Head>

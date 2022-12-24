@@ -62,7 +62,7 @@ export default function SearchCoursePage() {
         <Topbar />
         <div className={global.container}>
           <Head>
-            <title>Add Course Page</title>
+            <title>Search Course Page</title>
             <meta name="description" content="student Add Course Page" />
             <link rel="icon" href="#" />
           </Head>

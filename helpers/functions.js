@@ -1,3 +1,7 @@
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 /*
 * get the date in MM/DD/YYYY from a date object 
 */
@@ -91,6 +95,7 @@ function shuffle(array) {
 }
  
 export {
+    capitalizeFirstLetter,
     getDateFromDate,
     getTimeFromDate,
     getTomorrowDate,

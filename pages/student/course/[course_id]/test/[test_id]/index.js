@@ -34,7 +34,6 @@ export default function TestTakingPage({props}) {
           setQuestionNumber(questionNumber+1);
         }
         else{
-          clearTimer();
           router.push('/student/dashboard')
         }
       }
@@ -96,7 +95,7 @@ export default function TestTakingPage({props}) {
       }
       fetchMyAPI();
       return () => {
-        clearInterval();
+        clearTimer();
       };
     }, [questionNumber]);
 

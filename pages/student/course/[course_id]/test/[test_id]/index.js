@@ -61,7 +61,6 @@ export default function TestTakingPage({props}) {
           question_data: questionObject
         }
         const response = await axios.post('/api/student/submitTestQuestion', data);
-        clearTimer();
       }
       catch(error){
         setError(error)

@@ -5,6 +5,7 @@ import Head from 'next/head'
 import global from 'styles/Global.module.scss'
 import { getSession } from 'next-auth/react';
 import { Alert, Button, Form } from 'react-bootstrap';
+import ReCAPTCHA from "react-google-recaptcha";
 
 /*
 *
@@ -19,6 +20,7 @@ export default function PasswordResetPage({userProps}){
       "newPassword2":""
     });
     const [error, setError] = useState("");
+    const [capctaValue, setCapctaValue] = useState("");
     const handleChange = function (event){
       let name = event.target.name;
       let val = event.target.value;
@@ -29,6 +31,10 @@ export default function PasswordResetPage({userProps}){
     }
     const handleSubmit = async function(event){
         event.preventDefault();
+        if(!capctaValue){
+          setError('Prove that you are not a bot.');
+          return;
+        }
         if(formData.newPassword1 !== formData.newPassword2){
             setError("Passwords do NOT match");
             return;
@@ -60,17 +66,27 @@ export default function PasswordResetPage({userProps}){
              <div className='row justify-content-center'>
                <div className="col-lg-6 col-12 p-3">
                 <Form onChange={handleChange}  onSubmit={handleSubmit}>  
-                  <Form.Group className="mb-3" key="Current Password">
-                      <Form.Label>Current Password</Form.Label>
-                      <Form.Control type="password" name="currentPassword" placeholder="Current Password" required />
+                  <Form.Group className="mb-3">
+                    <Form.Label>Current Password</Form.Label>
+                    <Form.Control type="password" name="currentPassword" placeholder="Current Password" required />
                   </Form.Group>
-                  <Form.Group className="mb-3" key="New Password">
-                      <Form.Label>New Password</Form.Label>
-                      <Form.Control type="password" name="newPassword1" placeholder="New Password" required />
+                  <Form.Group className="mb-3">
+                    <Form.Label>New Password</Form.Label>
+                    <Form.Control type="password" name="newPassword1" placeholder="New Password" required />
                   </Form.Group>
-                  <Form.Group className="mb-3" key="Confirm New Password">
-                      <Form.Label>Confirm New Password</Form.Label>
-                      <Form.Control type="password" name="newPassword2" placeholder="Confirm New Password" required />
+                  <Form.Group className="mb-3">
+                    <Form.Label>Confirm New Password</Form.Label>
+                    <Form.Control type="password" name="newPassword2" placeholder="Confirm New Password" required />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <ReCAPTCHA
+                      sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SECRET_KEY}
+                      onChange={
+                          (value)=>{
+                              setCapctaValue(value);
+                          }
+                      }
+                    />
                   </Form.Group>
                   { error && <Alert variant="danger"> {error} </Alert>}
                   <Button variant="primary" type="submit">

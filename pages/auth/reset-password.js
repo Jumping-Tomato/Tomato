@@ -3,9 +3,8 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import Head from 'next/head'
 import global from 'styles/Global.module.scss'
-import { getSession } from 'next-auth/react'
-import { UserForm } from "components"
-
+import { getSession } from 'next-auth/react';
+import { Alert, Button, Form } from 'react-bootstrap';
 
 /*
 *
@@ -47,29 +46,6 @@ export default function PasswordResetPage({userProps}){
           setError(error.response.data.error);
         });  
     }
-    const formFields = [
-      {
-        "label": "Current Password",
-        "type": "password",
-        "name": "currentPassword",
-        "placeholder": "Current Password",
-        "required": true
-      },
-      {
-        "label": "New Password",
-        "type": "password",
-        "name": "newPassword1",
-        "placeholder": "New Password",
-        "required": true
-      },
-      {
-        "label": "Confirm New Password",
-        "type": "password",
-        "name": "newPassword2",
-        "placeholder": "Confirm New Password",
-        "required": true
-      },
-    ]
 
     return (
          <>
@@ -83,7 +59,24 @@ export default function PasswordResetPage({userProps}){
            <main className={global.main}>
              <div className='row justify-content-center'>
                <div className="col-lg-6 col-12 p-3">
-                  <UserForm handleChange={handleChange} handleSubmit={handleSubmit} formFields={formFields} error={error} />
+                <Form onChange={handleChange}  onSubmit={handleSubmit}>  
+                  <Form.Group className="mb-3" key="Current Password">
+                      <Form.Label>Current Password</Form.Label>
+                      <Form.Control type="password" name="currentPassword" placeholder="Current Password" required />
+                  </Form.Group>
+                  <Form.Group className="mb-3" key="New Password">
+                      <Form.Label>New Password</Form.Label>
+                      <Form.Control type="password" name="newPassword1" placeholder="New Password" required />
+                  </Form.Group>
+                  <Form.Group className="mb-3" key="Confirm New Password">
+                      <Form.Label>Confirm New Password</Form.Label>
+                      <Form.Control type="password" name="newPassword2" placeholder="Confirm New Password" required />
+                  </Form.Group>
+                  { error && <Alert variant="danger"> {error} </Alert>}
+                  <Button variant="primary" type="submit">
+                      Submit
+                  </Button>
+                </Form>
                </div>
              </div>
            </main>

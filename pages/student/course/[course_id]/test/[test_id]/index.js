@@ -259,8 +259,6 @@ export async function getServerSideProps(context) {
     if(unanswered_question.detail.correct_answers.length > 1){
       unanswered_question.hasMultipleCorrectAnswers = true;
     }
-    //take out the correct_answers from the students
-    delete unanswered_question.detail.correct_answers;
     unanswered_questions.push(unanswered_question);
   });
   const testSubmission_data = await testSubmissions.createTestSubmission({

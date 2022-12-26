@@ -62,7 +62,10 @@ async function getUnansweredQuestion(testSubmission_id){
             questions = submission.unanswered_questions;
         }
         if(questions.length){
-            return questions[0];
+            let questionObject = questions[0];
+            //take out the correct_answers from the students
+            delete questionObject.detail.correct_answers;
+            return questionObject;
         }
         return null;
     }

@@ -61,20 +61,20 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
             new_props.type = value;
             updateQuestion(new_props);
         }
-        else if(inputName == "choice"){
+        else if(props.type == "multipleChoice" && inputName == "choice"){
             const choice = event.target.getAttribute("data-choice");
             new_props.multipleChoice.choices[choice] = value;
+            updateQuestion(new_props);
+        }
+        else if(props.type == "multipleChoice" && inputName == "point"){
+            const choice = event.target.getAttribute("data-choice");
+            new_props.multipleChoice.correct_answers[choice]["point"] = value;
             updateQuestion(new_props);
         }
         else if(props.type == "shortAnswer" && inputName == "correct_answers"){
             const index = event.target.getAttribute("data-index");
             let field = event.target.getAttribute("data-field");
             new_props.shortAnswer.correct_answers[index][field] = value;
-            updateQuestion(new_props);
-        }
-        else if(inputName == "point"){
-            const choice = event.target.getAttribute("data-choice");
-            new_props.multipleChoice.correct_answers[choice]["point"] = value;
             updateQuestion(new_props);
         }
         else{

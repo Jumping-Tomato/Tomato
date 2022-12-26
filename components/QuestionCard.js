@@ -56,13 +56,14 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         }
         else if(inputName == "choice"){
             const choice = event.target.getAttribute("data-choice");
-            let type = event.target.getAttribute("data-type");
-            new_props.multipleChoice.choices[choice][type] = value;
+            let field = event.target.getAttribute("data-field");
+            new_props.multipleChoice.choices[choice][field] = value;
             updateQuestion(new_props);
         }
         else if(inputName == "correct_answers"){
             const index = event.target.getAttribute("data-index");
-            new_props.shortAnswer.correct_answers[index]["answer"] = value;
+            let field = event.target.getAttribute("data-field");
+            new_props.shortAnswer.correct_answers[index][field] = value;
             updateQuestion(new_props);
         }
         else{
@@ -111,7 +112,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                                 </Form.Label>
                                             </Col>
                                             <Col xs={3}>
-                                                <Form.Control data-input-name="choice" data-choice={key} type="text"  data-type="text" defaultValue={value.text} required />
+                                                <Form.Control data-input-name="choice" data-choice={key} type="text"  data-field="text" defaultValue={value.text} required />
                                             </Col>
                                             <Col xs={1}>
                                                 <Form.Label>
@@ -119,7 +120,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                                 </Form.Label>
                                             </Col>
                                             <Col xs={2}>
-                                                <Form.Control data-input-name="choice" data-choice={key} type="number" data-type="point" defaultValue={value.point} required />
+                                                <Form.Control data-input-name="choice" data-choice={key} type="number" data-field="point" defaultValue={value.point} required />
                                             </Col>
                                             <Col xs={5}>
                                                 {
@@ -174,10 +175,16 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                     props.shortAnswer.correct_answers.map((each, index)=>{
                                         return (
                                                 <Row key={each.key} className="mb-3">
-                                                    <Col xs={8}>
-                                                        <Form.Control as="textarea" data-input-name="correct_answers" data-index={index} row={3} defaultValue={each.answer} />
+                                                    <Col xs={6}>
+                                                        <Form.Control as="textarea" data-input-name="correct_answers" data-field="answer" data-index={index} row={3} defaultValue={each.answer} />
                                                     </Col>
-                                                    <Col xs={4}>
+                                                    <Col xs={1}>
+                                                        <Form.Label>Point:</Form.Label>
+                                                    </Col>
+                                                    <Col xs={1}>
+                                                        <Form.Control type="number" data-input-name="correct_answers"  data-field="point" data-index={index} defaultValue={each.point} required />
+                                                    </Col>
+                                                    <Col xs={1}>
                                                         {
                                                             !index &&
                                                             <button type="button" className="btn btn-sm btn-primary" onClick={addShortAnswer}>

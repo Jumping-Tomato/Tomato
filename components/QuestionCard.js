@@ -14,7 +14,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         if(num_of_choices < 5){
             let new_props = {...props};
             let new_choice = String.fromCharCode(94 + 3 + num_of_choices);
-            new_props.multipleChoice.choices[new_choice] = {text:"", point: ""};
+            new_props.multipleChoice.choices[new_choice] = "";
             updateQuestion(new_props);
         } 
     }
@@ -56,8 +56,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         }
         else if(inputName == "choice"){
             const choice = event.target.getAttribute("data-choice");
-            let field = event.target.getAttribute("data-field");
-            new_props.multipleChoice.choices[choice][field] = value;
+            new_props.multipleChoice.choices[choice] = value;
             updateQuestion(new_props);
         }
         else if(inputName == "correct_answers"){
@@ -111,16 +110,8 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                                     <h4>{key.toUpperCase()}:</h4>
                                                 </Form.Label>
                                             </Col>
-                                            <Col xs={3}>
-                                                <Form.Control data-input-name="choice" data-choice={key} type="text"  data-field="text" defaultValue={value.text} required />
-                                            </Col>
-                                            <Col xs={1}>
-                                                <Form.Label>
-                                                    <h4>Point:</h4>
-                                                </Form.Label>
-                                            </Col>
-                                            <Col xs={2}>
-                                                <Form.Control data-input-name="choice" data-choice={key} type="number" data-field="point" defaultValue={value.point} required />
+                                            <Col xs={5}>
+                                                <Form.Control data-input-name="choice" data-choice={key} type="text" defaultValue={value} required />
                                             </Col>
                                             <Col xs={5}>
                                                 {

@@ -3,7 +3,6 @@ import { Fragment } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import Multiselect from 'multiselect-react-dropdown';
-import {removeItemsFromArrayByValue} from 'helpers/functions';
 import { nanoid } from 'nanoid'
 
 export default function QuestionCard({props,title,handleRemoveButtonClick,updateQuestion}) {
@@ -205,7 +204,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                                     <Col xs={1}>
                                                         <Form.Label>Point:</Form.Label>
                                                     </Col>
-                                                    <Col xs={1}>
+                                                    <Col xs={3}>
                                                         <Form.Control type="number" data-input-name="correct_answers"  data-field="point" data-index={index} defaultValue={each.point} required />
                                                     </Col>
                                                     <Col xs={1}>

@@ -51,7 +51,11 @@ export default function TestManagementPage({props}) {
         choices:{
             a:""
         },
-        correct_answers: ["a"],
+        correct_answers: {
+          a:{
+            point: 1
+          }
+        },
         time: 60
       },
       shortAnswer:

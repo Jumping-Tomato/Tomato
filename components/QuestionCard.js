@@ -22,7 +22,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         const choice = event.currentTarget.value;
         let new_props = {...props};
         delete new_props.multipleChoice.choices[choice];
-        new_props.multipleChoice.correct_answers = removeItemsFromArrayByValue(new_props.multipleChoice.correct_answers, choice);
+        delete new_props.multipleChoice.correct_answers[choice];
         updateQuestion(new_props);
     }
     function addShortAnswer(event){
@@ -43,7 +43,14 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
     }
     function updateCorrectChoices(selectedList, selectedItem){
         let new_props = {...props};
-        new_props.multipleChoice.correct_answers = selectedList.map((each)=>{return each.value}).sort();
+        if(new_props.multipleChoice.correct_answers[selectedItem.value]){
+            delete new_props.multipleChoice.correct_answers[selectedItem.value];
+        }
+        else{
+            new_props.multipleChoice.correct_answers[selectedItem.value] = {
+                point: 1
+            }
+        }
         updateQuestion(new_props);
     }
     function handleChange(event){
@@ -59,10 +66,15 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
             new_props.multipleChoice.choices[choice] = value;
             updateQuestion(new_props);
         }
-        else if(inputName == "correct_answers"){
+        else if(props.type == "shortAnswer" && inputName == "correct_answers"){
             const index = event.target.getAttribute("data-index");
             let field = event.target.getAttribute("data-field");
             new_props.shortAnswer.correct_answers[index][field] = value;
+            updateQuestion(new_props);
+        }
+        else if(inputName == "point"){
+            const choice = event.target.getAttribute("data-choice");
+            new_props.multipleChoice.correct_answers[choice]["point"] = value;
             updateQuestion(new_props);
         }
         else{
@@ -142,12 +154,33 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                         })
                                     }
                                     selectedValues={
-                                        props.multipleChoice.correct_answers.map((each)=> {
-                                            return {name: each.toUpperCase(), value: each}
+                                        Object.keys(props.multipleChoice.correct_answers).map((key, index)=> {
+                                            return {name: key.toUpperCase(), value: key}
                                         })
                                     }
                                     displayValue="name"
                                 />
+                            </Form.Group>
+                            <Form.Group className="mb-3" >
+                                <Form.Label>
+                                    <h4>Points</h4>
+                                </Form.Label>
+                                {
+                                    Object.entries(props.multipleChoice.correct_answers).map(([key, value], index)=>{
+                                        return (
+                                            <Row key={key}>
+                                                <Col xs={1}>
+                                                    <Form.Label>
+                                                        <h4>{key.toUpperCase()}:</h4>
+                                                    </Form.Label>
+                                                </Col>
+                                                <Col xs={5}>
+                                                    <Form.Control type="number" data-input-name="point" data-choice={key} defaultValue={value.point} required />
+                                                </Col>
+                                            </Row>
+                                        )
+                                    })
+                                }
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Time (seconds):</Form.Label>

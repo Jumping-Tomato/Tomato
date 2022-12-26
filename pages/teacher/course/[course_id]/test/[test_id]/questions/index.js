@@ -49,7 +49,10 @@ export default function TestManagementPage({props}) {
       {
         question:"",
         choices:{
-            a:""
+            a:{
+              text:"",
+              point:""
+            }
         },
         correct_answers: ["a"],
         time: 60

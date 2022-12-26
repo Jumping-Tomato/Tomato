@@ -20,6 +20,7 @@ export default function TestManagementPage({props}) {
       show: false,
       message:""
     });
+    const [hasUnsaved, setHasUnsaved] = useState(false);
     useEffect(() => {
       //populate the questions
       const currentQuestions = props.questions;
@@ -38,9 +39,13 @@ export default function TestManagementPage({props}) {
       });
       setQuestions(questionsArray);
     },[]);
-
+    useEffect(()=>{
+      setHasUnsaved(true);
+    },[questions]);
     useBeforeunload((event) => {
-      event.preventDefault();
+      if (hasUnsaved) {
+        event.preventDefault();
+      }
     });
     const emptyQuestion = {
       id: nanoid(),
@@ -101,6 +106,7 @@ export default function TestManagementPage({props}) {
       axios.put(url, data)
       .then(function (response) {
         showModal(true,"Question(s) have been saved.");
+        setHasUnsaved(false);
       })
       .catch(function (error) {
         showModal(false,error.response.data.error);

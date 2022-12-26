@@ -63,7 +63,8 @@ export default function TestManagementPage({props}) {
         correct_answers:[
           {
             key: nanoid(),
-            answer: ""
+            answer: "",
+            point: "",
           }
         ],
         time: 60

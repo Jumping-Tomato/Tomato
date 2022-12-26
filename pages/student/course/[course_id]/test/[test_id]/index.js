@@ -71,10 +71,11 @@ export default function TestTakingPage({props}) {
       
       window.addEventListener('focus', handleFocus);
       window.addEventListener('blur', handleBlur);
-
+      window.addEventListener('beforeunload', handleBeforeUnload);
       return () => {
         window.removeEventListener('focus', handleFocus);
         window.removeEventListener('blur', handleBlur);
+        window.removeEventListener('beforeunload', handleBeforeUnload);
       };
     },[]);
 
@@ -163,6 +164,10 @@ export default function TestTakingPage({props}) {
         value:  "user exit tab"
       }
       activities.current.push(actvity);
+    }
+    function handleBeforeUnload(event){
+      event.preventDefault();
+      return event.returnValue = '';
     }
     return (
         <>

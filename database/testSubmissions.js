@@ -19,7 +19,8 @@ export const testSubmissions = {
     testIsSubmitted: testIsSubmitted,
     getUnansweredQuestion: getUnansweredQuestion,
     submitTestQuestionById: submitTestQuestionById,
-    setTotalScoreById: setTotalScoreById
+    setTotalScoreById: setTotalScoreById,
+    getAllTestScores: getAllTestScores
 };
 
 async function createTestSubmission(submissionData) {
@@ -214,5 +215,36 @@ async function setTotalScoreById(test_submission_id){
     }
     catch(error){
         throw `Unable to calculate the total score of the test submission.\nError: "${error}"\ntest_submission_id: "${test_submission_id}"`;
+    }
+}
+
+async function getAllTestScores(test_id){
+    try{
+        const submissions = await db.collection("testSubmissions").aggregate([
+            {
+                $match: {
+                    test_id: ObjectId(test_id)
+                } 
+            },
+            {
+                $lookup:{
+                    from: "users",
+                    localField: "student_id",
+                    foreignField: "_id",
+                    as: "student"
+                }
+            },
+            {
+                $project:{
+                    _id : 1,
+                    "student.firstName" : 1,
+                    "student.lastName" : 1,
+                }
+            }
+        ]).toArray();
+        return submissions
+    }
+    catch(error){
+        throw `Unable to get all scores of test.\n test_id: "${test_id}".\nError: "${error}"`;
     }
 }

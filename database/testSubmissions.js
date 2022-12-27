@@ -18,7 +18,8 @@ export const testSubmissions = {
     createTestSubmission,
     testIsSubmitted: testIsSubmitted,
     getUnansweredQuestion: getUnansweredQuestion,
-    submitTestQuestionById: submitTestQuestionById
+    submitTestQuestionById: submitTestQuestionById,
+    setTotalScoreById: setTotalScoreById
 };
 
 async function createTestSubmission(submissionData) {
@@ -158,7 +159,6 @@ async function submitTestQuestionById(test_submission_id, question_data){
         throw `Unable to submit the test question.\nError: "${error}"`;
     }
     finally {
-        console.log(`Question: "${question_data.id}" is successfully answered.`)
         await session.endSession();
     }
 }
@@ -187,4 +187,32 @@ function getGradedQuestion(questionData, correct_answers){
     questionData.correct_answers = correct_answers;
     questionData.score = score;
     return questionData;
+}
+
+
+async function setTotalScoreById(test_submission_id){
+    try{
+        const testSubmissions = await db.collection("testSubmissions").findOne(
+            {"_id": ObjectId(test_submission_id)}
+        );
+        if(!testSubmissions){
+            return false;
+        }
+        const answered_questions = testSubmissions.answered_questions;
+        let total_socre = 0;
+        answered_questions.forEach((each)=>{
+            total_socre += each.score;
+        })
+        const result = await db.collection("testSubmissions").updateOne(
+            {"_id": ObjectId(test_submission_id)},
+            {$set: {total_socre: total_socre}},
+        );
+        if(!result){
+            return false;
+        }
+        return true;
+    }
+    catch(error){
+        throw `Unable to calculate the total score of the test submission.\nError: "${error}"\ntest_submission_id: "${test_submission_id}"`;
+    }
 }

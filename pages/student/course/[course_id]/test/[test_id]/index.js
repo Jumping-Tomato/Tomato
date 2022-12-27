@@ -34,6 +34,7 @@ export default function TestTakingPage({props}) {
           setQuestionNumber(questionNumber+1);
         }
         else{
+          await setTotalScore();
           router.push('/student/dashboard')
         }
       }
@@ -171,6 +172,20 @@ export default function TestTakingPage({props}) {
     function handleBeforeUnload(event){
       event.preventDefault();
       return event.returnValue = '';
+    }
+    async function setTotalScore(){
+      try{
+        const params = {
+          test_submission_id: props.testSubmission_id
+        }
+        const response = await axios.post('/api/student/setTestTotalScore', params)
+        if(response.status != 200){
+          setError(response.error)
+        } 
+      }
+      catch(error){
+        setError(error)
+      }
     }
     return (
         <>

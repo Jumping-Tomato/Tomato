@@ -68,13 +68,17 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         }
         else if(props.type == "multipleChoice" && inputName == "point"){
             const choice = event.target.getAttribute("data-choice");
-            new_props.multipleChoice.correct_answers[choice]["point"] = value;
+            new_props.multipleChoice.correct_answers[choice]["point"] = parseInt(value);
+            updateQuestion(new_props);
+        }
+        else if(props.type == "shortAnswer" && inputName == "point"){
+            const index = event.target.getAttribute("data-index");
+            new_props.shortAnswer.correct_answers[index]["point"] = parseInt(value);
             updateQuestion(new_props);
         }
         else if(props.type == "shortAnswer" && inputName == "correct_answers"){
             const index = event.target.getAttribute("data-index");
-            let field = event.target.getAttribute("data-field");
-            new_props.shortAnswer.correct_answers[index][field] = value;
+            new_props.shortAnswer.correct_answers[index]["answer"] = value;
             updateQuestion(new_props);
         }
         else{
@@ -200,13 +204,13 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                         return (
                                                 <Row key={each.key} className="mb-3">
                                                     <Col xs={6}>
-                                                        <Form.Control as="textarea" data-input-name="correct_answers" data-field="answer" data-index={index} row={3} defaultValue={each.answer} />
+                                                        <Form.Control as="textarea" data-input-name="correct_answers" data-index={index} row={3} defaultValue={each.answer} />
                                                     </Col>
                                                     <Col xs={1}>
                                                         <Form.Label>Point:</Form.Label>
                                                     </Col>
                                                     <Col xs={3}>
-                                                        <Form.Control type="number" data-input-name="correct_answers"  data-field="point" data-index={index} defaultValue={each.point} required />
+                                                        <Form.Control type="number" data-input-name="point" data-index={index} defaultValue={each.point} required />
                                                     </Col>
                                                     <Col xs={1}>
                                                         {

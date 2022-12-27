@@ -18,7 +18,7 @@ export default function TestQuestion({question, handleChange, handleCopy, handle
                                             key={key}
                                             type={question.hasMultipleCorrectAnswers ? "checkbox": "radio"}
                                             label={`${key}: ${value}`}
-                                            value={value}
+                                            value={key}
                                         />
                                 })
                             }

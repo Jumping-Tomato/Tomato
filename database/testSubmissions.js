@@ -84,6 +84,13 @@ async function submitTestQuestionById(test_submission_id, question_data){
     try{
         const testSubmissionsCollection = client.db("Tomato").collection("testSubmissions");
         const transactionResults = await session.withTransaction(async () => {
+            const testSubmissions = await testSubmissionsCollection.findOne(
+                {"_id": ObjectId(test_submission_id)},
+                { session }
+            );
+            const correct_answers = testSubmissions.unanswered_questions[0].detail.correct_answers
+            question_data = getGradedQuestion(question_data,correct_answers)
+            
             const submit_answered_question = await testSubmissionsCollection.updateOne(
                 {"_id": ObjectId(test_submission_id)},
                 {$push: {answered_questions: question_data}},
@@ -91,6 +98,7 @@ async function submitTestQuestionById(test_submission_id, question_data){
             );
             console.log(`${submit_answered_question.matchedCount} document(s) found in the testSubmissions collection with the _id ${test_submission_id}.`);
             console.log(`${submit_answered_question.modifiedCount} document(s) was/were updated to append a new question to answered_questions array. question_id:  ${question_data.id}.`);
+            
             const removed_unanswered_question = await testSubmissionsCollection.updateOne(
                 {"_id": ObjectId(test_submission_id)},
                 {$pop: {unanswered_questions: -1}},
@@ -98,6 +106,7 @@ async function submitTestQuestionById(test_submission_id, question_data){
             );
             console.log(`${removed_unanswered_question.matchedCount} document(s) found in the testSubmissions collection with the _id ${test_submission_id}.`);
             console.log(`${removed_unanswered_question.modifiedCount} document(s) was/were updated to remove the first question question from unanswered_questions array. question_id:  ${question_data.id}.`);
+            
             const date = new Date().toISOString();
             const updated_date = await testSubmissionsCollection.updateOne(
                 {"_id": ObjectId(test_submission_id)},
@@ -105,27 +114,32 @@ async function submitTestQuestionById(test_submission_id, question_data){
                 { session }
             );
             console.log(`${updated_date.matchedCount} document(s) found in the testSubmissions collection with the _id ${test_submission_id}.`);
-            console.log(`${updated_date.modifiedCount} document(s) was/were updated to updated it dateUpdated field with _id  ${test_submission_id.id}. Date: ${date}`);
+            console.log(`${updated_date.modifiedCount} document(s) was/were updated to update dateUpdated field with _id  ${test_submission_id.id}. Date: ${date}`);
+            
             const updatedTestSubmission = await testSubmissionsCollection.findOne(
                 {"_id": ObjectId(test_submission_id)},
                 { session }
             );
+            
             const answered_questions = updatedTestSubmission.answered_questions;
             if(!answered_questions || !answered_questions.length){
                 console.error(`No new question added to answered_questions array.\nTest Submission Id: "${test_submission_id}"`)
                 await session.abortTransaction();
                 return;
             }
+            
             const new_answer = answered_questions[answered_questions.length - 1]
             if (!isEqual(new_answer,question_data)){
                 console.error(`The answered question was NOT added to answered_questions array.\nTest Submission Id: "${test_submission_id}"`)
                 await session.abortTransaction();
                 return;
             }
+            
             const unanswered_questions = updatedTestSubmission.unanswered_questions;
             if(unanswered_questions && unanswered_questions.length ){
                 const first_unanswered_question = unanswered_questions[0];
                 delete question_data['answers'];
+                delete question_data['score'];
                 if(isEqual(first_unanswered_question,question_data)){
                     console.error(`The answered question was NOT removed from unanswered_questions array.\nTest Submission Id: "${test_submission_id}"`)
                     await session.abortTransaction();
@@ -147,4 +161,30 @@ async function submitTestQuestionById(test_submission_id, question_data){
         console.log(`Question: "${question_data.id}" is successfully answered.`)
         await session.endSession();
     }
+}
+
+function getGradedQuestion(questionData, correct_answers){  
+    let score = 0;
+    if(questionData.type == "multipleChoice"){
+        questionData.answers.forEach((each)=>{
+            if(correct_answers[each]){
+                let point = correct_answers[each]["point"];
+                score += point;
+            }
+        });
+    }
+    else{
+        questionData.answers.forEach((each)=>{
+            for(let i=0; i < correct_answers.length; i++){
+                let right_answer = correct_answers[i];
+                if(each == right_answer.answer){
+                    let point = right_answer.point;
+                    score += point;
+                }
+            }
+        });
+    }
+    questionData.correct_answers = correct_answers;
+    questionData.score = score;
+    return questionData;
 }

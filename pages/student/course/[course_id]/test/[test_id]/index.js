@@ -61,6 +61,9 @@ export default function TestTakingPage({props}) {
           question_data: questionObject
         }
         const response = await axios.post('/api/student/submitTestQuestion', data);
+        if(response.status != 200){
+          alert("An error has occured. Unable to submit questions.");
+        }
       }
       catch(error){
         setError(error)

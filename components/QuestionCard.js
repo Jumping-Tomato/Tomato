@@ -50,6 +50,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                 point: 1
             }
         }
+        new_props.multipleChoice.correct_answers
         updateQuestion(new_props);
     }
     function handleChange(event){
@@ -148,12 +149,12 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                     onSelect={updateCorrectChoices}
                                     onRemove={updateCorrectChoices}
                                     options={ 
-                                        Object.keys(props.multipleChoice.choices).map((key)=>{
+                                        Object.keys(props.multipleChoice.choices).sort().map((key)=>{
                                             return {name: key.toUpperCase(), value: key};
                                         })
                                     }
                                     selectedValues={
-                                        Object.keys(props.multipleChoice.correct_answers).map((key, index)=> {
+                                        Object.keys(props.multipleChoice.correct_answers).sort().map((key, index)=> {
                                             return {name: key.toUpperCase(), value: key}
                                         })
                                     }
@@ -165,7 +166,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                     <h4>Points</h4>
                                 </Form.Label>
                                 {
-                                    Object.entries(props.multipleChoice.correct_answers).map(([key, value], index)=>{
+                                    Object.entries(props.multipleChoice.correct_answers).sort().map(([key, value], index)=>{
                                         return (
                                             <Row key={key}>
                                                 <Col xs={1}>

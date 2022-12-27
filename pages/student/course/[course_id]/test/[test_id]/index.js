@@ -274,7 +274,9 @@ export async function getServerSideProps(context) {
   let unanswered_questions = [];
   questions.forEach(question => {
     const unanswered_question = JSON.parse(JSON.stringify(question));
-    if(unanswered_question.detail.correct_answers.length > 1){
+    const correct_answers = unanswered_question.detail.correct_answers;
+    const num_of_correct_answers = Object.keys(correct_answers).length;
+    if(num_of_correct_answers > 1){
       unanswered_question.hasMultipleCorrectAnswers = true;
     }
     unanswered_questions.push(unanswered_question);

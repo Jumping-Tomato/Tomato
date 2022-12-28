@@ -200,13 +200,13 @@ async function setTotalScoreById(test_submission_id){
             return false;
         }
         const answered_questions = testSubmissions.answered_questions;
-        let total_socre = 0;
+        let total_score = 0;
         answered_questions.forEach((each)=>{
-            total_socre += each.score;
+            total_score += each.score;
         })
         const result = await db.collection("testSubmissions").updateOne(
             {"_id": ObjectId(test_submission_id)},
-            {$set: {total_socre: total_socre}},
+            {$set: {total_score: total_score}},
         );
         if(!result){
             return false;
@@ -239,6 +239,7 @@ async function getAllTestScores(test_id){
                     _id : 1,
                     "student.firstName" : 1,
                     "student.lastName" : 1,
+                    total_score: 1
                 }
             }
         ]).toArray();

@@ -237,6 +237,7 @@ async function getAllTestScores(test_id){
             {
                 $project:{
                     _id : 1,
+                    dateUpdated: 1,
                     "student.firstName" : 1,
                     "student.lastName" : 1,
                     total_score: 1

@@ -232,7 +232,7 @@ export default function CourseManagementPage({props}) {
                                                   </Button>
                                                 </Row>          
                                                 <Row className='pt-1'>
-                                                  <Button variant="success" size="sm">
+                                                  <Button variant="success" size="sm" href={`/teacher/course/${props.course_id}/test/${test._id}/allScores`}>
                                                       View Score
                                                   </Button>
                                                 </Row>

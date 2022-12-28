@@ -19,7 +19,8 @@ export default async function registerHandler(req, res) {
         return res.status(200).json({"result": result});
     }
     catch(error){
-        return res.status(500).json({"error": error});
+        console.error(error);
+        return res.status(500).json({"error": error.message});
     }
     
 }

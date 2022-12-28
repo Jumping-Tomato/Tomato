@@ -16,6 +16,7 @@ export default async function setTestTotalScore(req, res) {
         return res.status(500).json({error: "unable to calculate the total score."})    
     }
     catch(error){
-        return res.status(500).json({"error": error});
+        console.error(error);
+        return res.status(500).json({"error": error.message});
     }
 }

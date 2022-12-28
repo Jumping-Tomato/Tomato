@@ -13,6 +13,7 @@ export default async function getAllTestScores(req, res) {
         return res.status(200).json({score_data: score_data});
     }
     catch(error){
-        return res.status(500).json({"error": error});
+        console.error(error);
+        return res.status(500).json({"error": error.message});
     }
 }

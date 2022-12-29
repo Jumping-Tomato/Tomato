@@ -28,10 +28,7 @@ export default function AllScore({props}) {
       }
     }
     useEffect(() => {
-      const fetchData = async()=> {
-        await getScores();
-      }
-      fetchData()
+      getScores();
     }, []);
     
     return (

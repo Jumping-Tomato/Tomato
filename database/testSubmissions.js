@@ -20,7 +20,8 @@ export const testSubmissions = {
     getUnansweredQuestion: getUnansweredQuestion,
     submitTestQuestionById: submitTestQuestionById,
     setTotalScoreById: setTotalScoreById,
-    getAllTestScores: getAllTestScores
+    getAllTestScores: getAllTestScores,
+    getPointsByTestSubmissionId:getPointsByTestSubmissionId
 };
 
 async function createTestSubmission(submissionData) {
@@ -248,5 +249,31 @@ async function getAllTestScores(test_id){
     }
     catch(error){
         throw `Unable to get all scores of test.\n test_id: "${test_id}".\nError: "${error}"`;
+    }
+}
+
+async function getPointsByTestSubmissionId(test_submission_id){
+    try{
+        const testSubmissions = await db.collection("testSubmissions").findOne(
+            {"_id": ObjectId(test_submission_id)}
+        );
+        let point_data = [];
+        testSubmissions.answered_questions.forEach((each)=>{
+            let data = {
+                "type": each.type,
+                "question": each.detail.question,
+                "answers": each.answers,
+                "score": each.score,
+                "correct_answers": each.correct_answers
+            }
+            if(each.type == "multipleChoice"){
+                data["choices"] = each.detail.choices
+            }
+            point_data.push(data);
+        });
+        return point_data;
+    }
+    catch(error){
+        throw error;
     }
 }

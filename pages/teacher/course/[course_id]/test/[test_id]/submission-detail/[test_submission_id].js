@@ -9,29 +9,24 @@ import { tests } from 'database/tests';
 import { useRouter } from 'next/router';
 import  Link  from 'next/link';
 import { Button, Table } from 'react-bootstrap';
-import { getDateFromDate, getTimeFromDate } from 'helpers/functions';
 
-export default function AllScore({props}) {
+export default function TestSubmissionDetail({props}) {
     const router = useRouter();
     const title = `Test Score - ${props.test_name}`;
-    const {course_id, test_id} = router.query;
-    const [scores, setScores] = useState([]);
+    const [pointData, setPointData] = useState([]);
     const [error, setError] = useState("");
-    async function getScores(){
+    async function getPointData(){
       try{
-        const params = {params: {test_id:  router.query.test_id}};
-        const response = await axios.get("/api/teacher/getAllTestScores", params)
-        setScores(response.data.score_data);
+        const params = {params: {test_submission_id: router.query.test_submission_id}};
+        const response = await axios.get("/api/teacher/getPointsByTestSubmissionId", params);
+        setPointData(response.data.point_data);
       }
       catch(error){
         setError(error);
       }
     }
     useEffect(() => {
-      const fetchData = async()=> {
-        await getScores();
-      }
-      fetchData()
+      getPointData();
     }, []);
     
     return (
@@ -40,37 +35,34 @@ export default function AllScore({props}) {
         <div className={global.container}>
           <Head>
             <title>{title}</title>
-            <meta name="description" content="View All Score Page" />
+            <meta name="description" content="View Score Page" />
             <link rel="icon" href="#" />
           </Head>
      
           <main className={global.main}>
           <div className='row justify-content-center'>
               <div className="col-12 p-5">
+                <h6>Points: </h6>
                 <Table striped bordered hover>
                   <thead>
                     <tr>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Time Of Submission</th>
-                      <th>score</th>
+                      <th>Question</th>
+                      <th>Choices</th>
+                      <th>Answer(s)</th>
+                      <th>Correct Answer(s)</th>
+                      <th>Score</th>
                     </tr>
                   </thead>
                   <tbody>
                     {
-                      scores.map((each, index)=>{
+                      pointData.map((each, index)=>{
                         return  (
                           <tr key={index}>
-                            <td>{ each.student[0].firstName }</td>
-                            <td>{ each.student[0].lastName }</td>
-                            <td>{ getDateFromDate(new Date(each.dateUpdated)) } { getTimeFromDate(new Date(each.dateUpdated)) }</td>
-                            <td>{ each.total_score }</td>
-                            <td>
-                              <Button 
-                                href={`/teacher/course/${course_id}/test/${test_id}/submission-detail/${each._id}`}>
-                                  View Detail
-                                </Button>
-                            </td>
+                            <td>{ each.question }</td>
+                            <td>{ each.type == "multipleChoice" ? getChoicesString(each.choices) : "NA"}</td>
+                            <td>{ each.answers }</td>
+                            <td>{ getCorrectAnswersString(each.type, each.correct_answers) }</td>
+                            <td>{ each.score }</td>
                           </tr>
                         )
                       })
@@ -84,6 +76,27 @@ export default function AllScore({props}) {
         <Footer />
       </>
     );
+}
+function getChoicesString(choices){
+    let choiceString = "";
+    for (const [key, value] of Object.entries(choices)) {
+      choiceString += (key + ": " + value + "\n");
+    }
+    return choiceString;
+}
+
+function getCorrectAnswersString(type, correct_answers){
+  let correct_answers_string = "";
+  if(type == "multipleChoice"){
+    for (const [key, value] of Object.entries(correct_answers)) {
+      correct_answers_string += (key + ": " + value.point + "\n");
+    }
+    return correct_answers_string;
+  }
+  correct_answers.forEach((each)=>{
+    correct_answers_string += (each.answer + ": " + each.point + "\n");
+  });
+  return correct_answers_string;
 }
 
 export async function getServerSideProps(context) {
@@ -111,9 +124,8 @@ export async function getServerSideProps(context) {
         notFound: true
       }
     }
-    let props = {
-      test_name: test_data.name,
-    };
+    
+    let props = {};
     return {
       props: {props}
     }

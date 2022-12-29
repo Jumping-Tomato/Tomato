@@ -2,19 +2,20 @@ import Head from 'next/head';
 import global from 'styles/Global.module.scss';
 import { Topbar, Footer } from 'components';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { getSession } from 'next-auth/react';
 import { courses } from 'database/courses';
 import { tests } from 'database/tests';
 import { useRouter } from 'next/router';
-import  Link  from 'next/link';
-import { Button, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 
 export default function TestSubmissionDetail({props}) {
     const router = useRouter();
     const title = `Test Score - ${props.test_name}`;
     const [pointData, setPointData] = useState([]);
+    const [activityData, setActivityData] = useState([]);
     const [error, setError] = useState("");
+
     async function getPointData(){
       try{
         const params = {params: {test_submission_id: router.query.test_submission_id}};
@@ -25,8 +26,21 @@ export default function TestSubmissionDetail({props}) {
         setError(error);
       }
     }
+
+    async function getActivityData(){
+      try{
+        const params = {params: {test_submission_id: router.query.test_submission_id}};
+        const response = await axios.get("/api/teacher/getActivitiesByTestSubmissionId", params);
+        setActivityData(response.data.activity_data);
+      }
+      catch(error){
+        setError(error);
+      }
+    }
+
     useEffect(() => {
       getPointData();
+      getActivityData();
     }, []);
     
     return (
@@ -42,33 +56,68 @@ export default function TestSubmissionDetail({props}) {
           <main className={global.main}>
           <div className='row justify-content-center'>
               <div className="col-12 p-5">
-                <h6>Points: </h6>
-                <Table striped bordered hover>
-                  <thead>
-                    <tr>
-                      <th>Question</th>
-                      <th>Choices</th>
-                      <th>Answer(s)</th>
-                      <th>Correct Answer(s)</th>
-                      <th>Score</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      pointData.map((each, index)=>{
-                        return  (
-                          <tr key={index}>
-                            <td>{ each.question }</td>
-                            <td>{ each.type == "multipleChoice" ? getChoicesString(each.choices) : "NA"}</td>
-                            <td>{ each.answers }</td>
-                            <td>{ getCorrectAnswersString(each.type, each.correct_answers) }</td>
-                            <td>{ each.score }</td>
-                          </tr>
-                        )
-                      })
-                    }
-                  </tbody>
-                </Table>
+                <div>
+                  <h6>Points: </h6>
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>Question</th>
+                        <th>Choices</th>
+                        <th>Answer(s)</th>
+                        <th>Correct Answer(s)</th>
+                        <th>Score</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        pointData.map((each, index)=>{
+                          return  (
+                            <tr key={index}>
+                              <td>{ each.question }</td>
+                              <td>{ each.type == "multipleChoice" ? getChoicesString(each.choices) : "NA"}</td>
+                              <td>{ each.answers }</td>
+                              <td>{ getCorrectAnswersString(each.type, each.correct_answers) }</td>
+                              <td>{ each.score }</td>
+                            </tr>
+                          )
+                        })
+                      }
+                    </tbody>
+                  </Table>
+                </div>
+                <div className='mt-5'>
+                  <h6>Activities: </h6>
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>Question</th>
+                        <th>Action(s)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        activityData.map((each, index)=>{
+                          return  (
+                            <tr key={index}>
+                              <td>{ each.question }</td>
+                              <td>
+                                { 
+                                  each.activities.map((activity, index)=>{
+                                      return (
+                                              <Fragment key={index}>
+                                                {activity.name}: {activity.value}<br/>
+                                              </Fragment>
+                                      )
+                                  }) 
+                                }
+                              </td>
+                            </tr>
+                          )
+                        })
+                      }
+                    </tbody>
+                  </Table>
+                </div>  
               </div>
           </div>
           </main>

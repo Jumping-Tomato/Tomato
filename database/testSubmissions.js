@@ -21,7 +21,8 @@ export const testSubmissions = {
     submitTestQuestionById: submitTestQuestionById,
     setTotalScoreById: setTotalScoreById,
     getAllTestScores: getAllTestScores,
-    getPointsByTestSubmissionId:getPointsByTestSubmissionId
+    getPointsByTestSubmissionId: getPointsByTestSubmissionId,
+    getActivitiesByTestSubmissionId: getActivitiesByTestSubmissionId
 };
 
 async function createTestSubmission(submissionData) {
@@ -272,6 +273,30 @@ async function getPointsByTestSubmissionId(test_submission_id){
             point_data.push(data);
         });
         return point_data;
+    }
+    catch(error){
+        throw error;
+    }
+}
+
+async function getActivitiesByTestSubmissionId(test_submission_id){
+    try{
+        const testSubmissions = await db.collection("testSubmissions").findOne(
+            {"_id": ObjectId(test_submission_id)}
+        );
+        let activity_data = [];
+        testSubmissions.answered_questions.forEach((each)=>{
+            let data = {
+                "question": each.detail.question,
+                activities: []
+            }
+            const activities = each.activities;
+            activities.forEach((activity)=>{
+                data.activities.push(activity);
+            });
+            activity_data.push(data);
+        });
+        return activity_data;
     }
     catch(error){
         throw error;

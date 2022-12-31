@@ -84,6 +84,22 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
             updateQuestion(new_props);
         } 
     }
+    
+    function validateNumber(event){
+        const value = event.target.value;
+        const charCode = event.charCode;
+        const max = event.target.getAttribute("max");
+        /*if the value of the field has more digits than the max value,
+        * that means the value has exceeded the max value. So, the key
+        * will not be inputted. If the key entered is not a digit, such
+        * as '.' or '-', the key will not be inputted to avoid negative
+        * number and float.
+        */ 
+        if (value.length >= max.length || charCode < 49 || charCode > 57){
+            event.preventDefault();
+        }
+    }
+
     return (
         <Card className="p-0">
             <Card.Header>
@@ -185,7 +201,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Time (seconds):</Form.Label>
-                                <Form.Control data-input-name="time" type="number" defaultValue={props.multipleChoice.time} required />
+                                <Form.Control data-input-name="time" type="number" min="1" max="9999" onKeyPress={validateNumber} defaultValue={props.multipleChoice.time} required />
                             </Form.Group>
                         </Fragment>
                         :
@@ -230,7 +246,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Time (seconds):</Form.Label>
-                                <Form.Control data-input-name="time" type="number" defaultValue={props.shortAnswer.time} required />
+                                <Form.Control data-input-name="time" type="number" min="1" max="9999" onKeyPress={enterber} defaultValue={props.shortAnswer.time} required />
                             </Form.Group>
                         </Fragment>
                             

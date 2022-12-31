@@ -22,6 +22,7 @@ export const tests = {
             throw `Unable to delete the Test.\nError: "${error}"`;
         }
     },
+    editTestDetail: editTestDetail,
     getTestsByCourseId: async course_id => {
         return await db.collection("tests").find({"course_id": ObjectId(course_id)})
         .project({ name: 1, startDate:1, deadline:1 }).toArray();
@@ -29,7 +30,7 @@ export const tests = {
     getTestById: async test_id => {
         return await db.collection("tests").findOne({"_id": ObjectId(test_id)});
     },
-    updateQuestions: updateQuestions
+    updateQuestions: updateQuestions,
 };
 
 async function createTest(testData) {
@@ -41,6 +42,26 @@ async function createTest(testData) {
     db.collection("tests").insertOne(testData).catch((error)=>{
         throw `Unable to create quiz with the email`;
     });
+}
+
+async function editTestDetail(test_id, changed_data){
+    try{
+        const result = await db.collection("tests")
+                        .updateOne(
+                            {"_id": ObjectId(test_id)},
+                            {$set: {
+                                "name": changed_data.name,
+                                "startDate": changed_data.startDate,
+                                "deadline": changed_data.deadline,
+                                "dateUpdated": new Date().toISOString() 
+                            }}
+                        );
+        return result;
+        
+    }
+    catch(error){
+        throw error;
+    }
 }
 
 async function updateQuestions(test_id, questions_data){

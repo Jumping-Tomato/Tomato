@@ -18,6 +18,7 @@ export const testSubmissions = {
     createTestSubmission,
     testIsSubmitted: testIsSubmitted,
     getUnansweredQuestion: getUnansweredQuestion,
+    someoneHasSubmitted: someoneHasSubmitted,
     submitTestQuestionById: submitTestQuestionById,
     setTotalScoreById: setTotalScoreById,
     getAllTestScores: getAllTestScores,
@@ -75,6 +76,20 @@ async function getUnansweredQuestion(testSubmission_id){
     }
     catch(error){
         throw `Unable to get a question.\nError: "${error}"`;
+    }
+}
+async function someoneHasSubmitted(test_id){
+    try {
+        const submission = await db.collection("testSubmissions").findOne(
+           { "student_id": ObjectId(student_id)},
+        );
+        if(submission){
+            return true;
+        }
+        return false;
+    }
+    catch(error){
+        throw error;
     }
 }
 

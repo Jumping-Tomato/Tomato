@@ -17,14 +17,7 @@ export default async function editTestDetail(req, res) {
         if(new Date(startDate) >= new Date(deadline)){
             return res.status(406).send({"error": "Start date must be earlier than the deadline."});
         }
-        /* the difference in time between deadline and start date.
-        * The difference between two dates is in miliseconds. So, I need to
-        * convert it to seconds, and then to minitues.
-        */
-        const timeDiff = (new Date(deadline) - new Date(startDate))/1000/60;
-        if(timeDiff < length){
-            return res.status(406).send({"error": `Not enough time to finish the ${type}. Please shorten the length or change the start date or deadline.`});
-        }
+        
         const test_id = req_data["_id"];
         const changed_data = {
             name: req_data.name,

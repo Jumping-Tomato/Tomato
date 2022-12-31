@@ -260,14 +260,12 @@ export default function CourseManagementPage({props}) {
           </main>
         </div>
         <Footer />
-        <Modal show={showCreateQuizModal} onHide={closeCreateTestModal}>
-          <Modal.Header closeButton={true}>
-            <Modal.Title>Create a Quiz</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <CreateTestForm course_id={props.course_id} onSuccessCallback={createTestOnSuccessCallback} />
-          </Modal.Body>          
-        </Modal>
+        <CreateQuizModal 
+          showCreateQuizModal={showCreateQuizModal}
+          closeCreateTestModal={closeCreateTestModal}
+          course_id={props.course_id}
+          createTestOnSuccessCallback={createTestOnSuccessCallback}
+        />
         <ConfirmationModal 
           title="Are you sure?" 
           message="Are you sure to delete the test" 
@@ -279,6 +277,18 @@ export default function CourseManagementPage({props}) {
     );
 }
 
+function CreateQuizModal({showCreateQuizModal,closeCreateTestModal,course_id,createTestOnSuccessCallback}) {
+  return (
+    <Modal show={showCreateQuizModal} onHide={closeCreateTestModal}>
+      <Modal.Header closeButton={true}>
+        <Modal.Title>Create a Quiz</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <CreateTestForm course_id={course_id} onSuccessCallback={createTestOnSuccessCallback} />
+      </Modal.Body>          
+    </Modal>
+  )
+}
 export async function getServerSideProps(context) {
   const session = await getSession(context);
   const course_id = context.params.course_id;

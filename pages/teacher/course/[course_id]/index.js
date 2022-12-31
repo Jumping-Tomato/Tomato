@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import global from 'styles/Global.module.scss';
-import { ConfirmationModal, Topbar, Footer, CreateTestForm } from 'components';
+import { ConfirmationModal, Topbar, Footer, CreateTestForm, EditTestForm } from 'components';
 import axios from 'axios';
 import { Button, Tab, Col, Nav, Row,Spinner, Modal, Form} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
@@ -27,6 +27,11 @@ export default function CourseManagementPage({props}) {
       deleting_test_id: "",
       deleting_test_index: null,
     });
+    const [editQuizModalData, setEditQuizModalData] = useState({
+      show:false,
+      test_data:{}
+    });
+
     function loadStudents(){
       const url = '/api/teacher/getStudentsByCourseId';
       const params = {params: {course_id: props.course_id}};
@@ -100,6 +105,17 @@ export default function CourseManagementPage({props}) {
       closeCreateTestModal();
       loadTests();
     }
+    function showEditTestModal(event){
+      const testIndex = event.target.getAttribute("data-test-index");
+      let data = {};
+      let test_data = tests[testIndex];
+      test_data["startDate"] = new Date(test_data["startDate"]);
+      test_data["deadline"] = new Date(test_data["deadline"]);
+      data["show"] = true;
+      data["test_data"] = test_data
+      setEditQuizModalData(data);
+    }
+
     function deleteTest(test_id, index){
       const data = {
         "test_id": test_id,
@@ -232,6 +248,11 @@ export default function CourseManagementPage({props}) {
                                                   </Button>
                                                 </Row>          
                                                 <Row className='pt-1'>
+                                                  <Button variant="info" size="sm" data-test-index={index} onClick={showEditTestModal}>
+                                                      Edit Detail
+                                                  </Button>
+                                                </Row>
+                                                <Row className='pt-1'>
                                                   <Button variant="success" size="sm" href={`/teacher/course/${props.course_id}/test/${test._id}/allScores`}>
                                                       View Score
                                                   </Button>
@@ -268,6 +289,14 @@ export default function CourseManagementPage({props}) {
             createTestOnSuccessCallback: createTestOnSuccessCallback
           }
         } />
+        <EditQuizModal props={
+          {
+            showEditQuizModal: editQuizModalData.show,
+            closeEditTestModal: ()=>{setEditQuizModalData({show:false})},
+            test_data: editQuizModalData.test_data,
+            editTestOnSuccessCallback: null
+          }
+        } />
         <ConfirmationModal 
           title="Are you sure?" 
           message="Are you sure to delete the test" 
@@ -291,6 +320,20 @@ function CreateQuizModal({props}) {
     </Modal>
   )
 }
+
+function EditQuizModal({props}){
+  return (
+    <Modal show={props.showEditQuizModal} onHide={props.closeEditTestModal}>
+      <Modal.Header closeButton={true}>
+        <Modal.Title>Edit Test Detail</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <EditTestForm test_data={props.test_data} onSuccessCallback={()=>{console.log('wakanda')}} />
+      </Modal.Body>          
+    </Modal>
+  )
+}
+
 export async function getServerSideProps(context) {
   const session = await getSession(context);
   const course_id = context.params.course_id;

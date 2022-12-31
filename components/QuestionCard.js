@@ -95,7 +95,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
         * as '.' or '-', the key will not be inputted to avoid negative
         * number and float.
         */ 
-        if (value.length >= max.length || charCode < 49 || charCode > 57){
+        if (value.length >= max.length || charCode < 48 || charCode > 57){
             event.preventDefault();
         }
     }
@@ -201,7 +201,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Time (seconds):</Form.Label>
-                                <Form.Control data-input-name="time" type="number" min="1" max="9999" onKeyPress={validateNumber} defaultValue={props.multipleChoice.time} required />
+                                <Form.Control data-input-name="time" type="number" min="0" max="9999" onKeyPress={validateNumber} defaultValue={props.multipleChoice.time} required />
                             </Form.Group>
                         </Fragment>
                         :
@@ -246,7 +246,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Time (seconds):</Form.Label>
-                                <Form.Control data-input-name="time" type="number" min="1" max="9999" onKeyPress={validateNumber} defaultValue={props.shortAnswer.time} required />
+                                <Form.Control data-input-name="time" type="number" min="0" max="9999" onKeyPress={validateNumber} defaultValue={props.shortAnswer.time} required />
                             </Form.Group>
                         </Fragment>
                             

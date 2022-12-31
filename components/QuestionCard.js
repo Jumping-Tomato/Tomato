@@ -246,7 +246,7 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Time (seconds):</Form.Label>
-                                <Form.Control data-input-name="time" type="number" min="1" max="9999" onKeyPress={enterber} defaultValue={props.shortAnswer.time} required />
+                                <Form.Control data-input-name="time" type="number" min="1" max="9999" onKeyPress={validateNumber} defaultValue={props.shortAnswer.time} required />
                             </Form.Group>
                         </Fragment>
                             

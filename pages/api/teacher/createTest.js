@@ -8,7 +8,7 @@ export default async function createTest(req, res) {
         res.status(403).json({ error: "forbidden" })
     }
     const req_data = req.body;
-    const { type, length, startDate, deadline } = req_data;
+    const { startDate, deadline } = req_data;
     if(new Date(startDate) >= new Date(deadline)){
         return res.status(406).send({"error": "Start date must be earlier than the deadline."});
     }

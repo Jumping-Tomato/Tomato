@@ -13,7 +13,7 @@ export default async function editTestDetail(req, res) {
         if(testSubmissions.someoneHasSubmitted(req_data["_id"])){
             return res.status(403).json({ error: "A student has started the test" })
         }
-        const { type, length, startDate, deadline } = req_data;
+        const { startDate, deadline } = req_data;
         if(new Date(startDate) >= new Date(deadline)){
             return res.status(406).send({"error": "Start date must be earlier than the deadline."});
         }

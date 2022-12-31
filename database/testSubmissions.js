@@ -81,7 +81,7 @@ async function getUnansweredQuestion(testSubmission_id){
 async function someoneHasSubmitted(test_id){
     try {
         const submission = await db.collection("testSubmissions").findOne(
-           { "student_id": ObjectId(student_id)},
+           { "test_id": ObjectId(test_id)},
         );
         if(submission){
             return true;

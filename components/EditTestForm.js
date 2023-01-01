@@ -28,7 +28,17 @@ export default function EditTestForm({test_data, onSuccessCallback}) {
       const url = "/api/teacher/editTestDetail";
       axios.post(url, formData)
       .then(function (response) {
-        onSuccessCallback && onSuccessCallback();
+        if(onSuccessCallback){
+          const updated_test_data = response.data.updated_test_data;
+          const new_test = {
+            _id: updated_test_data._id,
+            name: updated_test_data.name,
+            startDate: updated_test_data.startDate,
+            deadline: updated_test_data.deadline,
+          }
+          
+          onSuccessCallback(new_test);
+        }
       })
       .catch(function (error) {
         setError(error.response.data.error);

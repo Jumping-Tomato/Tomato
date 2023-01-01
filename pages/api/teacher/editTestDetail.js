@@ -27,8 +27,8 @@ export default async function editTestDetail(req, res) {
             deadline: req_data.deadline,
         }
     
-        let result = await tests.editTestDetail(test_id, changed_data);
-        res.status(200).send("success");
+        let updated_test_data = await tests.editTestDetail(test_id, changed_data);
+        res.status(200).json({"updated_test_data": updated_test_data});
     }
     catch(error){
         console.error(error);

@@ -29,7 +29,8 @@ export default function CourseManagementPage({props}) {
     });
     const [editQuizModalData, setEditQuizModalData] = useState({
       show:false,
-      test_data:{}
+      test_data:{},
+      test_index: null
     });
 
     function loadStudents(){
@@ -106,13 +107,14 @@ export default function CourseManagementPage({props}) {
       loadTests();
     }
     function showEditTestModal(event){
-      const testIndex = event.target.getAttribute("data-test-index");
+      const testIndex = parseInt(event.target.getAttribute("data-test-index"));
       let data = {};
       let test_data = tests[testIndex];
       test_data["startDate"] = new Date(test_data["startDate"]);
       test_data["deadline"] = new Date(test_data["deadline"]);
       data["show"] = true;
-      data["test_data"] = test_data
+      data["test_data"] = test_data;
+      data["test_index"] = testIndex;
       setEditQuizModalData(data);
     }
 
@@ -138,6 +140,11 @@ export default function CourseManagementPage({props}) {
           deleting_test_index: null,
         });
       });
+    }
+    function setTestByIndex(index, test_data){
+      let new_tests = [...tests];
+      new_tests[index] = test_data;
+      setTests(new_tests);
     }
     return (
         <>
@@ -294,7 +301,10 @@ export default function CourseManagementPage({props}) {
             showEditQuizModal: editQuizModalData.show,
             closeEditTestModal: ()=>{setEditQuizModalData({show:false})},
             test_data: editQuizModalData.test_data,
-            editTestOnSuccessCallback: ()=>{setEditQuizModalData({show:false})}
+            editTestOnSuccessCallback:  (data)=>{
+                                          setEditQuizModalData({show:false});
+                                          setTestByIndex(editQuizModalData.test_index, data)
+                                        }
           }
         } />
         <ConfirmationModal 

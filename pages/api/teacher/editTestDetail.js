@@ -12,10 +12,11 @@ export default async function editTestDetail(req, res) {
         const req_data = req.body;
         const test_id = req_data["_id"];
 
-        const someoneHasSubmitted = await testSubmissions.someoneHasSubmitted(req_data["_id"]);
-        if(someoneHasSubmitted){
-            return res.status(403).json({ error: "Unable to update test deatail. Because, a student has started the test" })
+        const test = await tests.getTestById(test_id);
+        if(new Date() >= new Date(test.startDate)){
+            return res.status(403).send({"error": "you can NOT update test detail anymore after the start date."});
         }
+ 
         const { startDate, deadline } = req_data;
         if(new Date(startDate) >= new Date(deadline)){
             return res.status(406).send({"error": "Start date must be earlier than the deadline."});

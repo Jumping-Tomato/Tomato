@@ -47,16 +47,18 @@ async function createTest(testData) {
 async function editTestDetail(test_id, changed_data){
     try{
         const result = await db.collection("tests")
-                        .updateOne(
+                        .findOneAndUpdate(
                             {"_id": ObjectId(test_id)},
                             {$set: {
                                 "name": changed_data.name,
                                 "startDate": changed_data.startDate,
                                 "deadline": changed_data.deadline,
                                 "dateUpdated": new Date().toISOString() 
-                            }}
+                            }},
+                            {returnDocument: "after"}
                         );
-        return result;
+        const updated_test_data = result.value;
+        return updated_test_data;
         
     }
     catch(error){

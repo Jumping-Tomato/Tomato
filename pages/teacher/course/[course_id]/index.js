@@ -26,6 +26,7 @@ export default function CourseManagementPage({props}) {
       show: false,
       deleting_test_id: "",
       deleting_test_index: null,
+      error: ""
     });
     const [editQuizModalData, setEditQuizModalData] = useState({
       show:false,
@@ -119,6 +120,13 @@ export default function CourseManagementPage({props}) {
     }
 
     function deleteTest(test_id, index){
+      let test = tests[index];
+      if(new Date() >= new Date(test.startDate)){
+        let data = {...deleteConfirmationModalData};
+        data.error = "You can NOT delete a test after its start Date.";
+        setDeleteConfirmationModalData(data);
+        return;
+      }
       const data = {
         "test_id": test_id,
       };
@@ -246,7 +254,12 @@ export default function CourseManagementPage({props}) {
                                                 {test.name}
                                               </div>
                                               <div className="col-5 pt-3">
-                                                Earliest Start Time: { getDateFromDate(new Date(test.startDate)) } { getTimeFromDate(new Date(test.startDate)) }
+                                                <div className="p-1">
+                                                  <strong>Earliest Start Time:</strong> { getDateFromDate(new Date(test.startDate)) } { getTimeFromDate(new Date(test.startDate)) }
+                                                </div>
+                                                <div className="p-1">
+                                                  <strong>Deadline:</strong> { getDateFromDate(new Date(test.deadline)) } { getTimeFromDate(new Date(test.deadline)) }
+                                                </div>
                                               </div>
                                               <div className="col-3">
                                                 <Row className='pt-1'>
@@ -311,8 +324,19 @@ export default function CourseManagementPage({props}) {
           title="Are you sure?" 
           message="Are you sure to delete the test" 
           show={deleteConfirmationModalData.show} 
-          confirmationCallBack={function(){deleteTest(deleteConfirmationModalData.deleting_test_id, deleteConfirmationModalData.index)}}
-          closeModalCallBack={(e)=>{setDeleteConfirmationModalData({show:false, deleting_test_id:"", deleting_test_index: null})}}
+          error={deleteConfirmationModalData.error} 
+          confirmationCallBack={ 
+            function(){
+              deleteTest(deleteConfirmationModalData.deleting_test_id, deleteConfirmationModalData.deleting_test_index)
+          }}
+          closeModalCallBack={(e)=>{
+            setDeleteConfirmationModalData({
+              show:false, 
+              deleting_test_id:"", 
+              deleting_test_index: null,
+              error:""
+            })
+          }}
         />
       </>
     );

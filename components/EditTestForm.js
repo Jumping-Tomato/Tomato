@@ -25,7 +25,7 @@ export default function EditTestForm({test_data, onSuccessCallback}) {
     }
     const handleSubmit = function(event){
       event.preventDefault();
-      const url = "";
+      const url = "/api/teacher/editTestDetail";
       axios.post(url, formData)
       .then(function (response) {
         onSuccessCallback && onSuccessCallback();

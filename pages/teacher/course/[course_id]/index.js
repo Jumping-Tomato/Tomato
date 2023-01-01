@@ -294,7 +294,7 @@ export default function CourseManagementPage({props}) {
             showEditQuizModal: editQuizModalData.show,
             closeEditTestModal: ()=>{setEditQuizModalData({show:false})},
             test_data: editQuizModalData.test_data,
-            editTestOnSuccessCallback: null
+            editTestOnSuccessCallback: ()=>{setEditQuizModalData({show:false})}
           }
         } />
         <ConfirmationModal 
@@ -328,7 +328,7 @@ function EditQuizModal({props}){
         <Modal.Title>Edit Test Detail</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <EditTestForm test_data={props.test_data} onSuccessCallback={()=>{console.log('wakanda')}} />
+        <EditTestForm test_data={props.test_data} onSuccessCallback={props.editTestOnSuccessCallback} />
       </Modal.Body>          
     </Modal>
   )

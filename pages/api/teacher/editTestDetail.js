@@ -26,13 +26,12 @@ export default async function editTestDetail(req, res) {
             startDate: req_data.startDate,
             deadline: req_data.deadline,
         }
-    
-        let updated_test_data = await tests.editTestDetail(test_id, changed_data);
-        res.status(200).json({"updated_test_data": updated_test_data});
+        await tests.editTestDetail(test_id, changed_data);      
+        return res.status(200).send("success");
     }
     catch(error){
         console.error(error);
-        res.status(500).send({"error": "unable to edit test detail"})
+        return res.status(500).send({"error": "unable to edit test detail"})
     }
 }
   

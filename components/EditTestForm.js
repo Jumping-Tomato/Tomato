@@ -29,15 +29,7 @@ export default function EditTestForm({test_data, onSuccessCallback}) {
       axios.post(url, formData)
       .then(function (response) {
         if(onSuccessCallback){
-          const updated_test_data = response.data.updated_test_data;
-          const new_test = {
-            _id: updated_test_data._id,
-            name: updated_test_data.name,
-            startDate: updated_test_data.startDate,
-            deadline: updated_test_data.deadline,
-          }
-          
-          onSuccessCallback(new_test);
+          onSuccessCallback(formData);
         }
       })
       .catch(function (error) {

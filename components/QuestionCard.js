@@ -115,12 +115,14 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
             </Card.Header>
             <Card.Body> 
                 <Form onChange={handleChange}>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Type</Form.Label>
-                        <Form.Select name="type" data-input-name="questionType" defaultValue={props.type} required>
-                            <option value="multipleChoice">Multiple Choice</option>
-                            <option value="shortAnswer">Short Answer</option>
-                        </Form.Select>
+                    <Form.Group className="mb-3 row">
+                        <div className='col-3'>
+                            <Form.Label>Type</Form.Label>
+                            <Form.Select name="type" data-input-name="questionType" defaultValue={props.type} required>
+                                <option value="multipleChoice">Multiple Choice</option>
+                                <option value="shortAnswer">Short Answer</option>
+                            </Form.Select>
+                        </div>
                     </Form.Group>
                     {
                         props.type == "multipleChoice"
@@ -199,9 +201,11 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                     })
                                 }
                             </Form.Group>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Time (seconds):</Form.Label>
-                                <Form.Control data-input-name="time" type="number" min="0" max="9999" onKeyPress={validateNumber} defaultValue={props.multipleChoice.time} required />
+                            <Form.Group className="mb-3 row" >
+                                <div className='col-2'>
+                                    <Form.Label>Time (seconds):</Form.Label>
+                                    <Form.Control data-input-name="time" type="number" min="0" max="9999" onKeyPress={validateNumber} defaultValue={props.multipleChoice.time} required />
+                                </div>
                             </Form.Group>
                         </Fragment>
                         :
@@ -244,9 +248,11 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,update
                                     })
                                 }                        
                             </Form.Group>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Time (seconds):</Form.Label>
-                                <Form.Control data-input-name="time" type="number" min="0" max="9999" onKeyPress={validateNumber} defaultValue={props.shortAnswer.time} required />
+                            <Form.Group className="mb-3 row" >
+                                <div className='col-2'>
+                                    <Form.Label>Time (seconds):</Form.Label>
+                                    <Form.Control data-input-name="time" type="number" min="0" max="9999" onKeyPress={validateNumber} defaultValue={props.shortAnswer.time} required />
+                                </div>
                             </Form.Group>
                         </Fragment>
                             

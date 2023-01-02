@@ -270,7 +270,7 @@ export async function getServerSideProps(context) {
         }
     }
   }
-  let questions = test_data.questions;
+  let questions = test_data.questions ? test_data.questions : [];
   let unanswered_questions = [];
   questions.forEach(question => {
     const unanswered_question = JSON.parse(JSON.stringify(question));

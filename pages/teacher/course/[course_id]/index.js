@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import global from 'styles/Global.module.scss';
-import { ConfirmationModal, Topbar, Footer, CreateTestForm, EditTestForm } from 'components';
+import { ConfirmationModal, GeneralModal, Topbar, Footer, CreateTestForm, EditTestForm } from 'components';
 import axios from 'axios';
 import { Button, Tab, Col, Nav, Row,Spinner, Modal, Form} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
@@ -10,8 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import  Link  from 'next/link';
 import { getDateFromDate, getTimeFromDate } from 'helpers/functions';
+import { useRouter } from 'next/router';
 
 export default function CourseManagementPage({props}) {
+    const router = useRouter();
     const [students, setStudents] = useState({
       "type":{
         "enrolled":[],
@@ -33,7 +35,11 @@ export default function CourseManagementPage({props}) {
       test_data:{},
       test_index: null
     });
-
+    const [generalModalData, setGeneralModalData] = useState({
+      show:false,
+      title: "",
+      message: ""
+    });
     function loadStudents(){
       const url = '/api/teacher/getStudentsByCourseId';
       const params = {params: {course_id: props.course_id}};
@@ -154,6 +160,19 @@ export default function CourseManagementPage({props}) {
       new_tests[index] = test_data;
       setTests(new_tests);
     }
+    function goToEditTestPage(index){
+      let test = tests[index];
+      if(new Date() >= new Date(test.startDate)){
+        // open a general modal to say you can edit a test after the start date
+        setGeneralModalData({
+          show: true,
+          title: "Error",
+          message: "You can NOT add/remove/edit the questions after the start time and date of the test."
+        });
+        return;
+      }
+      router.push(`/teacher/course/${props.course_id}/test/${test._id}/questions`);
+    }
     return (
         <>
         <Topbar />
@@ -263,7 +282,7 @@ export default function CourseManagementPage({props}) {
                                               </div>
                                               <div className="col-3">
                                                 <Row className='pt-1'>
-                                                  <Button variant="warning" size="sm" href={`/teacher/course/${props.course_id}/test/${test._id}/questions`}>
+                                                  <Button variant="warning" size="sm" onClick={ ()=>{ goToEditTestPage(index) } }>
                                                     Edit Questions
                                                   </Button>
                                                 </Row>          
@@ -337,6 +356,16 @@ export default function CourseManagementPage({props}) {
               error:""
             })
           }}
+        />
+        <GeneralModal 
+          show={generalModalData.show}
+          title={generalModalData.title}
+          message={generalModalData.message}
+          closeModalCallBack={
+              ()=>{
+                setGeneralModalData({...generalModalData, show: false})
+              }
+          }
         />
       </>
     );

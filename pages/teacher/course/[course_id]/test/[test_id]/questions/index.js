@@ -215,6 +215,15 @@ export async function getServerSideProps(context) {
       notFound: true
     }
   }
+  
+  if (new Date() >= new Date(test_data.startDate)){
+    //You can no longer edit the questions after the start time of the test.
+    return {
+      redirect: {
+        destination: "/error/forbidden",
+      }
+    }
+  }
   const questions = test_data.questions ?  test_data.questions : []
   let props = {
     name: test_data.name,

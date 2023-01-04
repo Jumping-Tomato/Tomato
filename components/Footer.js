@@ -13,7 +13,7 @@ export default function Footer() {
             </a>
             </div>
             <div className='col-lg-5 col-12'>
-            Copyright © 2022 Hocuchi Inc. All Rights Reserved. 
+            Copyright © 2023 Jumping Tomato Inc. All Rights Reserved. 
             </div>  
         </footer>
     )

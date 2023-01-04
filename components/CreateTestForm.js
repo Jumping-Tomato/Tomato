@@ -58,6 +58,10 @@ export default function CreateTestForm({course_id, onSuccessCallback}) {
                   timeCaption="time"
                   dateFormat="MMMM d, yyyy h:mm aa"
                   autoComplete='off'
+                  required
+                  onKeyDown={(e) => {
+                    e.preventDefault();
+                 }}
             />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -73,6 +77,10 @@ export default function CreateTestForm({course_id, onSuccessCallback}) {
                   timeCaption="time"
                   dateFormat="MMMM d, yyyy h:mm aa"
                   autoComplete='off'
+                  required
+                  onKeyDown={(e) => {
+                    e.preventDefault();
+                  }}
               />
             </Form.Group>
             { error && <Alert variant="danger"> {error} </Alert>}

@@ -193,7 +193,7 @@ export default function TestTakingPage({props}) {
                 <Head>
                     <title>Test: {props.title}</title>
                     <meta name="Test Taking Page" content="Taking the test" />
-                    <link rel="icon" href="#" />
+                    <link rel="icon" href="/images/logo.svg" />
                 </Head>
 
                 <main className={global.main}>

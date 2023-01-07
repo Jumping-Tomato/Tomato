@@ -11,7 +11,7 @@ export default function Home() {
       <Head>
         <title>Home Page</title>
         <meta name="description" content="Home Page" />
-        <link rel="icon" href="/hair_cut.svg" />
+        <link rel="icon" href="/images/logo.svg" />
       </Head>
 
       

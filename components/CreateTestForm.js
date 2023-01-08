@@ -25,7 +25,7 @@ export default function CreateTestForm({course_id, onSuccessCallback}) {
     const handleOnDateChange = (date, name) => {
       setFormData({
         ...formData,
-        [name]: date
+        [name]: date.toISOString()
       });
     }
     const handleSubmit = function(event){
@@ -48,7 +48,7 @@ export default function CreateTestForm({course_id, onSuccessCallback}) {
             <Form.Group className="mb-3">
               <Form.Label>Start Date</Form.Label>
               <DatePicker
-                  selected={ formData.startDate }
+                  selected={ formData.startDate ? new Date(formData.startDate) : "" }
                   onChange={(date) => handleOnDateChange(date, "startDate") }
                   name="startDate"
                   showTimeSelect
@@ -67,7 +67,7 @@ export default function CreateTestForm({course_id, onSuccessCallback}) {
             <Form.Group className="mb-3">
               <Form.Label>deadline</Form.Label>
               <DatePicker
-                  selected={ formData.deadline }
+                  selected={ formData.deadline ? new Date(formData.deadline) : "" }
                   onChange={(date) => handleOnDateChange(date, "deadline") }
                   name="deadline"
                   showTimeSelect

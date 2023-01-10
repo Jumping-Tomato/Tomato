@@ -135,7 +135,7 @@ export default function TestManagementPage({props}) {
           <Head>
             <title>{"Test -" +  props.name}</title>
             <meta name="description" content="student Add Course Page" />
-            <link rel="icon" href="#" />
+            <link rel="icon" href="/images/logo.svg" />
           </Head>
      
           <main className={global.main}>

@@ -61,7 +61,7 @@ export default function Resgister(){
           <Head>
             <title>Register</title>
             <meta name="description" content="Register page" />
-            <link rel="icon" href="#" />
+            <link rel="icon" href="/images/logo.svg" />
           </Head>
 
           <main className={global.main}>

@@ -59,7 +59,7 @@ export default function PasswordResetPage({userProps}){
            <Head>
              <title>Reset Password</title>
              <meta name="description" content="Reset Password" />
-             <link rel="icon" href="#" />
+             <link rel="icon" href="/images/logo.svg" />
            </Head>
  
            <main className={global.main}>

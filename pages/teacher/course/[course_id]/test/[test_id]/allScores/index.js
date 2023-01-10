@@ -38,7 +38,7 @@ export default function AllScore({props}) {
           <Head>
             <title>{title}</title>
             <meta name="description" content="View All Score Page" />
-            <link rel="icon" href="#" />
+            <link rel="icon" href="/images/logo.svg" />
           </Head>
      
           <main className={global.main}>

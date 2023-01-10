@@ -65,7 +65,7 @@ export default function ForgotPasswordPage(){
            <Head>
              <title>Forgot Password</title>
              <meta name="description" content="Forgot Password" />
-             <link rel="icon" href="#" />
+             <link rel="icon" href="/images/logo.svg" />
            </Head>
  
            <main className={global.main}>

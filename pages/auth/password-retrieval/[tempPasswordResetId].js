@@ -59,7 +59,7 @@ export default function TempPassowordResetPage({props}){
           <Head>
             <title>Un-authenticated User Password Reset Page</title>
             <meta name="description" content="Password Reset Page" />
-            <link rel="icon" href="#" />
+            <link rel="icon" href="/images/logo.svg" />
           </Head>
 
           <main className={global.main}>

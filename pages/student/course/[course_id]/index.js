@@ -29,7 +29,7 @@ export default function StudentCoursePage({props}) {
                 <Head>
                     <title>{ props.course_name }</title>
                     <meta name="description" content="Studen Course Page" />
-                    <link rel="icon" href="#" />
+                    <link rel="icon" href="/images/logo.svg" />
                 </Head>
 
                 <main className={global.main}>

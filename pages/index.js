@@ -9,8 +9,9 @@ export default function Home() {
     <Topbar />
     <div className={global.container}>
       <Head>
-        <title>Home Page</title>
-        <meta name="description" content="Home Page" />
+        <title>Jumping Tomato | Cloud-Based software, Autograding Online Test System</title>
+        <meta name="description" content="At Jumping Tomato, we are dedicated to make jobs of every teachers to be easier and more effienct by providing
+                                          autograding online test system" />
         <link rel="icon" href="/images/logo.svg" />
       </Head>
 

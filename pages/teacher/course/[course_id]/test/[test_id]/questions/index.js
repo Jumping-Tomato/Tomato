@@ -2,7 +2,7 @@ import Head from 'next/head';
 import global from 'styles/Global.module.scss';
 import { Topbar,QuestionCard, Footer } from 'components';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 import { courses } from 'database/courses';
@@ -81,16 +81,19 @@ export default function TestManagementPage({props}) {
       const newQuestion = structuredClone(emptyQuestion);
       setQuestions(currentQuestions => [...currentQuestions, newQuestion])
     }
-    function removeQuestionCard(questionCardIndex){
+
+    const removeQuestionCard = useCallback((questionCardIndex)=>{
       let new_questions = [...questions];
       new_questions.splice(questionCardIndex,1);
       setQuestions(new_questions);
-    }
-    function updateQuestionAtIndex(index, question){
+    },[questions.length]);
+
+    const updateQuestionAtIndex = useCallback((index, question) =>{
       let new_questions = [...questions];
       new_questions[index] = question;
       setQuestions(new_questions);
-    }
+    },[questions.length]);
+
     function handleSave(event){
       event.preventDefault();
       if(!questions.length){
@@ -112,6 +115,7 @@ export default function TestManagementPage({props}) {
         showModal(false,error.response.data.error);
       }); 
     }
+
     function showModal(isSuccess, message){
       const modal_data = {
         show: true,
@@ -120,6 +124,7 @@ export default function TestManagementPage({props}) {
       }
       setModalData(modal_data);
     }
+
     function closeModal(event){
       event.preventDefault();
       const modal_data = {
@@ -128,6 +133,7 @@ export default function TestManagementPage({props}) {
       }
       setModalData(modal_data)
     }
+    
     return (
         <>
         <Topbar />

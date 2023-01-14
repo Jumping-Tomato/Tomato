@@ -1,11 +1,11 @@
 import { Card, Form, Row, Col} from 'react-bootstrap';
-import { Fragment } from 'react';
+import { Fragment, memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import Multiselect from 'multiselect-react-dropdown';
 import { nanoid } from 'nanoid'
 
-export default function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestionAtIndex}) {
+function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestionAtIndex}) {
     var choices = props.multipleChoice.choices;
     function updateQuestion(props){
         updateQuestionAtIndex(index, props);
@@ -268,3 +268,5 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,index,
         </Card>
     )
 }
+
+export default memo(QuestionCard);

@@ -5,8 +5,11 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import Multiselect from 'multiselect-react-dropdown';
 import { nanoid } from 'nanoid'
 
-export default function QuestionCard({props,title,handleRemoveButtonClick,updateQuestion}) {
+export default function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestionAtIndex}) {
     var choices = props.multipleChoice.choices;
+    function updateQuestion(props){
+        updateQuestionAtIndex(index, props);
+    }
     function addChoice(event){
         event.preventDefault();
         const num_of_choices = Object.keys(choices).length;

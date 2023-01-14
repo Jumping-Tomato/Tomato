@@ -86,7 +86,7 @@ export default function TestManagementPage({props}) {
       new_questions.splice(questionCardIndex,1);
       setQuestions(new_questions);
     }
-    function updateQuestion(index, question){
+    function updateQuestionAtIndex(index, question){
       let new_questions = [...questions];
       new_questions[index] = question;
       setQuestions(new_questions);
@@ -153,7 +153,7 @@ export default function TestManagementPage({props}) {
                     questions.map((question, index)=>{
                       return  (
                               <li className="list-group-item border-0" key={question.id}>
-                                <QuestionCard props={question} title={"Question " + (index + 1)} updateQuestion={function(question){updateQuestion(index, question)}} handleRemoveButtonClick={ ()=>{ removeQuestionCard(index) } }/>
+                                <QuestionCard props={question} title={"Question " + (index + 1)} index={index} updateQuestionAtIndex={updateQuestionAtIndex} handleRemoveButtonClick={ ()=>{ removeQuestionCard(index) } }/>
                               </li>
                             );
                     })

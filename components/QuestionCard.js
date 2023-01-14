@@ -111,7 +111,10 @@ export default function QuestionCard({props,title,handleRemoveButtonClick,index,
                     style={{padding:"0 4px",
                             transform: "translate(20px, -15px)"
                     }}
-                    onClick={handleRemoveButtonClick}
+                    onClick={() => {
+                                handleRemoveButtonClick(index);
+                            }
+                    }
                     >
                     <FontAwesomeIcon icon={faMinus} size="xs" />
                 </button>

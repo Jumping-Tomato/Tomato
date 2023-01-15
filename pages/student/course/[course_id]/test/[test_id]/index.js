@@ -281,10 +281,13 @@ export async function getServerSideProps(context) {
     }
     unanswered_questions.push(unanswered_question);
   });
+  if(test_data.shuffle){
+    unanswered_questions = shuffle(unanswered_questions);
+  }
   const testSubmission_data = await testSubmissions.createTestSubmission({
     "test_id": test_data._id,
     "student_id": new ObjectId(uid),
-    "unanswered_questions": shuffle(unanswered_questions),
+    "unanswered_questions": unanswered_questions,
     "answered_questions": []
   });
   const testSubmission_id =  testSubmission_data.insertedId.toString();

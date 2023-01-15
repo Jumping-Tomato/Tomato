@@ -12,6 +12,9 @@ export default function EditTestForm({test_data, onSuccessCallback}) {
     const handleChange = function (event){
       let name = event.target.name;
       let val = event.target.value;
+      if(name == "shuffle"){
+        val = !formData.shuffle
+      }
       setFormData({
         ...formData,
         [name]: val
@@ -41,6 +44,14 @@ export default function EditTestForm({test_data, onSuccessCallback}) {
             <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
               <Form.Control type="text" name="name" placeholder="name" value={formData.name} required />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Check 
+                type="checkbox"
+                name="shuffle"
+                label="shuffle"
+                checked={formData.shuffle} 
+              />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Start Date</Form.Label>

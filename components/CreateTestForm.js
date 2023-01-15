@@ -10,13 +10,17 @@ export default function CreateTestForm({course_id, onSuccessCallback}) {
     const [formData, setFormData] = useState({
       "course_id": course_id,
       "name":"",
+      "shuffle": false,
       "startDate": "",
       "deadline":""
     });
     const [error, setError] = useState("");
-    const handleChange = function (event){
+    const handleChange = function (event){  
       let name = event.target.name;
       let val = event.target.value;
+      if(name == "shuffle"){
+          val = !formData.shuffle
+      }
       setFormData({
         ...formData,
         [name]: val
@@ -44,6 +48,13 @@ export default function CreateTestForm({course_id, onSuccessCallback}) {
             <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
               <Form.Control type="text" name="name" placeholder="name" required />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Check 
+                type="checkbox"
+                name="shuffle"
+                label="shuffle"
+              />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Start Date</Form.Label>

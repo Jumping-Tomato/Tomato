@@ -25,7 +25,7 @@ export const tests = {
     editTestDetail: editTestDetail,
     getTestsByCourseId: async course_id => {
         return await db.collection("tests").find({"course_id": ObjectId(course_id)})
-        .project({ name: 1, startDate:1, deadline:1 }).toArray();
+        .project({ name: 1, shuffle:1, startDate:1, deadline:1 }).toArray();
     },
     getTestById: async test_id => {
         return await db.collection("tests").findOne({"_id": ObjectId(test_id)});
@@ -51,6 +51,7 @@ async function editTestDetail(test_id, changed_data){
                             {"_id": ObjectId(test_id)},
                             {$set: {
                                 "name": changed_data.name,
+                                "shuffle": changed_data.shuffle,
                                 "startDate": changed_data.startDate,
                                 "deadline": changed_data.deadline,
                                 "dateUpdated": new Date().toISOString() 

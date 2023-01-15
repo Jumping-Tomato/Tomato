@@ -24,6 +24,7 @@ export default async function editTestDetail(req, res) {
 
         const changed_data = {
             name: req_data.name,
+            shuffle: req_data.shuffle,
             startDate: req_data.startDate,
             deadline: req_data.deadline,
         }

@@ -29,7 +29,7 @@ export default function EditTestForm({test_data, onSuccessCallback}) {
     const handleSubmit = function(event){
       event.preventDefault();
       const url = "/api/teacher/editTestDetail";
-      axios.post(url, formData)
+      axios.put(url, formData)
       .then(function (response) {
         if(onSuccessCallback){
           onSuccessCallback(formData);

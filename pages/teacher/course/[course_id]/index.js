@@ -137,7 +137,7 @@ export default function CourseManagementPage({props}) {
         "test_id": test_id,
       };
       const url = "/api/teacher/deleteTestById";
-      axios.post(url, data)
+      axios.delete(url, data)
       .then(function (response) {
           let new_tests = [...tests];
           new_tests.splice(index,1);

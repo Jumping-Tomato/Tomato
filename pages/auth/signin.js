@@ -44,11 +44,11 @@ export default function Signin(){
                 router.push("/");
             }
             else{
-                setError('Email or password is incorrect');
+                setError(res.error);
             }
         }
         catch(error){
-            console.error(error);
+            setError("An error has occurred. Please try again later");
         }
     }
     return (

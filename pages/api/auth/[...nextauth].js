@@ -16,7 +16,7 @@ export default NextAuth({
             authorize: async (credentials)=>{
                 const isCaptchaValid = await verifyCaptcha(credentials.captchaValue);
                 if(!isCaptchaValid){
-                    throw 'Invalid Captcha Value';
+                    throw Error('Invalid Captcha Value');
                 }
                 //database look up
                 const email = credentials.email;

@@ -1,6 +1,8 @@
 import NextAuth from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
 import { usersRepo } from 'database/user-repo';
+import { verifyCaptcha } from 'helpers/functions';
+ 
 const bcrypt = require('bcryptjs');
 
 export default NextAuth({
@@ -12,6 +14,10 @@ export default NextAuth({
                     password: {label: "Password", type:"password"}
             },
             authorize: async (credentials)=>{
+                const isCaptchaValid = await verifyCaptcha(credentials.captchaValue);
+                if(!isCaptchaValid){
+                    throw 'Invalid Captcha Value';
+                }
                 //database look up
                 const email = credentials.email;
                 const password = credentials.password;

@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -93,6 +95,15 @@ function shuffle(array) {
     }
     return array;
 }
+
+async function verifyCaptcha(captcha_response_key){
+    const params = {
+        secret: process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SECRET_KEY,
+        response: captcha_response_key
+    };
+    const response = await axios.post('https://www.google.com/recaptcha/api/siteverify', params);
+    return response.data.success;
+}
  
 export {
     capitalizeFirstLetter,
@@ -101,6 +112,7 @@ export {
     getTomorrowDate,
     getNextTwoSemesters,
     getSeasonByMonth,
+    verifyCaptcha,
     removeItemsFromArrayByValue,
     shuffle
 };

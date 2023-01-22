@@ -45,7 +45,8 @@ export default function Resgister(){
           firstName: formData.firstName,
           lastName: formData.lastName,
           role: formData.role,
-          password: formData.password1
+          password: formData.password1,
+          capctaValue: capctaValue
         }
         axios.post('/api/auth/register', user)
         .then(function (response) {
@@ -98,7 +99,7 @@ export default function Resgister(){
                   </Form.Group>
                   <ReCAPTCHA
                     className='pb-2'
-                    sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SECRET_KEY}
+                    sitekey={NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
                     onChange={
                         (value)=>{
                             setCapctaValue(value);

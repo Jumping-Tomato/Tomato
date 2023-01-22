@@ -16,7 +16,7 @@ export default NextAuth({
             authorize: async (credentials)=>{
                 const isCaptchaValid = await verifyCaptcha(credentials.captchaValue);
                 if(!isCaptchaValid){
-                    throw Error('Invalid Captcha Value');
+                    throw new Error('Invalid Captcha Value');
                 }
                 //database look up
                 const email = credentials.email;
@@ -25,7 +25,7 @@ export default NextAuth({
                 const user = await usersRepo.find(email);
   
                 if (!(user && bcrypt.compareSync(password, user.hash))) {
-                    throw 'Email or password is incorrect';
+                    throw new Error('Email or password is incorrect');
                 }
                 
                 return user;

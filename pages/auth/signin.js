@@ -57,7 +57,7 @@ export default function Signin(){
                 <MDBInput wrapperClass='mb-4' label='Email address' name="email" type='email' required/>
                 <MDBInput wrapperClass='mb-4' label='Password' name="password" type='password' required />
                 <ReCAPTCHA
-                    sitekey={NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
+                    sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
                     onChange={
                         (value)=>{
                             setCapctaValue(value);

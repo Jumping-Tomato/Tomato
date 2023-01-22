@@ -78,7 +78,7 @@ export default function ForgotPasswordPage(){
                         </Form.Group>
                         <Form.Group className="mb-3">
                           <ReCAPTCHA
-                            sitekey={NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
+                            sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
                             onChange={
                                 (value)=>{
                                     setCapctaValue(value);

@@ -99,7 +99,7 @@ export default function Resgister(){
                   </Form.Group>
                   <ReCAPTCHA
                     className='pb-2'
-                    sitekey={NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
+                    sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
                     onChange={
                         (value)=>{
                             setCapctaValue(value);

@@ -48,6 +48,9 @@ export default function TeacherDashboard() {
                                 </Link>
                             </div>
                             <div className="col-12 pt-5">
+                                <h5>Courses:</h5>
+                            </div>
+                            <div className="col-12 pt-5">
                                 { 
                                 isLoading ? 
                                 <Spinner animation="border" />

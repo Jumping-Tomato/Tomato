@@ -38,7 +38,8 @@ export default function Signin(){
             const res = await signIn("credentials", {
                 redirect: false,
                 email: formData.email,
-                password: formData.password
+                password: formData.password,
+                captchaValue: captchaValue
             });
             if(res.status == 200){
                 router.push("/");

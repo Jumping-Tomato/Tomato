@@ -97,11 +97,18 @@ function shuffle(array) {
 }
 
 async function verifyCaptcha(captcha_response_key){
-    const params = {
-        secret: process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SECRET_KEY,
-        response: captcha_response_key
+    const options = {
+        method: 'POST',
+        url: 'https://www.google.com/recaptcha/api/siteverify',
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        params: {
+            secret: process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SECRET_KEY,
+            response: captcha_response_key
+        }
     };
-    const response = await axios.post('https://www.google.com/recaptcha/api/siteverify', params);
+    const response = await axios(options);
     return response.data.success;
 }
  

@@ -24,7 +24,7 @@ export default function ForgotPasswordPage(){
     });
     const [showEmailPopup, setShowEmailPopup] = useState(false);
     const [error, setError] = useState("");
-    const [capctaValue, setCapctaValue] = useState("");
+    const [captchaValue, setcaptchaValue] = useState("");
     const handleChange = function (event){
       let name = event.target.name;
       let val = event.target.value;
@@ -35,7 +35,7 @@ export default function ForgotPasswordPage(){
     }
     const handleSubmit = async function(event){
         event.preventDefault();
-        if(!capctaValue){
+        if(!captchaValue){
           setError('Prove that you are not a bot.');
           return;
         }
@@ -81,7 +81,7 @@ export default function ForgotPasswordPage(){
                             sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
                             onChange={
                                 (value)=>{
-                                    setCapctaValue(value);
+                                    setcaptchaValue(value);
                                 }
                             }
                           />

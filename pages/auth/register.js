@@ -20,7 +20,7 @@ export default function Resgister(){
       "password1":"",
       "password2":"",
     });
-    const [capctaValue, setCapctaValue] = useState("");
+    const [captchaValue, setcaptchaValue] = useState("");
     const [error, setError] = useState("");
     const handleChange = function (event){
       let name = event.target.name;
@@ -32,7 +32,7 @@ export default function Resgister(){
     }
     const handleSubmit = async function(event){
         event.preventDefault();
-        if(!capctaValue){
+        if(!captchaValue){
           setError('Prove that you are not a bot.');
           return;
         }
@@ -46,7 +46,7 @@ export default function Resgister(){
           lastName: formData.lastName,
           role: formData.role,
           password: formData.password1,
-          capctaValue: capctaValue
+          captchaValue: captchaValue
         }
         axios.post('/api/auth/register', user)
         .then(function (response) {
@@ -102,7 +102,7 @@ export default function Resgister(){
                     sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
                     onChange={
                         (value)=>{
-                            setCapctaValue(value);
+                            setcaptchaValue(value);
                         }
                     }
                   />

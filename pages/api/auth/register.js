@@ -1,5 +1,5 @@
 import { usersRepo } from 'database/user-repo';
-import { captchaIsValid } from 'helpers/functions';
+import { verifyCaptcha } from 'helpers/functions';
 const bcrypt = require('bcryptjs');
 
 export default async function registerHandler(req, res) {

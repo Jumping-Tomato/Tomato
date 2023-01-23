@@ -97,7 +97,6 @@ function shuffle(array) {
 }
 
 async function verifyCaptcha(captcha_response_key){
-    console.log(captcha_response_key);
     const options = {
         method: 'POST',
         url: 'https://www.google.com/recaptcha/api/siteverify',
@@ -110,7 +109,6 @@ async function verifyCaptcha(captcha_response_key){
         }
     };
     const response = await axios(options);
-    console.log(response);
     return response.data.success;
 }
  

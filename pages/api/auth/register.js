@@ -1,10 +1,15 @@
 import { usersRepo } from 'database/user-repo';
+import { captchaIsValid } from 'helpers/functions';
 const bcrypt = require('bcryptjs');
 
 export default async function registerHandler(req, res) {
     // split out password from user details 
-    const { password, ...user } = req.body;
+    const { captchaValue, password, ...user } = req.body;
 
+    const captchaIsValid = await verifyCaptcha(captchaValue);
+    if(!captchaIsValid){
+        return res.status(500).json({"error":`'Invalid Captcha Value'`});
+    }
     // validate
     let existed_user = await usersRepo.find(user.email);
     if(existed_user){

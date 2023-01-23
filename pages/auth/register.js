@@ -102,6 +102,7 @@ export default function Resgister(){
                     sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
                     onChange={
                         (value)=>{
+                            console.log(value);
                             setcaptchaValue(value);
                         }
                     }

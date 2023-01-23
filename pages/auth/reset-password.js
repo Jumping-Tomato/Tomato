@@ -20,7 +20,7 @@ export default function PasswordResetPage({userProps}){
       "newPassword2":""
     });
     const [error, setError] = useState("");
-    const [captchaValue, setcaptchaValue] = useState("");
+    const [captchaValue, setCaptchaValue] = useState("");
     const handleChange = function (event){
       let name = event.target.name;
       let val = event.target.value;
@@ -42,7 +42,8 @@ export default function PasswordResetPage({userProps}){
         const data = {
           id: userProps._id,
           password: formData.currentPassword,
-          newPassword: formData.newPassword1
+          newPassword: formData.newPassword1,
+          captchaValue,captchaValue
         }
         axios.post('/api/reset-password', data)
         .then(function (response) {
@@ -83,7 +84,7 @@ export default function PasswordResetPage({userProps}){
                       sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
                       onChange={
                           (value)=>{
-                              setcaptchaValue(value);
+                              setCaptchaValue(value);
                           }
                       }
                     />

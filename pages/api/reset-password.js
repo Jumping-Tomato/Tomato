@@ -1,9 +1,16 @@
 import { usersRepo } from 'database/user-repo';
 const bcrypt = require('bcryptjs');
 const { ObjectId } = require('mongodb')
+import { verifyCaptcha } from 'helpers/functions';
 
 export default async function resetPasswordHandler(req, res) {
-    const { id, password, newPassword } = req.body;
+    const { captchaValue, id, password, newPassword } = req.body;
+    
+    const captchaIsValid = await verifyCaptcha(captchaValue);
+    if(!captchaIsValid){
+        return res.status(500).json({"error": "Invalid Captcha."});
+    }
+
     let user;
     try{
         user = await usersRepo.getById(ObjectId(id));

@@ -104,7 +104,7 @@ async function verifyCaptcha(captcha_response_key){
             "Content-Type": "application/x-www-form-urlencoded"
         },
         params: {
-            secret: process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SECRET_KEY,
+            secret: process.env.GOOGLE_CAPTCHA_SECRET_KEY,
             response: captcha_response_key
         }
     };

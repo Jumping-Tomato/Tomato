@@ -10,8 +10,8 @@ export default function Home() {
     <div className={global.container}>
       <Head>
         <title>Jumping Tomato | Cloud-Based software, Autograding Online Test System</title>
-        <meta name="description" content="At Jumping Tomato, we are dedicated to make jobs of every teachers to be easier and more effienct by providing
-                                          autograding online test system" />
+        <meta name="description" content="At Jumping Tomato, we are dedicated to make the jobs of every teachers easier and more efficient by providing
+                                          the most adequating and most affordable autograding online test system" />
         <link rel="icon" href="/images/logo.svg" />
       </Head>
 

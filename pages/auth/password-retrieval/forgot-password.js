@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
@@ -24,7 +24,7 @@ export default function ForgotPasswordPage(){
     });
     const [showEmailPopup, setShowEmailPopup] = useState(false);
     const [error, setError] = useState("");
-    const [captchaValue, setcaptchaValue] = useState("");
+    const captchaRef = useRef(null);
     const handleChange = function (event){
       let name = event.target.name;
       let val = event.target.value;
@@ -35,6 +35,7 @@ export default function ForgotPasswordPage(){
     }
     const handleSubmit = async function(event){
         event.preventDefault();
+        const captchaValue = captchaRef.current.getValue();
         if(!captchaValue){
           setError('Prove that you are not a bot.');
           return;
@@ -53,6 +54,7 @@ export default function ForgotPasswordPage(){
         })
         .catch(function (error) {
           setError(error.response.data.error);
+          captchaRef.current.reset();
         });  
     }   
     const handleCloseEmailPopup = function(event){
@@ -79,11 +81,7 @@ export default function ForgotPasswordPage(){
                         <Form.Group className="mb-3">
                           <ReCAPTCHA
                             sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
-                            onChange={
-                                (value)=>{
-                                    setcaptchaValue(value);
-                                }
-                            }
+                            ref={captchaRef}
                           />
                         </Form.Group>
                         { error && <Alert variant="danger"> {error} </Alert>}

@@ -4,7 +4,7 @@ import {
 }
 from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
@@ -19,7 +19,7 @@ export default function Signin(){
       "password":"",
     });
     const [error, setError] = useState("");
-    const [captchaValue, setcaptchaValue] = useState("");
+    const captchaRef = useRef(null);
     const handleChange = function (event){
       let name = event.target.name;
       let val = event.target.value;
@@ -31,6 +31,7 @@ export default function Signin(){
     const handleSubmit = async function(event){
         event.preventDefault();
         try{
+            const captchaValue = captchaRef.current.getValue();
             if(!captchaValue){
                 setError('Prove that you are not a bot.');
                 return;
@@ -46,6 +47,7 @@ export default function Signin(){
             }
             else{
                 setError(res.error);
+                captchaRef.current.reset();
             }
         }
         catch(error){
@@ -59,11 +61,7 @@ export default function Signin(){
                 <MDBInput wrapperClass='mb-4' label='Password' name="password" type='password' required />
                 <ReCAPTCHA
                     sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
-                    onChange={
-                        (value)=>{
-                            setcaptchaValue(value);
-                        }
-                    }
+                    ref={captchaRef}
                 />
                 <br/>
                 { error && <Alert variant="danger"> {error} </Alert>}

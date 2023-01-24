@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Alert from 'react-bootstrap/Alert';
 import  Link  from 'next/link';
@@ -20,7 +20,7 @@ export default function Resgister(){
       "password1":"",
       "password2":"",
     });
-    const [captchaValue, setcaptchaValue] = useState("");
+    const captchaRef = useRef(null);
     const [error, setError] = useState("");
     const handleChange = function (event){
       let name = event.target.name;
@@ -32,6 +32,7 @@ export default function Resgister(){
     }
     const handleSubmit = async function(event){
         event.preventDefault();
+        const captchaValue = captchaRef.current.getValue();
         if(!captchaValue){
           setError('Prove that you are not a bot.');
           return;
@@ -54,6 +55,7 @@ export default function Resgister(){
         })
         .catch(function (error) {
           setError(error.response.data.error);
+          captchaRef.current.reset();
         });       
     }
     return (
@@ -100,11 +102,7 @@ export default function Resgister(){
                   <ReCAPTCHA
                     className='pb-2'
                     sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
-                    onChange={
-                        (value)=>{
-                            setcaptchaValue(value);
-                        }
-                    }
+                    ref={captchaRef}
                   />
                   { error && <Alert variant="danger"> {error} </Alert>}
                   <Button variant="primary" type="submit">

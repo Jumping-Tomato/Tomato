@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Head from 'next/head'
@@ -20,7 +20,7 @@ export default function PasswordResetPage({userProps}){
       "newPassword2":""
     });
     const [error, setError] = useState("");
-    const [captchaValue, setCaptchaValue] = useState("");
+    const captchaRef = useRef(null);
     const handleChange = function (event){
       let name = event.target.name;
       let val = event.target.value;
@@ -31,6 +31,7 @@ export default function PasswordResetPage({userProps}){
     }
     const handleSubmit = async function(event){
         event.preventDefault();
+        const captchaValue = captchaRef.current.getValue();
         if(!captchaValue){
           setError('Prove that you are not a bot.');
           return;
@@ -51,6 +52,7 @@ export default function PasswordResetPage({userProps}){
         })
         .catch(function (error) {
           setError(error.response.data.error);
+          captchaRef.current.reset();
         });  
     }
 
@@ -82,11 +84,7 @@ export default function PasswordResetPage({userProps}){
                   <Form.Group className="mb-3">
                     <ReCAPTCHA
                       sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
-                      onChange={
-                          (value)=>{
-                              setCaptchaValue(value);
-                          }
-                      }
+                      ref={captchaRef}
                     />
                   </Form.Group>
                   { error && <Alert variant="danger"> {error} </Alert>}

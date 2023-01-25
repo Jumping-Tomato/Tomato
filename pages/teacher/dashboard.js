@@ -31,7 +31,7 @@ export default function TeacherDashboard() {
             <Topbar />
             <div className={global.container}>
                 <Head>
-                    <title>Dashboard Page - {session ? session.role : ""}</title>
+                    <title>Dashboard Page - Teacher</title>
                     <meta name="description" content="Home Page" />
                     <link rel="icon" href="/images/logo.svg" />
                 </Head>

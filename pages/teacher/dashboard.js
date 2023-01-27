@@ -5,7 +5,7 @@ import { Topbar, Footer} from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import  Link  from 'next/link';
-import { Button, Spinner } from 'react-bootstrap';
+import { Alert, Button, Spinner } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -14,6 +14,8 @@ export default function TeacherDashboard() {
     const { data: session } = useSession();
     const [courses, setCourses] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
+    
     useEffect(() => {
         setIsLoading(true);
         axios.get("/api/teacher/getCoursesForTeacher")
@@ -23,7 +25,7 @@ export default function TeacherDashboard() {
             setIsLoading(false);
         })
         .catch(function (error) {
-            
+            setError(error.response.data.error);
         }); 
     },[]);
     return(
@@ -47,6 +49,7 @@ export default function TeacherDashboard() {
                                     </Button>
                                 </Link>
                             </div>
+                            { error && <Alert variant="danger"> {error} </Alert> }
                             <div className="col-12 pt-5">
                                 <h5>Courses:</h5>
                             </div>

@@ -261,9 +261,15 @@ export async function getServerSideProps(context) {
     }
   }
   const studentInCourse = await courses.isStudentInCourse(course_id, uid); 
-  // const testIsSubmitted = await testSubmissions.testIsSubmitted(test_id, uid);
-  const testIsSubmitted = false; //for development only, when finished, please remove this line and uncomment the line abobe
-  if(!studentInCourse || testIsSubmitted){
+  let testIsSubmitted = false;
+  if(process.env.NODE_ENV != 'development'){
+    testIsSubmitted = await testSubmissions.testIsSubmitted(test_id, uid);
+  }
+  const currentDateTime = new Date();
+  if(!studentInCourse || testIsSubmitted || 
+      currentDateTime < new Date(test_data.startDate) || 
+      currentDateTime > new Date(test_data.deadline)
+    ){
     return {
         redirect: {
             destination: "/error/forbidden",

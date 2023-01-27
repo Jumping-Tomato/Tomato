@@ -23,7 +23,29 @@ export const tests = {
         }
     },
     editTestDetail: editTestDetail,
-    getTestsByCourseId: async course_id => {
+    getTestsByCourseIdForStudents: async course_id => {
+        return await db.collection("tests").aggregate([
+            {
+                $match:{
+                    "course_id": ObjectId(course_id)
+                }
+            },
+            {
+                $lookup:{
+                    from: "testSubmissions",
+                    localField: "_id",
+                    foreignField: "test_id",
+                    as: "testSubmissions"
+                }
+            },
+            {
+                $project:{
+                    name: 1, shuffle:1, startDate:1, deadline:1, "testSubmissions._id" : 1
+                }
+            },
+        ]).toArray();
+    },
+    getTestsByCourseIdForTeachers: async course_id => {
         return await db.collection("tests").find({"course_id": ObjectId(course_id)})
         .project({ name: 1, shuffle:1, startDate:1, deadline:1 }).toArray();
     },

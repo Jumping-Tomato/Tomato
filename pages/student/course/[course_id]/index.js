@@ -51,7 +51,10 @@ export default function StudentCoursePage({props}) {
                                                             <h6>Deadline: { getDateFromDate(new Date(test.deadline)) } { getTimeFromDate(new Date(test.deadline)) }</h6>
                                                         </div>
                                                         <div className="col-4">
-                                                            <Button className='float-end' href={`/student/course/${props.course_id}/test/${test._id}`}>
+                                                            <Button className='float-end' 
+                                                                href={`/student/course/${props.course_id}/test/${test._id}`}
+                                                                disabled={ test.testSubmissions.length || new Date() < new Date(test.startDate) || new Date() > new Date(test.deadline) }
+                                                            >
                                                                 Go
                                                             </Button>
                                                         </div>

@@ -9,7 +9,7 @@ export default async function getTests(req, res) {
     }
     const {course_id } = req.query;
     try {
-        const test_list = await tests.getTestsByCourseId(course_id);
+        const test_list = await tests.getTestsByCourseIdForStudents(course_id);
         return res.status(200).json({"tests": test_list});
         
     }

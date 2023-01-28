@@ -6,7 +6,7 @@ export default function Footer() {
             <div className='col-lg-7 col-12 '>
             </div>
             <div className='col-lg-5 col-12'>
-            Copyright © 2023 Jumping Tomato Inc. All Rights Reserved. 
+            Copyright © 2023 Jumping Tomato.com. All Rights Reserved. 
             </div>  
         </footer>
     )

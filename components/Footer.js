@@ -1,4 +1,5 @@
 import styles from '../styles/Footer.module.scss'
+import  Link  from 'next/link';
 
 export default function Footer() {
     return (
@@ -9,12 +10,12 @@ export default function Footer() {
                 </span>
             </div>
             <div className={'col-lg-8 col-12 row ' + styles.row}>
-                <a href="/contact" className='col-lg-2'>
+                <Link href="/contact" legacyBehavior={false} className={'col-lg-2 ' + styles.link}>
                     Contact Us
-                </a>
-                <a href="/pricing" className='col-lg-2'>
+                </Link>
+                <Link href="/pricing" legacyBehavior={false} className={'col-lg-2 ' + styles.link}>
                     Pricing
-                </a>
+                </Link>
             </div>  
         </footer>
     )

@@ -1,7 +1,14 @@
 .footer {
-    padding: 2rem 1rem;
+    padding: 2rem 2rem;
     border-top: 1px solid #eaeaea;
     margin: 0;
+    .row{
+      a {
+        text-decoration: none;
+        font-size: 14px;
+        color:gray;
+      }
+    }
 }
 
 @media (prefers-color-scheme: dark) {

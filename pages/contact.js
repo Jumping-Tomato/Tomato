@@ -26,7 +26,7 @@ export default function Contact() {
                   You can reach out to our team through a couple of methods:
                 </p>
                 <ul>
-                  <li>Email: <a href="mailto:support@jumpingtomato.com" target="_blank">support@jumpingtomato.com</a></li>
+                  <li>Email: <a href="mailto:support@jumpingtomato.com" target="_blank" rel="noreferrer">support@jumpingtomato.com</a></li>
                   <li>Discord: <a href="https://discord.gg/GRwZ9e7z">Join our server</a></li>
                 </ul>
               </div>

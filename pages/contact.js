@@ -17,9 +17,18 @@ export default function Contact() {
           
      
           <main className={global.main}>
-            <div className='row justify-content-center'>
-              <div className="col-lg-6 col-12 p-3">
-                <h1>Coming Soon!</h1>
+            <div className='row'>
+              <div className="col-lg-6 col-12 p-3 mt-5">
+                <h6 className='text-primary'>Say Hello</h6>
+                <h2>Contact the Team</h2>
+                <p>Having trouble with the product, need help with signing up, 
+                  have questions about our offering, or just want to chat? 
+                  You can reach out to our team through a couple of methods:
+                </p>
+                <ul>
+                  <li>Email: <a href="mailto:support@jumpingtomato.com" target="_blank">support@jumpingtomato.com</a></li>
+                  <li>Discord: <a href="https://discord.gg/GRwZ9e7z">Join our server</a></li>
+                </ul>
               </div>
             </div>
           </main>

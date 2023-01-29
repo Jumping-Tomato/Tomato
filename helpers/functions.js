@@ -128,6 +128,7 @@ async function verifyCaptcha(captcha_response_key){
  
 export {
     capitalizeFirstLetter,
+    getCorrectAnswersString,
     getDateFromDate,
     getTimeFromDate,
     getTomorrowDate,

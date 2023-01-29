@@ -127,13 +127,6 @@ export default function TestSubmissionDetail({props}) {
       </>
     );
 }
-function getChoicesString(choices){
-    let choiceString = "";
-    for (const [key, value] of Object.entries(choices)) {
-      choiceString += (key + ": " + value + "\n");
-    }
-    return choiceString;
-}
 
 
 export async function getServerSideProps(context) {

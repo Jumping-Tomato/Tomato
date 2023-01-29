@@ -4,6 +4,14 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function getChoicesString(choices){
+    let choiceString = "";
+    for (const [key, value] of Object.entries(choices)) {
+      choiceString += (key + ": " + value + "\n");
+    }
+    return choiceString;
+}
+
 function getCorrectAnswersString(type, correct_answers){
     let correct_answers_string = "";
     if(type == "multipleChoice"){
@@ -128,6 +136,7 @@ async function verifyCaptcha(captcha_response_key){
  
 export {
     capitalizeFirstLetter,
+    getChoicesString,
     getCorrectAnswersString,
     getDateFromDate,
     getTimeFromDate,

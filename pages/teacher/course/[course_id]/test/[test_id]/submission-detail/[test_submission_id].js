@@ -8,7 +8,7 @@ import { courses } from 'database/courses';
 import { tests } from 'database/tests';
 import { useRouter } from 'next/router';
 import { Table } from 'react-bootstrap';
-import { getCorrectAnswersString } from 'helpers/functions';
+import { getCorrectAnswersString, getChoicesString } from 'helpers/functions';
 
 export default function TestSubmissionDetail({props}) {
     const router = useRouter();

@@ -4,6 +4,20 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function getCorrectAnswersString(type, correct_answers){
+    let correct_answers_string = "";
+    if(type == "multipleChoice"){
+      for (const [key, value] of Object.entries(correct_answers)) {
+        correct_answers_string += (key + ": " + value.point + "\n");
+      }
+      return correct_answers_string;
+    }
+    correct_answers.forEach((each)=>{
+      correct_answers_string += (each.answer + ": " + each.point + "\n");
+    });
+    return correct_answers_string;
+}
+
 /*
 * get the date in MM/DD/YYYY from a date object 
 */

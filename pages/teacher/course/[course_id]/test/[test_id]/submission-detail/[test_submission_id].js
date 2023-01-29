@@ -8,6 +8,7 @@ import { courses } from 'database/courses';
 import { tests } from 'database/tests';
 import { useRouter } from 'next/router';
 import { Table } from 'react-bootstrap';
+import { getCorrectAnswersString } from 'helpers/functions';
 
 export default function TestSubmissionDetail({props}) {
     const router = useRouter();
@@ -134,19 +135,6 @@ function getChoicesString(choices){
     return choiceString;
 }
 
-function getCorrectAnswersString(type, correct_answers){
-  let correct_answers_string = "";
-  if(type == "multipleChoice"){
-    for (const [key, value] of Object.entries(correct_answers)) {
-      correct_answers_string += (key + ": " + value.point + "\n");
-    }
-    return correct_answers_string;
-  }
-  correct_answers.forEach((each)=>{
-    correct_answers_string += (each.answer + ": " + each.point + "\n");
-  });
-  return correct_answers_string;
-}
 
 export async function getServerSideProps(context) {
     const session = await getSession(context);

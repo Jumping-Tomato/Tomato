@@ -19,13 +19,14 @@ export default function Home() {
       <main className={global.main}>
         <div className='row'>
           <div className="col-lg-6 col-12 pt-5">
-            <Image src="/images/home_1.png" className={global.fadeInSlideUpAnimation} alt="students and teachers in a classroom" width={566} height={696} />
+            <Image src="/images/home_1.png" className={global.fadeInSlideUpAnimation} alt="students and teachers in a classroom" width={325} height={400} />
           </div>
           <div className="col-lg-6 col-12 pt-5">
             <h3 className="pt-5 lh-base">
                 Make teaching easier and more fun.
                 We simplify the job of every teacher
-                when it comes to testing.
+                when it comes to testing. Our platform is an autograding system
+                for tests and quizzes. click on the button below to get started.
             </h3>
           </div>
         </div>

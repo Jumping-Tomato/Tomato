@@ -15,10 +15,10 @@ export const passwordResetRepo = {
     find: async _id => {
         return await db.collection("passwordReset").findOne({"_id": ObjectId(_id)});
     },
-    sendPasswordResetLink,
+    resetPassword,
 };
 
-async function sendPasswordResetLink(email) {
+async function resetPassword(email) {
     let user;
     try{
         user = await usersRepo.find(email);
@@ -37,12 +37,18 @@ async function sendPasswordResetLink(email) {
         expire: expire
     }
     try{
-        let result = await db.collection("passwordReset").updateOne(
+        await db.collection("passwordReset").updateOne(
             {user_id: user._id},
             {$set: pw_reset_data},
             {upsert: true}
-        )
-        return result;
+        );
+        let pwResetDocument = await db.collection("passwordReset").findOne(
+            {user_id: user._id},
+        );
+        if(pwResetDocument){
+            return pwResetDocument._id;
+        }
+        return null;
     }
     catch(error){
         console.error(error);

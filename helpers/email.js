@@ -35,6 +35,12 @@ async function send_email(sender_address, sender_name,
     } 
 }
 
+async function send_no_reply_email(recipient_address_name_array, subject, html){
+    const email_sent = await send_email('no-reply@jumpingtomato.com','No Reply', recipient_address_name_array, subject, html);
+    return email_sent;
+}
+
 export {
-    send_email
+    send_email,
+    send_no_reply_email
 };

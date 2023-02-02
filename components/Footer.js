@@ -6,7 +6,7 @@ export default function Footer() {
         <footer className={"row " + styles.footer}>
             <div className='col-lg-4 col-12'>
                 <span style={{fontSize:"12px"}}>
-                    Copyright © 2023 Jumping Tomato.com. All Rights Reserved. 
+                    Copyright © 2023 Jumpingtomato.com. All Rights Reserved. 
                 </span>
             </div>
             <div className={'col-lg-8 col-12 row ' + styles.row}>

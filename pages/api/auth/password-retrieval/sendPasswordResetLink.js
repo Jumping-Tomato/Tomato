@@ -12,7 +12,7 @@ export default async function sendPasswordResetLink(req, res) {
         }];
         const password_reset_url = process.env.NEXTAUTH_URL + "/" + password_reset_id.toString(); 
         const subject = "Your link to reset password on jumpingTomato.com";
-        const html = `Please click on the link below to reset your password. The link will expire in 15 minutes. <a href="${password_reset_url}">link</a>\n
+        const html = `Please click on the link below to reset your password. The link will expire in 15 minutes: <a href="${password_reset_url}">.link</a>\n
                       If the link above does not work. Please copy the following link and paste it to your browser:\n
                       ${password_reset_url}`;
         let email_sent = await send_email('no-reply@jumpingtomato.com', "Jumping Tomato", recipients,subject,html);

@@ -5,8 +5,9 @@ export async function middleware(req) {
     const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET, })
     const is_unprotected_page = req.url.includes("/auth/signin") ||
                                     req.url.includes("/auth/register") ||
-                                    req.url.includes("/auth/password-retrieval");
-
+                                    req.url.includes("/auth/password-retrieval") ||
+                                    req.url.includes("/auth/verify-email") ;
+    
     if (session && is_unprotected_page) {
       return NextResponse.redirect(process.env.NEXTAUTH_URL); 
     }

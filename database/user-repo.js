@@ -25,7 +25,8 @@ export const usersRepo = {
     } ,
     create,
     update,
-    delete: _delete
+    delete: _delete,
+    verifyUserEmail:verifyUserEmail
 };
 
 async function create(user) {
@@ -77,6 +78,26 @@ async function _delete(_id) {
     try{
         let result = await db.collection("users").deleteOne({"_id": _id });
         return result
+    }
+    catch(error){
+        throw `Unable to delete the user.\nError: "${error}"`;
+    }
+}
+
+async function verifyUserEmail(email_verification_code){
+    try{
+        let user = await db.collection("users").findOne({"email_verification_code": email_verification_code });
+        if(!user){
+            return false;
+        }
+        let result = await db.collection("users")
+                    .updateOne({"_id": user._id },
+                                {
+                                    $set: {'email_verified': true},
+                                    $unset:{'email_verification_code': ''}
+                                }
+                            );
+        return true;
     }
     catch(error){
         throw `Unable to delete the user.\nError: "${error}"`;

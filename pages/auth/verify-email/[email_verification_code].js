@@ -9,8 +9,7 @@ import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
 export default function VerifyEmailPage(){
     const router = useRouter();
-    
-    
+       
     return (
       <>
           <div className={global.container}>
@@ -35,6 +34,9 @@ export default function VerifyEmailPage(){
                           strokeWidth={6}
                           colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
                           colorsTime={[10, 6, 3, 0]}
+                          onComplete={() => {
+                            router.push('/auth/signin');
+                          }}
                         >
                         {renderTime}
                       </CountdownCircleTimer>

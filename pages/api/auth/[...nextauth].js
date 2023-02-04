@@ -28,7 +28,7 @@ export default NextAuth({
                     throw new Error('Email or password is incorrect');
                 }
                 if(!user.email_verified){
-                    throw new Error('Please, verify email address. If you do not see the email in your mailbox, check the spam folder.');
+                    throw new Error('Please, verify email address. If you do not see the email in your inbox, check the spam folder.');
                 }
                 return user;
             }

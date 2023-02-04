@@ -90,14 +90,17 @@ async function verifyUserEmail(email_verification_code){
         if(!user){
             return false;
         }
-        await db.collection("users")
+        const result = await db.collection("users")
                     .updateOne({"_id": user._id },
                                 {
                                     $set: {'email_verified': true},
                                     $unset:{'email_verification_code': ''}
                                 }
                             );
-        return true;
+        if(result.modifiedCount){
+            return true;
+        }
+        return false;          
     }
     catch(error){
         throw `Unable to delete the user.\nError: "${error}"`;

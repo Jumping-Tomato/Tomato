@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import global from 'styles/Global.module.scss'
-import {Topbar, Footer} from 'components'
-
+import Head from 'next/head';
+import global from 'styles/Global.module.scss';
+import {Topbar, Footer} from 'components';
+import Image from 'next/image';
 
 
 export default function Contact() {
@@ -29,6 +29,9 @@ export default function Contact() {
                   <li>Email: <a href="mailto:support@jumpingtomato.com" target="_blank" rel="noreferrer">support@jumpingtomato.com</a></li>
                   <li>Discord: <a href="https://discord.gg/GRwZ9e7z">Join our server</a></li>
                 </ul>
+              </div>
+              <div className="col-lg-6 col-12 pt-5">
+                <Image src="/images/girl_on_computer.png" className={global.fadeInSlideUpAnimation} alt="girl with red hair on computer" width={643} height={371} />
               </div>
             </div>
           </main>

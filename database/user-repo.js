@@ -90,7 +90,7 @@ async function verifyUserEmail(email_verification_code){
         if(!user){
             return false;
         }
-        let result = await db.collection("users")
+        await db.collection("users")
                     .updateOne({"_id": user._id },
                                 {
                                     $set: {'email_verified': true},

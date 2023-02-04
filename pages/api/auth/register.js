@@ -17,11 +17,13 @@ export default async function registerHandler(req, res) {
     }
         
     // hash password
-    user.hash = bcrypt.hashSync(password, 10);    
-
+    user.hash = bcrypt.hashSync(password, 10); 
     try{
         const result = await usersRepo.create(user);
-        return res.status(200).json({"result": result});
+        if(result){
+            return res.status(200).json({"result": result});
+        }
+        return res.status(500).json({"error": "unable to create user"});
     }
     catch(error){
         console.error(error);

@@ -27,7 +27,9 @@ export default NextAuth({
                 if (!(user && bcrypt.compareSync(password, user.hash))) {
                     throw new Error('Email or password is incorrect');
                 }
-                
+                if(!user.email_verified){
+                    throw new Error('Please, verify email address. If you do not see the email in your inbox, check the spam folder.');
+                }
                 return user;
             }
         })

@@ -43,7 +43,7 @@ export default function CreateCoursePage() {
           <Head>
             <title>Class Create Page</title>
             <meta name="description" content="Teacher Create Page" />
-            <link rel="icon" href="/images/logo.svg" />
+            <link rel="icon" href="/media/images/logo.svg" />
           </Head>
           
      

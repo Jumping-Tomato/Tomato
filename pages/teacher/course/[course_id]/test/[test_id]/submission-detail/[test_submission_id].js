@@ -51,7 +51,7 @@ export default function TestSubmissionDetail({props}) {
           <Head>
             <title>{title}</title>
             <meta name="description" content="View Score Page" />
-            <link rel="icon" href="/images/logo.svg" />
+            <link rel="icon" href="/media/images/logo.svg" />
           </Head>
      
           <main className={global.main}>

@@ -28,7 +28,7 @@ export default function StudentDashboard() {
                 <Head>
                     <title>{title}</title>
                     <meta name="description" content="Home Page" />
-                    <link rel="icon" href="/images/logo.svg" />
+                    <link rel="icon" href="/media/images/logo.svg" />
                 </Head>
 
                 <main className={global.main}>

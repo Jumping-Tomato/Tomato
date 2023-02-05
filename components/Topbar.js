@@ -58,7 +58,7 @@ export default function Topbar() {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
       <Container>
         <Navbar.Brand href="/">
-            <Image src="/images/logo.svg" alt="Logo" width={75} height={35} />
+            <Image src="/media/images/logo.svg" alt="Logo" width={75} height={35} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         { navItems }

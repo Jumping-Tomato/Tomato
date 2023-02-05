@@ -12,7 +12,7 @@ export default function Pricing() {
           <Head>
             <title>Pricing | Jumping Tomato</title>
             <meta name="description" content="Pricing Page" />
-            <link rel="icon" href="/images/logo.svg" />
+            <link rel="icon" href="/media/images/logo.svg" />
           </Head>
           
      
@@ -20,7 +20,7 @@ export default function Pricing() {
             <div className='row justify-content-center'>
               <div className="col-lg-6 col-12 p-5">
                 <h1>It is FREE!!!</h1>
-                <Image src="/gifs/yes-happy.gif" width={498} height={220} />
+                <Image src="/media/gifs/yes-happy.gif" width={498} height={220} />
               </div>
             </div>
           </main>

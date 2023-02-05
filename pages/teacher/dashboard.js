@@ -35,7 +35,7 @@ export default function TeacherDashboard() {
                 <Head>
                     <title>Dashboard Page - Teacher</title>
                     <meta name="description" content="Home Page" />
-                    <link rel="icon" href="/images/logo.svg" />
+                    <link rel="icon" href="/media/images/logo.svg" />
                 </Head>
 
                 <main className={global.main}>

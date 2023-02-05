@@ -12,14 +12,14 @@ export default function Home() {
         <title>Jumping Tomato | Cloud-Based software, Autograding Online Test System</title>
         <meta name="description" content="At Jumping Tomato, we are dedicated to make the jobs of every teachers easier and more efficient by providing
                                           the most adequating and most affordable autograding online test system" />
-        <link rel="icon" href="/images/logo.svg" />
+        <link rel="icon" href="/media/images/logo.svg" />
       </Head>
 
       
       <main className={global.main}>
         <div className='row'>
           <div className="col-lg-5 col-12 pt-5">
-            <Image src="/images/home_1.png" className={global.fadeInSlideUpAnimation} alt="students and teachers in a classroom" width={325} height={400} />
+            <Image src="/media/images/home_1.png" className={global.fadeInSlideUpAnimation} alt="students and teachers in a classroom" width={325} height={400} />
           </div>
           <div className="col-lg-7 col-12 pt-5">
             <h3 className="pt-5 lh-base">

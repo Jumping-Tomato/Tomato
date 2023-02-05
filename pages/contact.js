@@ -12,7 +12,7 @@ export default function Contact() {
           <Head>
             <title>Contact Us | Jumping Tomato</title>
             <meta name="description" content="Contact Us Page" />
-            <link rel="icon" href="/images/logo.svg" />
+            <link rel="icon" href="/media/images/logo.svg" />
           </Head>
           
      
@@ -31,7 +31,7 @@ export default function Contact() {
                 </ul>
               </div>
               <div className="col-lg-6 col-12 pt-5">
-                <Image src="/images/girl_on_computer.png" className={global.fadeInSlideUpAnimation} alt="girl with red hair on computer" width={643} height={371} />
+                <Image src="/media/images/girl_on_computer.png" className={global.fadeInSlideUpAnimation} alt="girl with red hair on computer" width={643} height={371} />
               </div>
             </div>
           </main>

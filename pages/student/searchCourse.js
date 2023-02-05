@@ -64,7 +64,7 @@ export default function SearchCoursePage() {
           <Head>
             <title>Search Course Page</title>
             <meta name="description" content="student Add Course Page" />
-            <link rel="icon" href="/images/logo.svg" />
+            <link rel="icon" href="/media/images/logo.svg" />
           </Head>
           
      

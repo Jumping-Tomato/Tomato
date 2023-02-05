@@ -12,7 +12,7 @@ export default function PrivacyPolicy() {
         <title>Jumping Tomato | Cloud-Based software, Autograding Online Test System</title>
         <meta name="Privacy Policy" content="At Jumping Tomato, we are dedicated to make the jobs of every teachers easier and more efficient by providing
                                           the most adequating and most affordable autograding online test system" />
-        <link rel="icon" href="/images/logo.svg" />
+        <link rel="icon" href="/media/images/logo.svg" />
       </Head>
 
       

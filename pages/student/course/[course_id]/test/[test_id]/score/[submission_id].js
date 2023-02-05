@@ -18,7 +18,7 @@ export default function StudentScoreViewPage({answered_questions, total_score}) 
                 <Head>
                     <title>View Score</title>
                     <meta name="Student Score View Page" content="Student Score View Page" />
-                    <link rel="icon" href="/images/logo.svg" />
+                    <link rel="icon" href="/media/images/logo.svg" />
                 </Head>
 
                 <main className={global.main}>

@@ -16,7 +16,7 @@ export default function VerifyEmailPage(){
             <Head>
               <title>Email Verification Page</title>
               <meta name="Email Verification Page" content="Email Verification" />
-              <link rel="icon" href="/images/logo.svg" />
+              <link rel="icon" href="/media/images/logo.svg" />
             </Head>
   
             <main className={global.main}>

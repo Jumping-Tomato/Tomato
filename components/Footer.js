@@ -10,11 +10,14 @@ export default function Footer() {
                 </span>
             </div>
             <div className={'col-lg-8 col-12 row ' + styles.row}>
-                <Link href="/contact" legacyBehavior={false} className={'col-lg-2 ' + styles.link}>
+                <Link href="/contact" legacyBehavior={false} className={'col-4 col-md-2' + ' ' +styles.link}>
                     Contact Us
                 </Link>
-                <Link href="/pricing" legacyBehavior={false} className={'col-lg-2 ' + styles.link}>
+                <Link href="/pricing" legacyBehavior={false} className={'col-4 col-md-2' + ' ' + styles.link}>
                     Pricing
+                </Link>
+                <Link href="/privacy-policy" legacyBehavior={false} className={'col-4 col-md-2' + ' ' + styles.link}>
+                    Privacy Policy
                 </Link>
             </div>  
         </footer>

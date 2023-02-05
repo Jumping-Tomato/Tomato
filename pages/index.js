@@ -18,16 +18,28 @@ export default function Home() {
       
       <main className={global.main}>
         <div className='row'>
-          <div className="col-lg-6 col-12 pt-5">
+          <div className="col-lg-5 col-12 pt-5">
             <Image src="/images/home_1.png" className={global.fadeInSlideUpAnimation} alt="students and teachers in a classroom" width={325} height={400} />
           </div>
-          <div className="col-lg-6 col-12 pt-5">
+          <div className="col-lg-7 col-12 pt-5">
             <h3 className="pt-5 lh-base">
                 Make teaching easier and more fun.
                 We simplify the job of every teacher
                 when it comes to testing. Our platform is an autograding system
-                for tests and quizzes. click on the button below to get started.
+                for tests and quizzes.
             </h3>
+          </div>
+        </div>
+        <div className='row'>
+          <div className="col-12 pt-5">
+          <h3>Reasons to Jumping Tomato:</h3>
+          <ul>
+            <li><b>Time Flexity</b>: You can the start date and deadline of the tests, and your students can take the tests anytime within the time frame.</li>
+            <li><b>Location Flexity</b>: You can create your tests anywhere in the world, and your studennts can take the tests anywhere in the world.</li>
+            <li><b>Automatic Grading</b>: Score is available instantly after submission. It saves you time from grading manually.</li>
+            <li><b>Activity Monitor</b>: We monitor the activities of test takers to prevent cheating.</li>
+            <li><b>Free</b>: It's free under 50 students.</li>
+          </ul>
           </div>
         </div>
       </main>

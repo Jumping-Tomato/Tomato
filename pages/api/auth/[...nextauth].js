@@ -54,7 +54,8 @@ export default NextAuth({
             }
     },
     pages: {
-        signIn: "/auth/signin"
+        signIn: "/auth/signin",
+        signOut: "/"
     },
     jwt: {
         secret: process.env.NEXTAUTH_SECRET,

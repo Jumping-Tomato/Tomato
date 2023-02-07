@@ -27,7 +27,7 @@ export default function Contact() {
                 </p>
                 <ul>
                   <li>Email: <a href="mailto:support@jumpingtomato.com" target="_blank" rel="noreferrer">support@jumpingtomato.com</a></li>
-                  <li>Discord: <a href="https://discord.gg/GRwZ9e7z">Join our server</a></li>
+                  <li>Discord: <a href="https://discord.gg/cGJVxp2H">Join our server</a></li>
                 </ul>
               </div>
               <div className="col-lg-6 col-12 pt-5">

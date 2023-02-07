@@ -5,7 +5,7 @@ import { verifyCaptcha } from 'helpers/functions';
  
 const bcrypt = require('bcryptjs');
 
-export default NextAuth({
+export const authOptions = {
     providers: [
         CredentialProvider({
             name: "credentials",
@@ -61,4 +61,6 @@ export default NextAuth({
         secret: process.env.NEXTAUTH_SECRET,
         encryption: true
     }
-})
+};
+
+export default NextAuth(authOptions);

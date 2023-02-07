@@ -4,13 +4,14 @@ import { ConfirmationModal, GeneralModal, Topbar, Footer, CreateTestForm, EditTe
 import axios from 'axios';
 import { Button, Tab, Col, Nav, Row,Spinner, Modal, Form} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import { getSession } from 'next-auth/react';
 import { courses } from 'database/courses';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import  Link  from 'next/link';
 import { getDateFromDate, getTimeFromDate } from 'helpers/functions';
 import { useRouter } from 'next/router';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { getServerSession } from "next-auth/next";
 
 export default function CourseManagementPage({props}) {
     const router = useRouter();
@@ -398,7 +399,7 @@ function EditQuizModal({props}){
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
+  const session = await getServerSession(context.req, context.res, authOptions);
   const course_id = context.params.course_id;
   const uid = session._id;
   const course_data = await courses.getCourseById(course_id);

@@ -3,7 +3,8 @@ import global from 'styles/Global.module.scss';
 import { Topbar, Footer } from 'components';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { getSession } from 'next-auth/react';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { getServerSession } from "next-auth/next";
 import { courses } from 'database/courses';
 import { tests } from 'database/tests';
 import { useRouter } from 'next/router';
@@ -84,7 +85,7 @@ export default function AllScore({props}) {
 }
 
 export async function getServerSideProps(context) {
-    const session = await getSession(context);
+    const session = await getServerSession(context.req, context.res, authOptions);
     const course_id = context.params.course_id;
     const test_id = context.params.test_id;
     const uid = session._id;

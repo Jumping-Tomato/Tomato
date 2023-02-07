@@ -3,9 +3,10 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import Head from 'next/head'
 import global from 'styles/Global.module.scss'
-import { getSession } from 'next-auth/react';
 import { Alert, Button, Form } from 'react-bootstrap';
 import ReCAPTCHA from "react-google-recaptcha";
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { getServerSession } from "next-auth/next";
 
 /*
 *
@@ -102,7 +103,7 @@ export default function PasswordResetPage({userProps}){
 
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context)
+  const session = await getServerSession(context.req, context.res, authOptions);
   let userProps = {};
   if (session){
     userProps["_id"] = session._id;

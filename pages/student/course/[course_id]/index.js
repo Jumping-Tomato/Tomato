@@ -1,4 +1,5 @@
-import { getSession } from 'next-auth/react';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { getServerSession } from "next-auth/next";
 import Head from 'next/head';
 import global from 'styles/Global.module.scss';
 import { Topbar, Footer } from 'components';
@@ -85,7 +86,7 @@ export default function StudentCoursePage({props}) {
 }
 
 export async function getServerSideProps(context) {
-    const session = await getSession(context);
+    const session = await getServerSession(context.req, context.res, authOptions);
     const course_id = context.params.course_id;
     const uid = session._id;
     const course = await courses.getCourseById(course_id);

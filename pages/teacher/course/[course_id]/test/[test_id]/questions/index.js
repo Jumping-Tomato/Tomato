@@ -4,7 +4,8 @@ import { Topbar,QuestionCard, Footer } from 'components';
 import axios from 'axios';
 import { useState, useEffect, useCallback } from 'react';
 import {useRouter } from 'next/router';
-import { getSession } from 'next-auth/react';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { getServerSession } from "next-auth/next";
 import { courses } from 'database/courses';
 import { tests } from 'database/tests';
 import { Alert, Button, Modal } from 'react-bootstrap';
@@ -197,7 +198,7 @@ export default function TestManagementPage({props}) {
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
+  const session = await getServerSession(context.req, context.res, authOptions);
   const course_id = context.params.course_id;
   const test_id = context.params.test_id;
   const uid = session._id;

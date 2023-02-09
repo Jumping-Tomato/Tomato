@@ -34,7 +34,7 @@ export default function Home() {
           <div className="col-12 pt-5">
           <h3>Reasons to Jumping Tomato:</h3>
           <ul>
-            <li><b>Time Flexity</b>: You can the start date and deadline of the tests, and your students can take the tests anytime within the time frame.</li>
+            <li><b>Time Flexity</b>: You can set the start date and deadline of the tests, and your students can take the tests anytime within the time frame.</li>
             <li><b>Location Flexity</b>: You can create your tests anywhere in the world, and your studennts can take the tests anywhere in the world.</li>
             <li><b>Automatic Grading</b>: Score is available instantly after submission. It saves you time from grading manually.</li>
             <li><b>Activity Monitor</b>: We monitor the activities of test takers to prevent cheating.</li>

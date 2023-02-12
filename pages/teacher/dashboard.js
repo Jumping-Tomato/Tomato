@@ -65,7 +65,11 @@ export default function TeacherDashboard() {
                                         {
                                             courses.map((course) => {
                                                 return  (<li className="list-group-item" key={course._id}>
-                                                            <Link href={"/teacher/course/" + course._id}>{course.name}</Link>
+                                                            <div className="row">
+                                                                <Link legacyBehavior={false}  href={"/teacher/course/" + course._id} className='col-6'>{course.name}</Link>
+                                                                <span className='col-6'>{ course.semester }</span>
+                                                            </div>
+                                                            
                                                         </li>);
                                             })
                                         }

@@ -155,17 +155,24 @@ export default function TestManagementPage({props}) {
                   </Button>
                 </div>
                 <h1>{"Test -" +  props.name}</h1>
-                <ul className="list-group">
-                  {
-                    questions.map((question, index)=>{
-                      return  (
-                              <li className="list-group-item border-0" key={question.id}>
-                                <QuestionCard props={question} title={"Question " + (index + 1)} index={index} updateQuestionAtIndex={updateQuestionAtIndex} handleRemoveButtonClick={ removeQuestionCard }/>
-                              </li>
-                            );
-                    })
-                  }
-                </ul>     
+                {
+                  questions.length > 0 ?
+                    <ul className="list-group">
+                      {
+                        questions.map((question, index)=>{
+                          return  (
+                                  <li className="list-group-item border-0" key={question.id}>
+                                    <QuestionCard props={question} title={"Question " + (index + 1)} index={index} updateQuestionAtIndex={updateQuestionAtIndex} handleRemoveButtonClick={ removeQuestionCard }/>
+                                  </li>
+                                );
+                        })
+                      }
+                    </ul>
+                  :
+                  <div className='col-12 p-5'>
+                    <h4 className='text-center'>Please add Questions</h4>
+                  </div> 
+                } 
               </div>
               <div className="col-12 p-2 row">
                 <div className="col-2 ps-xl-5 row">

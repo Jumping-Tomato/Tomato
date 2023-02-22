@@ -2,6 +2,7 @@ import Head from 'next/head';
 import global from 'styles/Global.module.scss';
 import {Topbar, Footer} from 'components';
 import Image from 'next/image';
+import Link  from 'next/link';
 
 export default function Home() {
   return (
@@ -28,6 +29,8 @@ export default function Home() {
                 when it comes to testing. Our platform is an autograding system
                 for tests and quizzes.
             </h3>
+            <br />
+            <h3><Link href="/auth/register">Register</Link> and get started now.</h3>
           </div>
         </div>
         <div className='row'>

@@ -46,8 +46,9 @@ async function create(user) {
                 name: user.firstName + ' ' + user.lastName
             }];
             const subject = "Verify Your Email Address";
+            const email_verification_url = process.env.DOMAIN_URL + '/verify-email/' + user.email_verification_code;
             const html = `Please click on the link to verify your email address: 
-                           <a href="${process.env.DOMAIN_URL + '/verify-email/' + user.email_verification_code}">Link</a>`
+                           <a href="${email_verification_url}">Link</a>`
             const email_sent = await send_no_reply_email(recipient,subject,html);
             if (email_sent){
                 return true;

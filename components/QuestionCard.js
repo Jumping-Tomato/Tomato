@@ -58,7 +58,7 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
     }
     function handleChange(event){
         const inputName = event.target.getAttribute("data-input-name");
-        let value = inputName == 'files' ? event.target.files : event.target.value;
+        let value = event.target.value;
         const new_props = JSON.parse(JSON.stringify(props));
         if (inputName == "questionType"){
             new_props.type = value;
@@ -79,6 +79,16 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
             let field = event.target.getAttribute("data-field");
             value = field == "point" ? parseInt(value) : value;
             new_props.shortAnswer.correct_answers[index][field] = value;
+            updateQuestion(new_props);
+        }
+        else if(inputName == "files"){
+            const questionType = props.type;
+            let files = event.target.files;
+            let selectedFiles = [];
+            for (let i=0; i < files.length; i++){
+                selectedFiles.push(files[i]);
+            }
+            new_props[questionType][inputName] = selectedFiles;
             updateQuestion(new_props);
         }
         else{

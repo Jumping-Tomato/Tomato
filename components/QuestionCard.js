@@ -58,7 +58,7 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
     }
     function handleChange(event){
         const inputName = event.target.getAttribute("data-input-name");
-        let value = event.target.value;
+        let value = inputName == 'files' ? event.target.files : event.target.value;
         const new_props = JSON.parse(JSON.stringify(props));
         if (inputName == "questionType"){
             new_props.type = value;
@@ -137,6 +137,10 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
                                 <Form.Control as="textarea" data-input-name="question" row={3} defaultValue={props.multipleChoice.question} />
+                            </Form.Group>
+                            <Form.Group className="mb-3" >
+                                <Form.Label>Files:</Form.Label>
+                                <Form.Control type="file" data-input-name="files" row={3} multiple/>
                             </Form.Group>
                             {
                                 Object.entries(choices).map(([key, value], index)=>{
@@ -219,6 +223,10 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
                                 <Form.Control as="textarea" data-input-name="question" row={3} defaultValue={props.shortAnswer.question} />
+                            </Form.Group>
+                            <Form.Group className="mb-3" >
+                                <Form.Label>Files:</Form.Label>
+                                <Form.Control type="file" data-input-name="files" row={3} multiple/>
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Correct Answers:</Form.Label>

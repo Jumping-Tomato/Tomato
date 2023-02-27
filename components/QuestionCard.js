@@ -150,7 +150,7 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Files:</Form.Label>
-                                { props.multipleChoice.files.length > 0 && displayFiles(props.multipleChoice.files) }
+                                { props.multipleChoice.files?.length > 0 && displayFiles(props.multipleChoice.files) }
                                 <Form.Control type="file" data-input-name="files" accept="image/png, image/jpeg"  row={3} multiple/>
                             </Form.Group>
                             {
@@ -237,7 +237,7 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Files:</Form.Label>
-                                { props.shortAnswer.files.length > 0 && displayFiles(props.shortAnswer.files) }
+                                { props.shortAnswer.files?.length > 0 && displayFiles(props.shortAnswer.files) }
                                 <Form.Control type="file" data-input-name="files" accept="image/png, image/jpeg"  row={3} multiple/>
                             </Form.Group>
                             <Form.Group className="mb-3" >

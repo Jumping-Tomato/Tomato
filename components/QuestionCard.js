@@ -150,7 +150,8 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Files:</Form.Label>
-                                <Form.Control type="file" data-input-name="files" row={3} multiple/>
+                                { props.multipleChoice.files.length > 0 && displayFiles(props.multipleChoice.files) }
+                                <Form.Control type="file" data-input-name="files" accept="image/png, image/jpeg"  row={3} multiple/>
                             </Form.Group>
                             {
                                 Object.entries(choices).map(([key, value], index)=>{
@@ -236,7 +237,8 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Files:</Form.Label>
-                                <Form.Control type="file" data-input-name="files" row={3} multiple/>
+                                { props.shortAnswer.files.length > 0 && displayFiles(props.shortAnswer.files) }
+                                <Form.Control type="file" data-input-name="files" accept="image/png, image/jpeg"  row={3} multiple/>
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Correct Answers:</Form.Label>
@@ -285,6 +287,14 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
             </Card.Body>
         </Card>
     )
+}
+
+function displayFiles(files){
+    let fileNames = [];
+    files.forEach((file)=>{
+        fileNames.push(file.name);
+    });
+    return fileNames.join(', ');
 }
 
 export default memo(QuestionCard);

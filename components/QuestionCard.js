@@ -59,7 +59,7 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
     function handleChange(event){
         const inputName = event.target.getAttribute("data-input-name");
         let value = event.target.value;
-        const new_props = JSON.parse(JSON.stringify(props));
+        const new_props = {...props};
         if (inputName == "questionType"){
             new_props.type = value;
             updateQuestion(new_props);

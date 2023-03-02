@@ -54,7 +54,6 @@ export default function TestManagementPage({props}) {
       multipleChoice:
       {
         question:"",
-        files: [],
         choices:{
             a:""
         },
@@ -68,7 +67,6 @@ export default function TestManagementPage({props}) {
       shortAnswer:
       {
         question:"",
-        files: [],
         correct_answers:[
           {
             key: nanoid(),

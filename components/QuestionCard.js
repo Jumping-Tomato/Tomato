@@ -82,14 +82,7 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
             updateQuestion(new_props);
         }
         else if(inputName == "files"){
-            const questionType = props.type;
-            let files = event.target.files;
-            let selectedFiles = [];
-            for (let i=0; i < files.length; i++){
-                selectedFiles.push(files[i]);
-            }
-            new_props[questionType][inputName] = selectedFiles;
-            updateQuestion(new_props);
+            
         }
         else{
             const questionType = props.type;
@@ -140,6 +133,11 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
                             </Form.Select>
                         </div>
                     </Form.Group>
+                    <Form.Group className="mb-3" >
+                        <Form.Label>Files:</Form.Label>
+                        { props.files?.length > 0 && displayFiles(props.files) }
+                        <Form.Control type="file" data-input-name="files" accept="image/png, image/jpeg"  row={3} multiple/>
+                    </Form.Group>
                     {
                         props.type == "multipleChoice"
                         ?
@@ -147,11 +145,6 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
                                 <Form.Control as="textarea" data-input-name="question" row={3} defaultValue={props.multipleChoice.question} />
-                            </Form.Group>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Files:</Form.Label>
-                                { props.multipleChoice.files?.length > 0 && displayFiles(props.multipleChoice.files) }
-                                <Form.Control type="file" data-input-name="files" accept="image/png, image/jpeg"  row={3} multiple/>
                             </Form.Group>
                             {
                                 Object.entries(choices).map(([key, value], index)=>{
@@ -234,11 +227,6 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
                             <Form.Group className="mb-3" >
                                 <Form.Label>Question:</Form.Label>
                                 <Form.Control as="textarea" data-input-name="question" row={3} defaultValue={props.shortAnswer.question} />
-                            </Form.Group>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Files:</Form.Label>
-                                { props.shortAnswer.files?.length > 0 && displayFiles(props.shortAnswer.files) }
-                                <Form.Control type="file" data-input-name="files" accept="image/png, image/jpeg"  row={3} multiple/>
                             </Form.Group>
                             <Form.Group className="mb-3" >
                                 <Form.Label>Correct Answers:</Form.Label>

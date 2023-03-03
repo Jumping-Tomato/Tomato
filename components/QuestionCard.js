@@ -5,7 +5,7 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import Multiselect from 'multiselect-react-dropdown';
 import { nanoid } from 'nanoid'
 
-function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestionAtIndex}) {
+function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestionAtIndex, updateFiles}) {
     var choices = props.multipleChoice.choices;
     function updateQuestion(props){
         updateQuestionAtIndex(index, props);
@@ -82,7 +82,12 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
             updateQuestion(new_props);
         }
         else if(inputName == "files"){
-            
+            let files = event.target.files;
+            let selected_files = [];
+            for (let i=0; i < files.length; i++){
+              selected_files.push(files[i]);
+            }
+            updateFiles(props.id, selected_files);
         }
         else{
             const questionType = props.type;

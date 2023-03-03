@@ -17,6 +17,7 @@ import { useBeforeunload } from 'react-beforeunload';
 export default function TestManagementPage({props}) {
     const router = useRouter();
     const [questions, setQuestions] = useState([]);
+    const [files, setFiles] = useState({});
     const [modalData, setModalData] = useState({
       show: false,
       message:""
@@ -95,6 +96,12 @@ export default function TestManagementPage({props}) {
       setQuestions(new_questions);
     },[questions.length]);
 
+    function updateFiles(question_id, selected_files){
+      let attachedFiles = {...files};
+      attachedFiles[question_id] = selected_files;
+      setFiles(attachedFiles);
+    };
+
     function handleSave(event){
       event.preventDefault();
       if(!questions.length){
@@ -162,7 +169,11 @@ export default function TestManagementPage({props}) {
                         questions.map((question, index)=>{
                           return  (
                                   <li className="list-group-item border-0" key={question.id}>
-                                    <QuestionCard props={question} title={"Question " + (index + 1)} index={index} updateQuestionAtIndex={updateQuestionAtIndex} handleRemoveButtonClick={ removeQuestionCard }/>
+                                    <QuestionCard props={question} title={"Question " + (index + 1)} index={index} 
+                                        updateQuestionAtIndex={updateQuestionAtIndex} 
+                                        handleRemoveButtonClick={ removeQuestionCard } 
+                                        updateFiles={ updateFiles }
+                                    />
                                   </li>
                                 );
                         })

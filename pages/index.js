@@ -3,8 +3,11 @@ import global from 'styles/Global.module.scss';
 import {Topbar, Footer} from 'components';
 import Image from 'next/image';
 import Link  from 'next/link';
+import { useSession } from 'next-auth/react'
 
 export default function Home() {
+  const { data: session } = useSession();
+
   return (
     <>
     <Topbar />
@@ -30,7 +33,7 @@ export default function Home() {
                 for tests and quizzes.
             </h3>
             <br />
-            <h3><Link href="/auth/register">Register</Link> and get started now.</h3>
+            { !session && <h3><Link href="/auth/register">Register</Link> and get started now.</h3> }
           </div>
         </div>
         <div className='row'>

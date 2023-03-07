@@ -1,12 +1,22 @@
-import { Card, Form, Row, Col} from 'react-bootstrap';
-import { Fragment, memo } from 'react';
+import { Button, Card, Form, Row, Col} from 'react-bootstrap';
+import { Fragment, memo, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import Multiselect from 'multiselect-react-dropdown';
 import { nanoid } from 'nanoid'
 
-function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestionAtIndex, updateFiles}) {
+function QuestionCard( {
+                        props,
+                        title,
+                        handleRemoveButtonClick,
+                        index, 
+                        updateQuestionAtIndex, 
+                        updateFiles,
+                        clearFiles}) {
+
     var choices = props.multipleChoice.choices;
+    const filePickerRef = useRef(null);
+
     function updateQuestion(props){
         updateQuestionAtIndex(index, props);
     }
@@ -94,7 +104,7 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
             new_props[questionType][inputName] = value;
             updateQuestion(new_props);
         } 
-    }
+    }    
     
     function validateNumber(event){
         const value = event.target.value;
@@ -109,6 +119,11 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
         if (value.length >= max.length || charCode < 48 || charCode > 57){
             event.preventDefault();
         }
+    }
+
+    function clearFileSelection(event){
+        clearFiles(props.id); 
+        filePickerRef.current.value = "";
     }
 
     return (
@@ -141,7 +156,10 @@ function QuestionCard({props,title,handleRemoveButtonClick,index, updateQuestion
                     <Form.Group className="mb-3" >
                         <Form.Label>Files:</Form.Label>
                         { props.files?.length > 0 && displayFiles(props.files) }
-                        <Form.Control type="file" data-input-name="files" accept="image/png, image/jpeg"  row={3} multiple/>
+                        <Form.Control type="file" ref={filePickerRef} accept="image/png, image/jpeg"  row={3} multiple/>
+                        <Button className="mt-2" variant="secondary" onClick={clearFileSelection}>
+                            Reset Files
+                        </Button>
                     </Form.Group>
                     {
                         props.type == "multipleChoice"

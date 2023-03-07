@@ -102,6 +102,12 @@ export default function TestManagementPage({props}) {
       setFiles(attachedFiles);
     };
 
+    function clearFiles(question_id){
+      let attachedFiles = {...files};
+      delete attachedFiles[question_id];
+      setFiles(attachedFiles);
+    }
+
     function handleSave(event){
       event.preventDefault();
       if(!questions.length){
@@ -173,6 +179,7 @@ export default function TestManagementPage({props}) {
                                         updateQuestionAtIndex={updateQuestionAtIndex} 
                                         handleRemoveButtonClick={ removeQuestionCard } 
                                         updateFiles={ updateFiles }
+                                        clearFiles={ clearFiles }
                                     />
                                   </li>
                                 );

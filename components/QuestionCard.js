@@ -156,7 +156,7 @@ function QuestionCard( {
                     <Form.Group className="mb-3" >
                         <Form.Label>Files:</Form.Label>
                         { props.files?.length > 0 && displayFiles(props.files) }
-                        <Form.Control type="file" ref={filePickerRef} accept="image/png, image/jpeg"  row={3} multiple/>
+                        <Form.Control type="file" ref={filePickerRef} data-input-name="files" accept="image/png, image/jpeg"  row={3} multiple/>
                         <Button className="mt-2" variant="secondary" onClick={clearFileSelection}>
                             Reset Files
                         </Button>

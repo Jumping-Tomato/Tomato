@@ -34,6 +34,7 @@ export default function Home() {
             </h3>
             <br />
             { !session && <h3><Link href="/auth/register">Register</Link> and get started now.</h3> }
+            { session && <h3>Go to <Link href={`/${session.role}/dashboard`}>dashboard</Link> to get started.</h3> }
           </div>
         </div>
         <div className='row'>

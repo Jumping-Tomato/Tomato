@@ -11,6 +11,7 @@ import Alert from 'react-bootstrap/Alert';
 import { signIn } from "next-auth/react";
 import  Link  from 'next/link';
 import ReCAPTCHA from "react-google-recaptcha";
+import Head from 'next/head';
 
 export default function Signin(){
     const router = useRouter();
@@ -55,27 +56,43 @@ export default function Signin(){
         }
     }
     return (
-        <form onChange={handleChange} onSubmit={handleSubmit}>
-            <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
-                <MDBInput wrapperClass='mb-4' label='Email address' name="email" type='email' required/>
-                <MDBInput wrapperClass='mb-4' label='Password' name="password" type='password' required />
-                <ReCAPTCHA
-                    sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
-                    ref={captchaRef}
-                />
-                <br/>
-                { error && <Alert variant="danger"> {error} </Alert>}
-                <div className="d-flex justify-content-between mx-3 mb-4">
-                    <Link href="/auth/password-retrieval/forgot-password">Forgot password?</Link>
-                </div> 
-                <Button variant="primary" type="submit">
-                        Sign In
-                </Button>
+        <>
+        <div className={global.container}>
+          <Head>
+            <title>Sign In</title>
+            <meta name="description" content="Sign-in Page" />
+            <link rel="icon" href="/media/images/logo.svg" />
+          </Head>
 
-                <div className="text-center">
-                    <p>Not a member? <Link href="/auth/register">Register</Link></p>
-                </div>
-            </MDBContainer>
-        </form>
+          <main className={global.main}>
+            <div className='row justify-content-center'>
+              <div className="col-lg-6 col-12 p-3">
+                <form onChange={handleChange} onSubmit={handleSubmit}>
+                    <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
+                        <MDBInput wrapperClass='mb-4' label='Email address' name="email" type='email' required/>
+                        <MDBInput wrapperClass='mb-4' label='Password' name="password" type='password' required />
+                        <ReCAPTCHA
+                            sitekey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY}
+                            ref={captchaRef}
+                        />
+                        <br/>
+                        { error && <Alert variant="danger"> {error} </Alert>}
+                        <div className="d-flex justify-content-between mx-3 mb-4">
+                            <Link href="/auth/password-retrieval/forgot-password">Forgot password?</Link>
+                        </div> 
+                        <Button variant="primary" type="submit">
+                                Sign In
+                        </Button>
+
+                        <div className="text-center">
+                            <p>Not a member? <Link href="/auth/register">Register</Link></p>
+                        </div>
+                    </MDBContainer>
+                </form>
+              </div>
+            </div>
+          </main>
+        </div>
+      </>
     );
 }

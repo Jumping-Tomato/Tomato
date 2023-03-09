@@ -37,7 +37,7 @@ export default function StudentDashboard() {
                             <div className="col-12 pt-5">
                                 { 
                                     courses.length > 0
-                                    &&
+                                    ?
                                     <ul className="list-group">
                                         {
                                             courses.map((course) => {
@@ -59,6 +59,8 @@ export default function StudentDashboard() {
                                             })
                                         }
                                     </ul>
+                                    :
+                                    <h1>No Course</h1>
                                 }
                             </div>
                         </div>

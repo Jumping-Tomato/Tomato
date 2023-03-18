@@ -59,7 +59,7 @@ export default function TeacherDashboard() {
                                 <Spinner animation="border" />
                                 :
                                 !courses.length ?
-                                    <h1>No Cources</h1>
+                                    <h1>No Courses</h1>
                                      :
                                      <ul className="list-group">
                                         {

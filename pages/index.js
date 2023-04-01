@@ -39,7 +39,7 @@ export default function Home() {
         </div>
         <div className='row'>
           <div className="col-12 pt-5">
-          <h3>Reasons to Jumping Tomato:</h3>
+          <h3>Reasons to Use Jumping Tomato:</h3>
           <ul>
             <li><b>Time Flexity</b>: You can set the start date and deadline of the tests, and your students can take the tests anytime within the time frame.</li>
             <li><b>Location Flexity</b>: You can create your tests anywhere in the world, and your studennts can take the tests anywhere in the world.</li>

@@ -49,6 +49,12 @@ export default function Home() {
           </ul>
           </div>
         </div>
+        <div className='row'>
+          <div className="col-12 pt-5">
+            <h3>Making the questions is really simple:</h3>
+            <Image className="pt-3" src="/media/gifs/edit-questions-demo.gif" width={1240} height={620} />
+          </div>
+        </div>
       </main>
     </div>
     <Footer />

@@ -27,6 +27,14 @@ if (process.env.NODE_ENV === 'development') {
   dbPromise = client.connect()
 }
 
+
+async function getClient(){
+  if(!client){
+    client = await dbPromise;
+  }
+  return client;
+}
+
 async function getDB(){
   if(!client){
     client = await dbPromise;
@@ -36,7 +44,9 @@ async function getDB(){
 }
 
 
-// Export a module-scoped MongoClient promise. By doing this in a
-// separate module, the client can be shared across functions.
 
-export default getDB
+
+export {
+  getClient,
+  getDB
+}

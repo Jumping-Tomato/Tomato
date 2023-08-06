@@ -1,18 +1,12 @@
-import dbPromise from "database/mongodb-config";
+import { getDB } from "database/mongodb-config";
 import { usersRepo } from "database/user-repo";
 const { ObjectId } = require('mongodb')
 
-let db;
-dbPromise.then((value) => {
-    const client = value;
-    db = client.db("Tomato");
-})
-.catch((error)=>{
-    console.error(error);
-});
+
 
 export const passwordResetRepo = {
     find: async _id => {
+        const db = await getDB();
         return await db.collection("passwordReset").findOne({"_id": ObjectId(_id)});
     },
     resetPassword,
@@ -37,6 +31,7 @@ async function resetPassword(email) {
         expire: expire
     }
     try{
+        const db = await getDB();
         await db.collection("passwordReset").updateOne(
             {user_id: user._id},
             {$set: pw_reset_data},

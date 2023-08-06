@@ -7,6 +7,7 @@ const options = {
 }
 
 let client;
+let db;
 let dbPromise;
 
 if (!process.env.MONGODB_URI) {
@@ -39,7 +40,9 @@ async function getDB(){
   if(!client){
     client = await dbPromise;
   }
-  let db = client.db("Tomato");
+  if(!db){
+    db = client.db("Tomato");
+  }
   return db;
 }
 

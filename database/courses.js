@@ -1,21 +1,14 @@
-import dbPromise from "database/mongodb-config";
+import getDB from "database/mongodb-config";
 const { ObjectId } = require('mongodb')
 
-let db;
-let client;
-dbPromise.then((value) => {
-    client = value;
-    db = client.db("Tomato");
-})
-.catch((error)=>{
-    console.error(error);
-});
+
 
 export const courses = {
     approveStudent: approveStudent,
     createCourse,
     denyStudent: denyStudent,
     getCoursesForTeacher: async teacher_id => {
+        let db = await getDB();
         return await db.collection("courses").find({"teacher_id": ObjectId(teacher_id)})
         .project({ name: 1, semester: 1 }).toArray();
     },

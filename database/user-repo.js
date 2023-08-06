@@ -62,7 +62,7 @@ async function update(_id, params) {
     const db = await getDB();
     return db.collection("users").updateOne({"_id": ObjectId(_id)},{$set: params})
     .then((result)=>{
-        console.log(`user with id "${_id}" is updated is mongoDB`);
+        console.log(`user with id "${_id}" is updated in mongoDB`);
         console.log(result);
     })
     .catch((error)=>{

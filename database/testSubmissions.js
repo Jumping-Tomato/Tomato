@@ -1,17 +1,6 @@
-import dbPromise from "database/mongodb-config";
+import { getClient, getDB } from "database/mongodb-config";
 const { ObjectId } = require('mongodb')
 var isEqual = require('lodash.isequal');
-
-let db;
-let client;
-dbPromise.then((value) => {
-    client = value;
-    db = client.db("Tomato");
-})
-.catch((error)=>{
-    console.error(error);
-});
-
 
 
 export const testSubmissions = {
@@ -28,6 +17,7 @@ export const testSubmissions = {
 };
 
 async function createTestSubmission(submissionData) {
+    const db = await getDB();
     submissionData.dateCreated = new Date().toISOString();
     submissionData.dateUpdated = new Date().toISOString();
     try {
@@ -42,6 +32,7 @@ async function createTestSubmission(submissionData) {
 
 async function testIsSubmitted(test_id, student_id) {
     try{
+        const db = await getDB();
         const submission = await db.collection("testSubmissions").findOne({
             $and: [
                 { "test_id": ObjectId(test_id)},
@@ -60,6 +51,7 @@ async function testIsSubmitted(test_id, student_id) {
 
 async function getUnansweredQuestion(testSubmission_id){
     try{
+        const db = await getDB();
         const submission = await db.collection("testSubmissions").findOne({
             "_id": ObjectId(testSubmission_id)
         });
@@ -81,6 +73,7 @@ async function getUnansweredQuestion(testSubmission_id){
 }
 async function someoneHasSubmitted(test_id){
     try {
+        const db = await getDB();
         const submission = await db.collection("testSubmissions").findOne(
            { "test_id": ObjectId(test_id)},
         );
@@ -95,6 +88,7 @@ async function someoneHasSubmitted(test_id){
 }
 
 async function submitTestQuestionById(test_submission_id, question_data){
+    let client = await getClient();
     const session = client.startSession();
     const transactionOptions = {
         readPreference: 'primary',
@@ -211,6 +205,7 @@ function getGradedQuestion(questionData, correct_answers){
 
 async function setTotalScoreById(test_submission_id){
     try{
+        const db = await getDB();
         const testSubmissions = await db.collection("testSubmissions").findOne(
             {"_id": ObjectId(test_submission_id)}
         );
@@ -238,6 +233,7 @@ async function setTotalScoreById(test_submission_id){
 
 async function getAllTestScores(test_id){
     try{
+        const db = await getDB();
         const submissions = await db.collection("testSubmissions").aggregate([
             {
                 $match: {
@@ -271,6 +267,7 @@ async function getAllTestScores(test_id){
 
 async function getPointsByTestSubmissionId(test_submission_id){
     try{
+        const db = await getDB();
         const testSubmissions = await db.collection("testSubmissions").findOne(
             {"_id": ObjectId(test_submission_id)}
         );
@@ -297,6 +294,7 @@ async function getPointsByTestSubmissionId(test_submission_id){
 
 async function getActivitiesByTestSubmissionId(test_submission_id){
     try{
+        const db = await getDB();
         const testSubmissions = await db.collection("testSubmissions").findOne(
             {"_id": ObjectId(test_submission_id)}
         );
@@ -321,6 +319,7 @@ async function getActivitiesByTestSubmissionId(test_submission_id){
 
 async function getTestSubmissionById(test_submission_id){
     try{
+        const db = await getDB();
         const submissionData = await db.collection("testSubmissions").findOne(
             {"_id": ObjectId(test_submission_id)}
         );

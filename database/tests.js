@@ -1,20 +1,13 @@
-import dbPromise from "database/mongodb-config";
+import { getDB } from "database/mongodb-config";
 const { ObjectId } = require('mongodb')
 
-let db;
-dbPromise.then((value) => {
-    const client = value;
-    db = client.db("Tomato");
-})
-.catch((error)=>{
-    console.error(error);
-});
 
 
 export const tests = {
     createTest,
     deleteTestById: async test_id =>{
         try{
+            const db = await getDB();
             const result = await db.collection("tests").deleteOne({"_id": ObjectId(test_id) });
             return result
         }
@@ -24,6 +17,7 @@ export const tests = {
     },
     editTestDetail: editTestDetail,
     getTestsByCourseIdForStudents: async course_id => {
+        const db = await getDB();
         return await db.collection("tests").aggregate([
             {
                 $match:{
@@ -46,10 +40,12 @@ export const tests = {
         ]).toArray();
     },
     getTestsByCourseIdForTeachers: async course_id => {
+        const db = await getDB();
         return await db.collection("tests").find({"course_id": ObjectId(course_id)})
         .project({ name: 1, shuffle:1, startDate:1, deadline:1 }).toArray();
     },
     getTestById: async test_id => {
+        const db = await getDB();
         return await db.collection("tests").findOne({"_id": ObjectId(test_id)});
     },
     updateQuestions: updateQuestions,
@@ -61,6 +57,7 @@ async function createTest(testData) {
     testData.dateUpdated = new Date().toISOString();
 
     // add and save user
+    const db = await getDB();
     db.collection("tests").insertOne(testData).catch((error)=>{
         throw `Unable to create quiz with the email`;
     });
@@ -68,6 +65,7 @@ async function createTest(testData) {
 
 async function editTestDetail(test_id, changed_data){
     try{
+        const db = await getDB();
         const result = await db.collection("tests")
                         .updateOne(
                             {"_id": ObjectId(test_id)},
@@ -102,6 +100,7 @@ async function updateQuestions(test_id, questions_data){
             }
             questions.push(question_obj);
         });
+        const db = await getDB();
         const result = await db.collection("tests").updateOne(
                                                         {"_id": ObjectId(test_id)},
                                                         {$set: {

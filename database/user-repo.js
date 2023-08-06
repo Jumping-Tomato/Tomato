@@ -1,26 +1,21 @@
-import dbPromise from "database/mongodb-config";
+import { getDB } from "database/mongodb-config";
 const { ObjectId } = require('mongodb')
 import { nanoid } from 'nanoid';
 import { send_no_reply_email } from "helpers/email";
 
-let db;
-dbPromise.then((value) => {
-    const client = value;
-    db = client.db("Tomato");
-})
-.catch((error)=>{
-    console.error(error);
-});
 
 
 export const usersRepo = {
     getAll: async () => {
+        const db = await getDB();
         return await db.collection("users").find({}).toArray();
     },
     getById: async _id => {
+        const db = await getDB();
         return await db.collection("users").findOne({"_id": ObjectId(_id)});
     },
     find: async email => {
+        const db = await getDB();
         return await db.collection("users").findOne({"email": email});
     } ,
     create,
@@ -39,6 +34,7 @@ async function create(user) {
         user.email_verified = false;
         user.email_verification_code = nanoid();
         // add and save user
+        const db = await getDB();
         let result = await db.collection("users").insertOne(user);
         if(result){
             const recipient = [{
@@ -61,8 +57,9 @@ async function create(user) {
     }
 }
 
-function update(_id, params) {
+async function update(_id, params) {
     params.dateUpdated = new Date().toISOString();
+    const db = await getDB();
     return db.collection("users").updateOne({"_id": ObjectId(_id)},{$set: params})
     .then((result)=>{
         console.log(`user with id "${_id}" is updated is mongoDB`);
@@ -76,6 +73,7 @@ function update(_id, params) {
 // prefixed with underscore '_' because 'delete' is a reserved word in javascript
 async function _delete(_id) {
     try{
+        const db = await getDB();
         let result = await db.collection("users").deleteOne({"_id": _id });
         return result
     }
@@ -86,6 +84,7 @@ async function _delete(_id) {
 
 async function verifyUserEmail(email_verification_code){
     try{
+        const db = await getDB();
         let user = await db.collection("users").findOne({"email_verification_code": email_verification_code });
         if(!user){
             return false;

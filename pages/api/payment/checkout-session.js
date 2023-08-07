@@ -5,26 +5,19 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 export default async function checkoutSession(req, res) {
     
     if (req.method === 'POST') {
-      const { cart } = req.body;
+      const { payment_data } = req.body;
       try {
         const session = await stripe.checkout.sessions.create({
           line_items: [{
             price_data: {
               currency: 'usd',
-              unit_amount: 1000,
-              product_data: {
-                name: 'Monthly Access',
-                description: 'One Month Access to Jumping Tomato',
-                images: ['https://i.imgur.com/fLWFlP3.png'],
-              },
-              recurring:{
-                interval: "month",
-                interval_count: 1
-              }
+              unit_amount: payment_data.unit_amount,
+              product_data: payment_data.price_data,
+              recurring: payment_data.recurring
             },
             quantity: 1,
           }],
-          mode: 'subscription',
+          mode: 'payment',
           success_url: `${req.headers.origin}/payment/success`,
           cancel_url: `${req.headers.origin}/payment/cancel`,
         });

@@ -45,10 +45,11 @@ const pricing = {
         }  
     }
 }
-async function StripeCheckout(accessLevel) {
+async function StripeCheckout(accessLevel, email) {
     try {
         const stripe = await stripePromise;
         const payment_data = pricing[accessLevel];
+        payment_data.email = email;
         const checkoutSession = await axios.post("/api/payment/checkout-session", 
              {payment_data} 
         );

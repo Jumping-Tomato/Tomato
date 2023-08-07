@@ -17,6 +17,7 @@ export default async function checkoutSession(req, res) {
             },
             quantity: 1,
           }],
+          customer_email: payment_data.email,
           mode: 'subscription',
           success_url: `${req.headers.origin}/payment/success`,
           cancel_url: `${req.headers.origin}/payment/cancel`,

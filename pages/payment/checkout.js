@@ -2,12 +2,14 @@ import Head from 'next/head'
 import global from 'styles/Global.module.scss'
 import { Topbar, Footer, PricingCard } from 'components'
 import { StripeCheckout } from 'helpers/Stripe';
- 
+import { useSession } from 'next-auth/react';
 
 export default function CheckoutPage() {
+    const { data: session } = useSession();
     function handlePriceSelection(event){
         const accessLevel = event.target.value;
-        StripeCheckout(accessLevel);
+        const email = session.user.email;
+        StripeCheckout(accessLevel,email);
     }
     return (
       <>

@@ -50,7 +50,7 @@ async function StripeCheckout(accessLevel, email) {
         const stripe = await stripePromise;
         const payment_data = pricing[accessLevel];
         payment_data.email = email;
-        const checkoutSession = await axios.post("/api/payment/checkout-session", 
+        const checkoutSession = await axios.post("/api/Stripe/checkout-session", 
              {payment_data} 
         );
         if (checkoutSession.status == 200) {

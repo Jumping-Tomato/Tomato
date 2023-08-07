@@ -50,11 +50,11 @@ async function StripeCheckout(accessLevel) {
         const stripe = await stripePromise;
         const payment_data = pricing[accessLevel];
         const checkoutSession = await axios.post("/api/payment/checkout-session", 
-             payment_data 
+             {payment_data} 
         );
         if (checkoutSession.status == 200) {
             const checkoutUrl = checkoutSession.data.url;
-            window.location.href  = checkoutUrl;
+            window.open(checkoutUrl);
         }
         else{
             alert('An error has occured')

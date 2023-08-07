@@ -5,7 +5,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 export default async function checkoutSession(req, res) {
     
     if (req.method === 'POST') {
-      const  payment_data  = req.body;
+      const  {payment_data}  = req.body;
       try {
         const session = await stripe.checkout.sessions.create({
           line_items: [{

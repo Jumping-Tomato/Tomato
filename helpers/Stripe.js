@@ -7,7 +7,7 @@ const stripePromise = loadStripe(
 );
 
 
-const priceLevel = {
+const pricing = {
     1: {
         unit_amount: 1000,
         product_data: {
@@ -48,16 +48,16 @@ const priceLevel = {
 async function StripeCheckout(accessLevel) {
     try {
         const stripe = await stripePromise;
+        const payment_data = pricing[accessLevel];
         const checkoutSession = await axios.post("/api/payment/checkout-session", 
-            priceLevel[accessLevel],
+             payment_data 
         );
-
-        const result = await stripe.redirectToCheckout({
-            sessionId: checkoutSession.data.id,
-        });
-
-        if (result.error) {
-            alert(result.error.message);
+        if (checkoutSession.status == 200) {
+            const checkoutUrl = checkoutSession.data.url;
+            window.location.href  = checkoutUrl;
+        }
+        else{
+            alert('An error has occured')
         }
     } 
     catch (error) {

@@ -7,7 +7,7 @@ import QuestionCard from './QuestionCard';
 import TestQuestion from './TestQuestion';
 import Topbar from './Topbar';
 import UserForm from './User-form';
-
+import Checkout from './Checkout';
 
 
 export {
@@ -19,5 +19,6 @@ export {
     QuestionCard,
     TestQuestion,
     Topbar,
-    UserForm
+    UserForm,
+    Checkout
 }

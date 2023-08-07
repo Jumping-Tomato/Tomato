@@ -7,8 +7,7 @@ import QuestionCard from './QuestionCard';
 import TestQuestion from './TestQuestion';
 import Topbar from './Topbar';
 import UserForm from './User-form';
-import Checkout from './Checkout';
-
+import PricingCard from './PricingCard';
 
 export {
     ConfirmationModal,
@@ -20,5 +19,5 @@ export {
     TestQuestion,
     Topbar,
     UserForm,
-    Checkout
+    PricingCard
 }

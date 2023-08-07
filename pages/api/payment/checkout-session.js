@@ -17,10 +17,14 @@ export default async function checkoutSession(req, res) {
                 description: 'One Month Access to Jumping Tomato',
                 images: ['https://i.imgur.com/fLWFlP3.png'],
               },
+              recurring:{
+                interval: "month",
+                interval_count: 1
+              }
             },
             quantity: 1,
           }],
-          mode: 'payment',
+          mode: 'subscription',
           success_url: `${req.headers.origin}/payment/success`,
           cancel_url: `${req.headers.origin}/payment/cancel`,
         });

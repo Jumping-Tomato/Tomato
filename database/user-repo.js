@@ -114,6 +114,7 @@ function updateByEmail(email, params) {
     .then((result)=>{
         console.log(`user with email "${email}" is updated in mongoDB`);
         console.log(result);
+        return result;
     })
     .catch((error)=>{
         throw `Unable to update the user.\nError: "${error}"`;

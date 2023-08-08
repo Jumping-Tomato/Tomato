@@ -68,5 +68,6 @@ async function StripeCheckout(amount_in_cents, email) {
 
 
 export {
+    pricing,
     StripeCheckout
 };

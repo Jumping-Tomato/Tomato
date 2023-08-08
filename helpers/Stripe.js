@@ -47,7 +47,10 @@ const pricing = {
 }
 async function StripeCheckout(amount_in_cents, email) {
     try {
-        const stripe = await stripePromise;
+        /* Do NOT remove the following line. It is used to prevent
+        * user from checking out before stripePromise is configured
+        */
+        const stripe = await stripePromise;  
         const payment_data = pricing[amount_in_cents];
         payment_data.email = email;
         const checkoutSession = await axios.post("/api/Stripe/checkout-session", 

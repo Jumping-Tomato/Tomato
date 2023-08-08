@@ -29,7 +29,7 @@ const pricing = {
         },
         recurring:{
           interval: "month",
-          interval_count: 6
+          interval_count: 3
         }  
     },
     3000: {
@@ -41,7 +41,7 @@ const pricing = {
         },
         recurring:{
           interval: "month",
-          interval_count: 12
+          interval_count: 6
         }  
     }
 }

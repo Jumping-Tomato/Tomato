@@ -8,7 +8,7 @@ const stripePromise = loadStripe(
 
 
 const pricing = {
-    1: {
+    1000: {
         unit_amount: 1000,
         product_data: {
           name: 'Monthly Access',
@@ -20,7 +20,7 @@ const pricing = {
           interval_count: 1
         }  
     },
-    2: {
+    2100: {
         unit_amount: 2100,
         product_data: {
           name: 'Three-Month Access',
@@ -32,7 +32,7 @@ const pricing = {
           interval_count: 6
         }  
     },
-    3: {
+    3000: {
         unit_amount: 3000,
         product_data: {
           name: 'Six-month Access',
@@ -45,10 +45,10 @@ const pricing = {
         }  
     }
 }
-async function StripeCheckout(accessLevel, email) {
+async function StripeCheckout(amount_in_cents, email) {
     try {
         const stripe = await stripePromise;
-        const payment_data = pricing[accessLevel];
+        const payment_data = pricing[amount_in_cents];
         payment_data.email = email;
         const checkoutSession = await axios.post("/api/Stripe/checkout-session", 
              {payment_data} 

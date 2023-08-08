@@ -7,9 +7,9 @@ import { useSession } from 'next-auth/react';
 export default function CheckoutPage() {
     const { data: session } = useSession();
     function handlePriceSelection(event){
-        const accessLevel = event.target.value;
+        const amount_in_cents = event.target.value;
         const email = session.user.email;
-        StripeCheckout(accessLevel,email);
+        StripeCheckout(amount_in_cents,email);
     }
     return (
       <>
@@ -29,7 +29,7 @@ export default function CheckoutPage() {
                         subtitle={"bill every month"}
                         text={"$10 in total"}
                         buttonText={"Select"}
-                        accessLevel={1}
+                        accessLevel={1000}
                         handleClick={handlePriceSelection}
                     />
                 </div>
@@ -39,7 +39,7 @@ export default function CheckoutPage() {
                         subtitle={"bill every three months"}
                         text={"$21 in total"}
                         buttonText={"Select"}
-                        accessLevel={2}
+                        accessLevel={2100}
                         handleClick={handlePriceSelection}
                     />
                 </div>
@@ -49,7 +49,7 @@ export default function CheckoutPage() {
                         subtitle={"bill every six months"}
                         text={"$30 in total"}
                         buttonText={"Select"}
-                        accessLevel={1}
+                        accessLevel={3000}
                         handleClick={handlePriceSelection}
                     />
                 </div>

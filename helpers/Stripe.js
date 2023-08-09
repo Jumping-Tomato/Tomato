@@ -33,15 +33,15 @@ const pricing = {
         }  
     },
     3000: {
-        unit_amount: 3000,
+        unit_amount: 1,
         product_data: {
-          name: 'Six-month Access',
+          name: '1 day Access',
           description: 'One Year Access to Jumping Tomato',
           images: ['https://i.imgur.com/fLWFlP3.png'],
         },
         recurring:{
-          interval: "month",
-          interval_count: 6
+          interval: "day",
+          interval_count: 1
         }  
     }
 }

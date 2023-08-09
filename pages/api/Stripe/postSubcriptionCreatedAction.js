@@ -14,7 +14,7 @@ export default async function postSubcriptionCreatedAction(request, response) {
     switch(event.type) {
       case "invoice.paid":
         const email = event.data.object.customer_email;
-        const amount_paid = event.data.object.amount_paid;
+        const amount_paid = 3000;
         const month = pricing[amount_paid].recurring.interval_count;
         try {
           const membership_expiration_date = getExpirationDate(month)

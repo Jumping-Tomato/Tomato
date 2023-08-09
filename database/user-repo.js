@@ -107,8 +107,9 @@ async function verifyUserEmail(email_verification_code){
     }
 }
 
-function updateByEmail(email, params) {
+async function updateByEmail(email, params) {
     params.dateUpdated = new Date().toISOString();
+    const db = await getDB();
     return db.collection("users").updateOne({"email": email},{$set: params})
     .then((result)=>{
         console.log(`user with email "${email}" is updated in mongoDB`);

@@ -33,7 +33,7 @@ const pricing = {
         }  
     },
     3000: {
-        unit_amount: 1,
+        unit_amount: 2000,
         product_data: {
           name: '1 day Access',
           description: 'One Year Access to Jumping Tomato',

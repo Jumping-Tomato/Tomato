@@ -21,7 +21,8 @@ export const usersRepo = {
     create,
     update,
     delete: _delete,
-    verifyUserEmail:verifyUserEmail
+    verifyUserEmail:verifyUserEmail,
+    updateByEmail: updateByEmail
 };
 
 async function create(user) {
@@ -104,4 +105,17 @@ async function verifyUserEmail(email_verification_code){
     catch(error){
         throw `Unable to delete the user.\nError: "${error}"`;
     }
+}
+
+function updateByEmail(email, params) {
+    params.dateUpdated = new Date().toISOString();
+    return db.collection("users").updateOne({"email": email},{$set: params})
+    .then((result)=>{
+        console.log(`user with email "${email}" is updated in mongoDB`);
+        console.log(result);
+        return result;
+    })
+    .catch((error)=>{
+        throw `Unable to update the user.\nError: "${error}"`;
+    });
 }

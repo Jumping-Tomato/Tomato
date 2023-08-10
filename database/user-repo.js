@@ -113,6 +113,7 @@ async function updateByEmail(email, params) {
     return db.collection("users").updateOne({"email": email},{$set: params})
     .then((result)=>{
         console.log(`user with email "${email}" is updated in mongoDB`);
+        console.log("updated params: " + JSON.stringify(params) + "\n");
         console.log(result);
         return result;
     })

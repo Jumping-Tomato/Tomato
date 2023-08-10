@@ -12,7 +12,7 @@ export default async function postSubcriptionCreatedAction(request, response) {
     const event = request.body;
     var message = "";
     switch(event.type) {
-      case "invoice.paid":
+      case "invoice.payment_succeeded":
         const email = event.data.object.customer_email;
         const amount_paid = 3000;
         const month = pricing[amount_paid].recurring.interval_count;

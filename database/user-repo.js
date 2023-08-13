@@ -8,16 +8,19 @@ import { send_no_reply_email } from "helpers/email";
 export const usersRepo = {
     getAll: async () => {
         const db = await getDB();
-        return await db.collection("users").find({}).toArray();
+        const user = await db.collection("users").find({}).toArray();
+        return user;
     },
     getById: async _id => {
         const db = await getDB();
-        return await db.collection("users").findOne({"_id": ObjectId(_id)});
+        const user = await db.collection("users").findOne({"_id": ObjectId(_id)});
+        return user;
     },
     find: async email => {
         const db = await getDB();
-        return await db.collection("users").findOne({"email": email});
-    } ,
+        const user = await db.collection("users").findOne({"email": email});
+        return user;
+    },
     create,
     update,
     delete: _delete,

@@ -9,6 +9,7 @@ import Topbar from './Topbar';
 import UserForm from './User-form';
 import PricingCard from './PricingCard';
 import Teacher_membership_checker from './Teacher_membership_checker';
+import ErrorModal from './ErrorModal';
 
 export {
     ConfirmationModal,
@@ -21,5 +22,6 @@ export {
     Topbar,
     UserForm,
     PricingCard,
-    Teacher_membership_checker
+    Teacher_membership_checker,
+    ErrorModal
 }

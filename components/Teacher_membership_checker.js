@@ -1,18 +1,21 @@
 import { useEffect } from 'react';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 export default function Teacher_membership_checker() {
-    const { data: session } = useSession();
+    const router = useRouter();
     useEffect(()=>{
         axios.get("/api/teacher/isMembershipExpired")
         .then(function (response) {
-            console.log(response);
+            if(response.data){
+                router.push('/payment/checkout')
+            }
         })
         .catch(function (error) {
+            console.log("Unable to determine if teacher's membership has expired");
             console.error(error);
         }); 
-    },[session])
+    },[])
     return (
         <></>
     );

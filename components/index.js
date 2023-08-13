@@ -8,6 +8,7 @@ import TestQuestion from './TestQuestion';
 import Topbar from './Topbar';
 import UserForm from './User-form';
 import PricingCard from './PricingCard';
+import Teacher_membership_checker from './Teacher_membership_checker';
 
 export {
     ConfirmationModal,
@@ -19,5 +20,6 @@ export {
     TestQuestion,
     Topbar,
     UserForm,
-    PricingCard
+    PricingCard,
+    Teacher_membership_checker
 }

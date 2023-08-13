@@ -17,6 +17,9 @@ export async function middleware(req) {
     if(session?.role != "student" && req.url.includes("/student")){
       return NextResponse.redirect(process.env.NEXTAUTH_URL + "/error/forbidden"); 
     }
+    if(session?.role == "teacher" && new Date() > new Date(session.membership_expiration_date)){
+      return NextResponse.redirect(process.env.NEXTAUTH_URL + "/payment/checkout");
+    }
     if (!session && !is_unprotected_page){
       return NextResponse.redirect(process.env.NEXTAUTH_URL +  '/auth/signin');
     } 
@@ -28,6 +31,6 @@ export async function middleware(req) {
 // Supports both a single string value or an array of matchers
 export const config = {
   matcher: [
-    '/((?!_next|api/auth|api/Stripe/postSubcriptionCreatedAction|media|contact|pricing|privacy-policy).*)(.+)' //put '_next' as a temporary fix. This is an issue of Next.js of the newest versions
+    '/((?!_next|api/auth|payment/checkout|api/Stripe|media|contact|pricing|privacy-policy).*)(.+)' //put '_next' as a temporary fix. This is an issue of Next.js of the newest versions
   ],
 }

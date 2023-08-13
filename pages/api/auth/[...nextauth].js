@@ -43,6 +43,7 @@ export const authOptions = {
                 if(user){
                     token._id = user._id;
                     token.role = user.role;
+                    token.membership_expiration_date = user.membership_expiration_date;
                 }
                 return token;
             },
@@ -50,6 +51,7 @@ export const authOptions = {
                 if(token){
                     session._id = token._id;
                     session.role = token.role;
+                    session.membership_expiration_date = session.membership_expiration_date;
                 }
                 return session;
             }

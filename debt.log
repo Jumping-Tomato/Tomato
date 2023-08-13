@@ -1,0 +1,9 @@
+###this file contains all the technical debts of this project
+
+unresolved [8/13/2023]: We currently use JWT to check whether the
+teacher's membership has expired by checking membership_expiration_date
+field on JWT. However, we should do it on server side to make sure it's sync.
+However, we are not allowed to do so in middleware.
+
+unresolved [8/13/2023]: The matcher field's value in config variable in middleware.js
+is way to large and long. Since matcher is an array, break it down into multiple elements.

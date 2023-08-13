@@ -9,13 +9,13 @@ export default function Teacher_membership_checker() {
     const router = useRouter();
     const { data: session } = useSession();
     const [showErrorModal, setShowErrorModal] = useState(false);
-
+    
     useEffect(()=>{
-        if(session?.role == "teacher"){
+        if(session?.role == "teacher" && !router.pathname.includes('/payment/')){
             axios.get("/api/teacher/isMembershipExpired")
             .then(function (response) {
                 if(response.data){
-                    router.push('/payment/checkout')
+                    router.push('/payment/checkout');
                 }
             })
             .catch(function (error) {

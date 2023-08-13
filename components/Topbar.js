@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
+import Teacher_membership_checker from "./Teacher_membership_checker"; 
 
 export default function Topbar() {
   const router = useRouter();
@@ -55,14 +56,17 @@ export default function Topbar() {
             </Navbar.Collapse>;
   }
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
-      <Container>
-        <Navbar.Brand href="/">
-            <Image src="/media/images/logo.svg" alt="Logo" width={75} height={35} />
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        { navItems }
-      </Container>
-    </Navbar>
+    <>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
+        <Container>
+          <Navbar.Brand href="/">
+              <Image src="/media/images/logo.svg" alt="Logo" width={75} height={35} />
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          { navItems }
+        </Container>
+      </Navbar>
+      <Teacher_membership_checker />
+    </>
   );
 };

@@ -8,8 +8,8 @@ import { send_no_reply_email } from "helpers/email";
 export const usersRepo = {
     getAll: async () => {
         const db = await getDB();
-        const user = await db.collection("users").find({}).toArray();
-        return user;
+        const user_array = await db.collection("users").find({}).toArray();
+        return user_array;
     },
     getById: async _id => {
         const db = await getDB();

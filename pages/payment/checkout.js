@@ -22,7 +22,14 @@ export default function CheckoutPage() {
           </Head>
   
           <main className={global.main}>
-            <div className='row' style={{ marginTop: "10%"}}>
+            <div className='row p-5'>
+              <div className="col-8">
+                <h4>
+                  Select a subscription below to continue:
+                </h4>
+              </div>
+            </div>
+            <div className='row'>
                 <div className="col-3 text-center">
                     <PricingCard 
                         title={"$10/month"}

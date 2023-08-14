@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 
-export default function PricingCard({title, subtitle, text, buttonText, accessLevel, handleClick}) {
+export default function CheckoutCard({title, subtitle, text, buttonText, accessLevel, handleClick}) {
   return (
     <Card>
       <Card.Body>

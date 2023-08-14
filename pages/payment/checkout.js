@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import global from 'styles/Global.module.scss'
-import { Topbar, Footer, PricingCard } from 'components'
+import { Topbar, Footer, CheckoutCard } from 'components'
 import { StripeCheckout } from 'helpers/Stripe';
 import { useSession } from 'next-auth/react';
 
@@ -31,7 +31,7 @@ export default function CheckoutPage() {
             </div>
             <div className='row'>
                 <div className="col-3 text-center">
-                    <PricingCard 
+                    <CheckoutCard 
                         title={"$10/month"}
                         subtitle={"bill every month"}
                         text={"$10 in total"}
@@ -41,7 +41,7 @@ export default function CheckoutPage() {
                     />
                 </div>
                 <div className="col-3 text-center">
-                    <PricingCard 
+                    <CheckoutCard 
                         title={"$7/month"}
                         subtitle={"bill every three months"}
                         text={"$21 in total"}
@@ -51,7 +51,7 @@ export default function CheckoutPage() {
                     />
                 </div>
                 <div className="col-3 text-center">
-                    <PricingCard 
+                    <CheckoutCard 
                         title={"$5/month"}
                         subtitle={"bill every six months"}
                         text={"$30 in total"}
@@ -61,7 +61,7 @@ export default function CheckoutPage() {
                     />
                 </div>
                 <div className="col-3 text-center">
-                    <PricingCard 
+                    <CheckoutCard 
                         title={"7 days trials"}
                         subtitle={"Free"}
                         text={<>Please email sales: <b> support@jumpingtomato.com</b></>}

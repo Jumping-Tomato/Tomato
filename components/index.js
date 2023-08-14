@@ -7,7 +7,7 @@ import QuestionCard from './QuestionCard';
 import TestQuestion from './TestQuestion';
 import Topbar from './Topbar';
 import UserForm from './User-form';
-import PricingCard from './PricingCard';
+import CheckoutCard from './CheckoutCard';
 import Teacher_membership_checker from './Teacher_membership_checker';
 import ErrorModal from './ErrorModal';
 
@@ -21,7 +21,7 @@ export {
     TestQuestion,
     Topbar,
     UserForm,
-    PricingCard,
+    CheckoutCard,
     Teacher_membership_checker,
     ErrorModal
 }

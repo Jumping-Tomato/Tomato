@@ -7,7 +7,6 @@ import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
-import Teacher_membership_checker from "./Teacher_membership_checker"; 
 
 export default function Topbar() {
   const router = useRouter();
@@ -66,7 +65,6 @@ export default function Topbar() {
           { navItems }
         </Container>
       </Navbar>
-      <Teacher_membership_checker />
     </>
   );
 };

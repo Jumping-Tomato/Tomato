@@ -20,7 +20,7 @@ export default function Success() {
                 <main className={global.main}>
                     <div className='row justify-content-center'>
                         <div className="col-lg-8 col-12 p-5">
-                            <h4>&#128549 Payment was processed successfully. You will be redirected to dashboard page.</h4>  
+                            <h4>&#128549; Payment was processed successfully. You will be redirected to dashboard page.</h4>  
                         </div>
                     </div>
                     <div className='row justify-content-center'>

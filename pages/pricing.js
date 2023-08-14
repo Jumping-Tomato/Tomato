@@ -18,7 +18,7 @@ export default function Pricing() {
 
       <main className={global.main}>
         <div className='row mt-5'>
-            <div className="col-3 text-center">
+            <div className="col-lg-3 text-center">
               <PriceCard 
                 title={"$10/month"}
                 subtitle={"bill every month"}
@@ -26,7 +26,7 @@ export default function Pricing() {
                 buttonText={"GET STARTED"}
               />
             </div>
-            <div className="col-3 text-center">
+            <div className="col-lg-3 text-center">
                 <PriceCard 
                   title={"$7/month"}
                   subtitle={"bill every three months"}
@@ -34,7 +34,7 @@ export default function Pricing() {
                   buttonText={"GET STARTED"}
               />
             </div>
-            <div className="col-3 text-center">
+            <div className="col-lg-3 text-center">
                 <PriceCard 
                   title={"$5/month"}
                   subtitle={"bill every six months"}
@@ -42,7 +42,7 @@ export default function Pricing() {
                   buttonText={"GET STARTED"}
                 />
             </div>
-            <div className="col-3 text-center">
+            <div className="col-lg-3 text-center">
                 <PriceCard 
                   title={"7 days trials"}
                   subtitle={"Free"}

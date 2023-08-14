@@ -45,7 +45,6 @@ export default function Home() {
             <li><b>Location Flexity</b>: You can create your tests anywhere in the world, and your studennts can take the tests anywhere in the world.</li>
             <li><b>Automatic Grading</b>: Score is available instantly after submission. It saves you time from grading manually.</li>
             <li><b>Activity Monitor</b>: We monitor the activities of test takers to prevent cheating.</li>
-            <li><b>Free</b>: It is free, and we all love free stuff.</li>
           </ul>
           </div>
         </div>

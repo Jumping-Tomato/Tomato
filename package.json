@@ -26,7 +26,7 @@
     "multiselect-react-dropdown": "^2.0.25",
     "nanoid": "^4.0.0",
     "next": "12.3.0",
-    "next-auth": "^4.19.2",
+    "next-auth": "^4.20.1",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-beforeunload": "^2.5.3",

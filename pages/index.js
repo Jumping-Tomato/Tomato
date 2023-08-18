@@ -32,6 +32,9 @@ export default function Home() {
                 when it comes to testing. Our platform is an autograding system
                 for tests and quizzes.
             </h3>
+            <h3 className="lh-base">
+                Homework grading will be supported soon.
+            </h3>
             <br />
             { !session && <h3><Link href="/auth/register">Register</Link> and get started now.</h3> }
             { session && <h3>Go to <Link href={`/${session.role}/dashboard`}>dashboard</Link> to get started.</h3> }

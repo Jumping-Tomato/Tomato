@@ -44,7 +44,7 @@ export default function Pricing() {
             </div>
             <div className="col-lg-3 text-center">
                 <PriceCard 
-                  title={"7 days trials"}
+                  title={"7-day trials"}
                   subtitle={"Free"}
                   text={<>Please email sales: <b> support@jumpingtomato.com</b></>}
                 />

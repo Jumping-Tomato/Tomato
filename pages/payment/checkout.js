@@ -62,7 +62,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="col-3 text-center">
                     <CheckoutCard 
-                        title={"7 days trials"}
+                        title={"7-day trials"}
                         subtitle={"Free"}
                         text={<>Please email sales: <b> support@jumpingtomato.com</b></>}
                     />

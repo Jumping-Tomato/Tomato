@@ -4,9 +4,27 @@ import {Topbar, Footer} from 'components';
 import Image from 'next/image';
 import Link  from 'next/link';
 import { useSession } from 'next-auth/react'
+import { useEffect } from 'react';
+import {useRouter } from 'next/router';
+import * as ga from '../lib/ga';
 
 export default function Home() {
   const { data: session } = useSession();
+  const router = useRouter();
+  
+  useEffect(()=>{
+    const email_source = router.query.email_source;
+    if(!email_source){
+      return;
+    }
+    const action ={
+      action: "opened_from_email",
+      params:{
+        source: email_source
+      }
+    }
+    ga.event(action);
+  },[]);
 
   return (
     <>

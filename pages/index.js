@@ -24,7 +24,7 @@ export default function Home() {
       }
     }
     ga.event(action);
-  },[]);
+  },[router.query]);
 
   return (
     <>

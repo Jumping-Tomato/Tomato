@@ -4,9 +4,27 @@ import {Topbar, Footer} from 'components';
 import Image from 'next/image';
 import Link  from 'next/link';
 import { useSession } from 'next-auth/react'
+import { useEffect } from 'react';
+import {useRouter } from 'next/router';
+import * as ga from '../lib/ga';
 
 export default function Home() {
   const { data: session } = useSession();
+  const router = useRouter();
+  
+  useEffect(()=>{
+    const source = router.query.source;
+    if(!source){
+      return;
+    }
+    const action ={
+      action: "open_link",
+      params:{
+        source: source
+      }
+    }
+    ga.event(action);
+  },[router.query]);
 
   return (
     <>

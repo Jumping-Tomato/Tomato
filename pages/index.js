@@ -20,7 +20,7 @@ export default function Home() {
     const action ={
       action: "open_link",
       params:{
-        source: source
+        "source": source
       }
     }
     ga.event(action);

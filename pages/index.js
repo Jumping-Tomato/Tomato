@@ -13,14 +13,14 @@ export default function Home() {
   const router = useRouter();
   
   useEffect(()=>{
-    const email_source = router.query.email_source;
-    if(!email_source){
+    const source = router.query.source;
+    if(!source){
       return;
     }
     const action ={
-      action: "opened_from_email",
+      action: "open_link",
       params:{
-        source: email_source
+        source: source
       }
     }
     ga.event(action);

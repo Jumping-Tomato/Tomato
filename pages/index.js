@@ -34,6 +34,10 @@ export default function Home() {
         <title>Jumping Tomato | Cloud-Based software, Autograding Online Test System</title>
         <meta name="description" content="At Jumping Tomato, we are dedicated to make the jobs of every teachers easier and more efficient by providing
                                           the most adequating and most affordable autograding online test system" />
+        <meta name="keywords" content="autograding, quizzes, tests, exams, homeworks, E-Learning, online-learning" />
+        <meta name="author" content="Rongan Li" />
+        <meta name="company" content="Jumping Tomato" />
+        <meta name="industry" content="education technology, edtech" />
         <link rel="icon" href="/media/images/logo.svg" />
       </Head>
 
